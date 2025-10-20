@@ -5,6 +5,7 @@ public class Room {
 	BoardCell centerCell;
 	BoardCell labelCell;
 	
+	
 	public Room() {
 		super();
 	}
