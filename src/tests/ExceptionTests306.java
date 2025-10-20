@@ -19,7 +19,7 @@ public class ExceptionTests306 {
 	@Test
 	public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
 		assertThrows(BadConfigFormatException.class, () -> {
-			// Note that we are using a LOCAL BoardPackage variable, because each
+			// Note that we are using a LOCAL clueGame variable, because each
 			// test will load different files
 			Board board = Board.getInstance();
 			board.setConfigFiles("ClueLayoutBadColumns306.csv", "ClueSetup306.txt");

@@ -23,13 +23,13 @@ public class FileInitTests306 {
 	public static final int NUM_ROWS = 25;
 	public static final int NUM_COLUMNS = 24;
 
-	// NOTE: I made BoardPackage static because I only want to set it up one
+	// NOTE: I made clueGame static because I only want to set it up one
 	// time (using @BeforeAll), no need to do setup before each test.
 	private static Board board;
 
 	@BeforeAll
 	public static void setUp() {
-		// BoardPackage is singleton, get the only instance
+		// clueGame is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
 		board.setConfigFiles("ClueLayout306.csv", "ClueSetup306.txt");
