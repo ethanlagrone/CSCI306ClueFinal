@@ -1,5 +1,5 @@
 package clueGame;
 
 public enum DoorDirection {
-//stub
+	LEFT, RIGHT, UP, DOWN
 }

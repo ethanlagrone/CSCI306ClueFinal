@@ -55,6 +55,29 @@ public class Board {
     	}
     }
     
+    
+    public void setConfigFiles(String csv, String setup) {
+    	//stub
+    }
+
+	public void loadSetupConfig() {
+    	//stub
+    }
+    
+    public void loadLayoutConfig() {
+    	//stub
+    }
+    
+    public Room getRoom(char room) {
+    	return null;
+    	//stub
+    }
+    
+    public Room getRoom(BoardCell cell) {
+    	return null;
+    	//stub
+    }
+    
     public void calcTargets(BoardCell startCell, int numSteps) {
     	//source: slides from clue path walkthrough
 		for(BoardCell adjCell : startCell.getAdjList()) {
@@ -83,4 +106,14 @@ public class Board {
 		calcTargets(startCell, numSteps);
 		return targets;
     }
+    
+    public static int getNumColumns() {
+ 		return COLS;
+ 	}
+
+
+ 	public static int getNumRows() {
+ 		return ROWS;
+ 	}
+
 }
