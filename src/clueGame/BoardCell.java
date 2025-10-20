@@ -12,6 +12,9 @@ public class BoardCell {
     private boolean inRoom = false;
     private boolean occupied = false;
     private Set<BoardCell> adjCells;
+    private boolean isDoorway;
+    private boolean isLabel;
+    private boolean isRoomCenter;
 
     public BoardCell(int row, int column) {
         this.row = row;
@@ -20,29 +23,17 @@ public class BoardCell {
         adjCells = new HashSet<BoardCell>();
     }
     
-    public boolean isDoorway() {
-    	return false;
-    	//stub
-    }
-    
+   
     public DoorDirection getDoorDirection() {
     	return DoorDirection.UP;
     	//stub
     }
 
-	public boolean isLabel() {
-		return false;
-		//stub
-	}
-
-	public boolean isRoomCenter() {
-		return false;
+	public char getSecretPassage(){
+		return 'C';
 		//stub
 	}
 	
-	public char getSecretPassage(){
-		return 'C';
-	}
 	
     public void addAdjacency(BoardCell cell) {
         adjCells.add(cell);
@@ -52,7 +43,40 @@ public class BoardCell {
         return adjCells;
     }
 
+    
+    
     //getters and setters
+    public boolean isLabel() {
+		return isLabel;
+	}
+
+	public boolean isRoomCenter() {
+		return isRoomCenter;
+	}
+	
+	
+    public void setDoorway(boolean isDoorway) {
+		this.isDoorway = isDoorway;
+	}
+
+
+
+	public void setLabel(boolean isLabel) {
+		this.isLabel = isLabel;
+	}
+
+
+
+	public void setRoomCenter(boolean isRoomCenter) {
+		this.isRoomCenter = isRoomCenter;
+	}
+
+
+
+	public boolean isDoorway() {
+    	return isDoorway;
+    }
+    
     public void setInRoom(boolean b) {
         inRoom = b;
     }

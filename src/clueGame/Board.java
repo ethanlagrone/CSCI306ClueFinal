@@ -78,6 +78,7 @@ public class Board {
     	//stub
     }
     
+    
     public void calcTargets(BoardCell startCell, int numSteps) {
     	//source: slides from clue path walkthrough
 		for(BoardCell adjCell : startCell.getAdjList()) {
