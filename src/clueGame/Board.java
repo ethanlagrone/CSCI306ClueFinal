@@ -10,8 +10,19 @@ public class Board {
     private Set<BoardCell> visited;
     final static int COLS = 4;
     final static int ROWS = 4;
+    private static Board theInstance = new Board();
     
     public Board() {
+    	super();
+    }
+    
+    
+    public static Board getInstance() {
+    	return theInstance;
+    }
+    
+    
+    public void initialize() {
     	targets = new HashSet<>();
     	visited = new HashSet<>();
     	grid = new BoardCell[ROWS][COLS];
@@ -43,7 +54,7 @@ public class Board {
     		}
     	}
     }
-
+    
     public void calcTargets(BoardCell startCell, int numSteps) {
     	//source: slides from clue path walkthrough
 		for(BoardCell adjCell : startCell.getAdjList()) {
