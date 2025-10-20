@@ -1,4 +1,4 @@
-package Board;
+package BoardPackage;
 
 import java.util.HashSet;
 import java.util.Set;
