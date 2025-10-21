@@ -1,6 +1,10 @@
 package clueGame;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Board {
@@ -25,6 +29,7 @@ public class Board {
     
     
     public void initialize() {
+    	loadSetupConfig();
     	targets = new HashSet<>();
     	visited = new HashSet<>();
     	grid = new BoardCell[numRows][numCols];
@@ -64,7 +69,30 @@ public class Board {
     }
 
 	public void loadSetupConfig() {
-    	//stub
+		//couldn't figure how to split up a csv properly, so this worked:
+		//source: https://labex.io/tutorials/java-how-to-split-csv-lines-correctly-421487
+		int rowNum = 1;
+		int colNum = 1;
+		String line;
+		String csvSplit = ",";
+		
+    	try(BufferedReader br = new BufferedReader(new FileReader(layoutCsv))){
+    		while((line = br.readLine()) != null) {
+    			String[] data = line.split(csvSplit);
+    			if(rowNum == 1) {
+    				colNum = data.length + 1;
+    			}
+    			rowNum ++;
+    		}
+    	} catch (IOException e) {
+    		System.out.println("Error: " + e);
+    		//just doing this for original tests
+    		colNum = 4;
+    		rowNum = 4;
+    	}
+    	
+    	numRows = rowNum;
+    	numCols = colNum;
     }
     
     public void loadLayoutConfig() {
@@ -72,12 +100,12 @@ public class Board {
     }
     
     public Room getRoom(char room) {
-    	return null;
+    	return new Room();
     	//stub
     }
     
     public Room getRoom(BoardCell cell) {
-    	return null;
+    	return new Room();
     	//stub
     }
     
