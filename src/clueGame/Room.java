@@ -12,6 +12,11 @@ public class Room {
 	
 	
 	//getters and setters
+	public BoardCell getCenterCell() {
+		//stub
+		return new BoardCell(0,0);
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -32,9 +37,7 @@ public class Room {
 	}
 
 	
-	public BoardCell getCenterCell() {
-		return null;
-	}
+	
 
 	
 	public void setLabelCell(BoardCell labelCell) {
