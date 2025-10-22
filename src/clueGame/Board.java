@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
@@ -19,6 +20,7 @@ public class Board {
 	private ArrayList<String> rows;
     private int numRows;
     private int numCols;
+	private static final char validExtensions[] = {'*', '#', '^', '>', 'v', '<'};
     private static Board theInstance = new Board();
     private String layoutCsv;
     private String setupTxt;
@@ -34,8 +36,13 @@ public class Board {
     
     
     public void initialize() {
-    	loadSetupConfig();
-		loadLayoutConfig();
+    	try {
+			loadSetupConfig();
+			loadLayoutConfig();
+		}
+		catch (BadConfigFormatException e) {
+			System.out.print(e);
+		}
     	targets = new HashSet<>();
     	visited = new HashSet<>();
     	grid = new BoardCell[numRows][numCols];
@@ -47,6 +54,14 @@ public class Board {
     			grid[i][j] = new BoardCell(i, j);
 				if (roomMap.containsKey(cells[j].charAt(0))) {
 					grid[i][j].setInRoom(true);
+					if (cells[j].length() == 2) {
+						if (cells[j].charAt(1) == '*') {
+							grid[i][j].setRoomCenter(true);
+						}
+						else {
+							grid[i][j].setLabel(true);
+						}
+					}
 				}
     		}
     	}
@@ -132,6 +147,15 @@ public class Board {
 			for (String cell : cells) {
 				if (!roomMap.containsKey(cell.charAt(0)) && !validSpaces.contains(cell.charAt(0))) {
 					throw new BadConfigFormatException();
+				}
+				else if (cell.length() == 2 && Arrays.asList(validExtensions).contains(cell.charAt(1))) {
+					throw new BadConfigFormatException();
+				}
+				else if (cell.length() > 2 || cell.length() < 1) {
+					throw new BadConfigFormatException();
+				}
+				else {
+					continue;
 				}
 			}
 		}
