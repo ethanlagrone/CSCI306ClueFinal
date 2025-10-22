@@ -20,6 +20,7 @@ public class Board {
     private int numRows;
     private int numCols;
 	private static final char validExtensions[] = {'*', '#', '^', '>', 'v', '<'};
+	private static final char doors[] = {'^', '>', 'v', '<'};
     private static Board theInstance = new Board();
     private String layoutCsv;
     private String setupTxt;
@@ -68,13 +69,26 @@ public class Board {
 	    			grid[i][j] = new BoardCell(i, j);
 					if (roomMap.containsKey(cells[j].charAt(0))) {
 						grid[i][j].setInRoom(true);
+						
 						if (cells[j].length() == 2) {
-							if (cells[j].charAt(1) == '*') {
+							char specialChar = cells[j].charAt(1);
+							if (specialChar == '*') {
 								grid[i][j].setRoomCenter(true);
-							}
-							else {
+							} else if (specialChar == '#') {
 								grid[i][j].setLabel(true);
-							}
+							} else if (specialChar == '^') {
+								grid[i][j].setDoorway(true);
+								grid[i][j].setDoorDirection(DoorDirection.UP);
+							} else if (specialChar == '>') {
+								grid[i][j].setDoorway(true);
+								grid[i][j].setDoorDirection(DoorDirection.RIGHT);
+							} else if (specialChar == 'v') {
+								grid[i][j].setDoorway(true);
+								grid[i][j].setDoorDirection(DoorDirection.DOWN);
+							} else if (specialChar == '<') {
+								grid[i][j].setDoorway(true);
+								grid[i][j].setDoorDirection(DoorDirection.LEFT);
+							} 
 						}
 					}
 	    		}
@@ -176,7 +190,6 @@ public class Board {
     
     public Room getRoom(char room) {
     	return roomMap.get(room);
-    	//stub
     }
     
     public Room getRoom(BoardCell cell) {

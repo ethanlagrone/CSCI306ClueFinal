@@ -1,0 +1,1 @@
+For our tests, we decided on tests that line up with our board. We test cells with each door direction, again specifically on our board. This checks the unique format of our board, even though a lot of the tests are based on the original provided tests

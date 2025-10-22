@@ -10,7 +10,7 @@ public class BoardCell {
     private boolean inRoom = false;
     private boolean occupied = false;
     private Set<BoardCell> adjCells;
-    private boolean isDoorway;
+    private boolean isDoorway = false;
     private boolean isLabel;
     private boolean isRoomCenter;
     private DoorDirection doorDirection;
@@ -55,6 +55,10 @@ public class BoardCell {
     	return doorDirection;
     }
     
+    public void setDoorDirection(DoorDirection doorDirection) {
+    	this.doorDirection = doorDirection;
+    }
+    
     public boolean isLabel() {
 		return isLabel;
 	}
@@ -66,9 +70,7 @@ public class BoardCell {
 	
     public void setDoorway(boolean isDoorway) {
 		this.isDoorway = isDoorway;
-	}
-
-
+    }
 
 	public void setLabel(boolean isLabel) {
 		this.isLabel = isLabel;

@@ -1,11 +1,15 @@
 package clueGame;
 
 public class Room {
-	String name;
-	BoardCell centerCell;
-	BoardCell labelCell;
+	private String name;
+	private BoardCell centerCell;
+	private BoardCell labelCell;
+	private boolean hasDoor;
+	private DoorDirection doorDirection;
 	
 	
+	
+
 	public Room() {
 		super();
 	}
@@ -15,6 +19,14 @@ public class Room {
 	}
 	
 	//getters and setters
+	public DoorDirection getDoorDirection() {
+		return doorDirection;
+	}
+
+	public void setDoorDirection(DoorDirection doorDirection) {
+		this.doorDirection = doorDirection;
+	}
+	
 	public BoardCell getCenterCell() {
 		return centerCell;
 	}
@@ -39,7 +51,13 @@ public class Room {
 	}
 
 	
-	
+	public boolean hasDoor() {
+        return hasDoor;
+    }
+
+    public void setHasDoor(boolean hasDoor) {
+        this.hasDoor = hasDoor;
+    }
 
 	
 	public void setLabelCell(BoardCell labelCell) {
