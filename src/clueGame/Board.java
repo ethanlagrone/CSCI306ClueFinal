@@ -3,7 +3,9 @@ package clueGame;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -12,6 +14,9 @@ public class Board {
     private BoardCell[][] grid;
     private Set<BoardCell> targets;
     private Set<BoardCell> visited;
+	private Map<Character, Room> roomMap;
+	private ArrayList<Character> validSpaces;
+	private ArrayList<String> rows;
     private int numRows;
     private int numCols;
     private static Board theInstance = new Board();
@@ -28,7 +33,7 @@ public class Board {
     }
     
     
-    public void initialize() {
+    public void initialize() throws BadConfigFormatException {
     	loadSetupConfig();
     	targets = new HashSet<>();
     	visited = new HashSet<>();
@@ -36,8 +41,12 @@ public class Board {
     	
     	//setup board with cells
     	for(int i = 0; i < numRows; i++) {
-    		for(int j = 0; j < numCols; j++) {
+    		String cells[] = rows.get(i).split(",");
+			for(int j = 0; j < numCols; j++) {
     			grid[i][j] = new BoardCell(i, j);
+				if (roomMap.containsKey(cells[j].charAt(0))) {
+					grid[i][j].setInRoom(true);
+				}
     		}
     	}
     	
@@ -68,19 +77,73 @@ public class Board {
     	setupTxt = setup; 
     }
 
-	public void loadSetupConfig() {
-		
+	public void loadSetupConfig() throws BadConfigFormatException {
+		try (BufferedReader reader = new BufferedReader(new FileReader(setupTxt))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				if (line.substring(0, 3).equals("Room")) {
+					String[] roomInfo = line.split(", ");
+					Room room = new Room();
+					room.setName(roomInfo[1]);
+					roomMap.put(roomInfo[2].charAt(0), room);
+				}
+				
+				else if (line.substring(0, 4).equals("Space")) {
+					String[] spaceInfo = line.split(", ");
+					validSpaces.add(spaceInfo[2].charAt(0));
+				}
+
+				else if (line.charAt(0) == '/') {
+					// ignore
+				}
+
+				else {
+					throw new BadConfigFormatException();
+				}
+			}
+		}
+		catch (IOException e) {
+			System.out.println(e);
+		}
     }
     
-    public void loadLayoutConfig() {
+    public void loadLayoutConfig() throws BadConfigFormatException {
     	//couldn't figure how to split up a csv properly, so this worked:
 		//source: https://labex.io/tutorials/java-how-to-split-csv-lines-correctly-421487
-		int rowNum = 1;
+		String line;
+		rows = new ArrayList<>();
+		try (BufferedReader reader = new BufferedReader(new FileReader(layoutCsv))) {
+			while ((line = reader.readLine()) != null) {
+				rows.add(line);
+			}
+		}
+		catch (IOException e) {
+			System.out.println(e);
+		}
+
+		String cells[] = rows.get(0).split(",");
+		int expectedNumCols = cells.length;
+		for (String row : rows) {
+			cells = row.split(",");
+			if (cells.length != expectedNumCols) {
+				throw new BadConfigFormatException();
+			}
+			for (String cell : cells) {
+				if (!roomMap.containsKey(cell.charAt(0)) && !validSpaces.contains(cell.charAt(0))) {
+					throw new BadConfigFormatException();
+				}
+			}
+		}
+
+
+		
+		
+		/* int rowNum = 1;
 		int colNum = 1;
 		String line;
 		String csvSplit = ",";
 		
-    	try(BufferedReader br = new BufferedReader(new FileReader(layoutCsv))){
+    	try (BufferedReader br = new BufferedReader(new FileReader(layoutCsv))) {
     		while((line = br.readLine()) != null) {
     			String[] data = line.split(csvSplit);
     			if(rowNum == 1) {
@@ -88,7 +151,8 @@ public class Board {
     			}
     			rowNum ++;
     		}
-    	} catch (IOException e) {
+    	} 
+		catch (IOException e) {
     		System.out.println("Error: " + e);
     		//just doing this for original tests
     		colNum = 4;
@@ -97,6 +161,7 @@ public class Board {
     	
     	numRows = rowNum;
     	numCols = colNum;
+		*/
     }
     
     public Room getRoom(char room) {
