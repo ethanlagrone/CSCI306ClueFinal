@@ -33,8 +33,9 @@ public class Board {
     }
     
     
-    public void initialize() throws BadConfigFormatException {
+    public void initialize() {
     	loadSetupConfig();
+		loadLayoutConfig();
     	targets = new HashSet<>();
     	visited = new HashSet<>();
     	grid = new BoardCell[numRows][numCols];
