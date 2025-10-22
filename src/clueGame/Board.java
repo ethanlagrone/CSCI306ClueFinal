@@ -16,7 +16,6 @@ public class Board {
     private Set<BoardCell> targets;
     private Set<BoardCell> visited;
 	private Map<Character, Room> roomMap;
-	private ArrayList<Character> validSpaces;
 	private ArrayList<String> rows;
     private int numRows;
     private int numCols;
@@ -97,16 +96,11 @@ public class Board {
 		try (BufferedReader reader = new BufferedReader(new FileReader(setupTxt))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
-				if (line.substring(0, 3).equals("Room")) {
-					String[] roomInfo = line.split(", ");
+				String[] roomInfo = line.split(", ");
+				if (roomInfo[0].equals("Room") || roomInfo[0].equals("Space")) {
 					Room room = new Room();
 					room.setName(roomInfo[1]);
 					roomMap.put(roomInfo[2].charAt(0), room);
-				}
-				
-				else if (line.substring(0, 4).equals("Space")) {
-					String[] spaceInfo = line.split(", ");
-					validSpaces.add(spaceInfo[2].charAt(0));
 				}
 
 				else if (line.charAt(0) == '/') {
@@ -145,7 +139,7 @@ public class Board {
 				throw new BadConfigFormatException();
 			}
 			for (String cell : cells) {
-				if (!roomMap.containsKey(cell.charAt(0)) && !validSpaces.contains(cell.charAt(0))) {
+				if (!roomMap.containsKey(cell.charAt(0))) {
 					throw new BadConfigFormatException();
 				}
 				else if (cell.length() == 2 && Arrays.asList(validExtensions).contains(cell.charAt(1))) {
@@ -190,7 +184,7 @@ public class Board {
     }
     
     public Room getRoom(char room) {
-    	return new Room();
+    	return roomMap.get(room);
     	//stub
     }
     

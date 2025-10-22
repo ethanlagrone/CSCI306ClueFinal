@@ -13,8 +13,7 @@ public class Room {
 	
 	//getters and setters
 	public BoardCell getCenterCell() {
-		//stub
-		return new BoardCell(0,0);
+		return centerCell;
 	}
 	
 	public String getName() {
