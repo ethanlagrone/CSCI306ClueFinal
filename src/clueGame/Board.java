@@ -69,7 +69,11 @@ public class Board {
     }
 
 	public void loadSetupConfig() {
-		//couldn't figure how to split up a csv properly, so this worked:
+		
+    }
+    
+    public void loadLayoutConfig() {
+    	//couldn't figure how to split up a csv properly, so this worked:
 		//source: https://labex.io/tutorials/java-how-to-split-csv-lines-correctly-421487
 		int rowNum = 1;
 		int colNum = 1;
@@ -93,10 +97,6 @@ public class Board {
     	
     	numRows = rowNum;
     	numCols = colNum;
-    }
-    
-    public void loadLayoutConfig() {
-    	//stub
     }
     
     public Room getRoom(char room) {
