@@ -1,7 +1,5 @@
 package clueGame;
 
-import static org.junit.Assert.assertFalse;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,8 +14,10 @@ public class BoardCell {
     private boolean isLabel;
     private boolean isRoomCenter;
     private DoorDirection doorDirection;
+    private Room room;
 
-    public BoardCell(int row, int column) {
+
+	public BoardCell(int row, int column) {
         this.row = row;
         this.column = column;
         //not needing sort so may as well use hashset
@@ -42,6 +42,15 @@ public class BoardCell {
     
     
     //getters and setters
+    public Room getRoom() {
+		return room;
+	}
+
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+	
     public DoorDirection getDoorDirection() {
     	return doorDirection;
     }

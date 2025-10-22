@@ -5,9 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 
 public class Board {
@@ -26,6 +26,9 @@ public class Board {
     
     public Board() {
     	super();
+    	roomMap = new HashMap<>();
+
+    	
     }
     
     
@@ -35,54 +38,64 @@ public class Board {
     
     
     public void initialize() {
-    	try {
-			loadSetupConfig();
-			loadLayoutConfig();
-		}
-		catch (BadConfigFormatException e) {
-			System.out.print(e);
-		}
-    	targets = new HashSet<>();
-    	visited = new HashSet<>();
-    	grid = new BoardCell[numRows][numCols];
-    	
-    	//setup board with cells
-    	for(int i = 0; i < numRows; i++) {
-    		String cells[] = rows.get(i).split(",");
-			for(int j = 0; j < numCols; j++) {
-    			grid[i][j] = new BoardCell(i, j);
-				if (roomMap.containsKey(cells[j].charAt(0))) {
-					grid[i][j].setInRoom(true);
-					if (cells[j].length() == 2) {
-						if (cells[j].charAt(1) == '*') {
-							grid[i][j].setRoomCenter(true);
-						}
-						else {
-							grid[i][j].setLabel(true);
+    	//makes dummy 4x4 board for tests
+    	if(layoutCsv == null || setupTxt == null) {
+    		for(int i = 0; i < 4; i++) {
+        		for(int j = 0; j < 4; j++) {
+        			grid[i][j] = new BoardCell(i, j);
+        		}
+        	}
+    	} else {
+	    	try {
+				loadSetupConfig();
+				loadLayoutConfig();
+			}
+			catch (BadConfigFormatException e) {
+				System.out.print(e);
+			}
+	    	
+	    	targets = new HashSet<>();
+	    	visited = new HashSet<>();
+	    	grid = new BoardCell[numRows][numCols];
+	    	
+	    	//setup board with cells
+	    	for(int i = 0; i < numRows; i++) {
+	    		String cells[] = rows.get(i).split(",");
+				for(int j = 0; j < numCols; j++) {
+	    			grid[i][j] = new BoardCell(i, j);
+					if (roomMap.containsKey(cells[j].charAt(0))) {
+						grid[i][j].setInRoom(true);
+						if (cells[j].length() == 2) {
+							if (cells[j].charAt(1) == '*') {
+								grid[i][j].setRoomCenter(true);
+							}
+							else {
+								grid[i][j].setLabel(true);
+							}
 						}
 					}
-				}
-    		}
-    	}
-    	
-    	//find every adjacency of each cell, hint said to do it here
-    	for(int i = 0; i < numRows; i++) {
-    		for(int j = 0; j < numCols; j++) {
-    			BoardCell cell = grid[i][j];
-    			
-    			if(i - 1 >= 0) {
-    				cell.addAdjacency(grid[i-1][j]);
-    			}
-    			if(i + 1 < numRows) {
-    				cell.addAdjacency(grid[i+1][j]);
-    			}
-    			if(j - 1 >= 0) {
-    				cell.addAdjacency(grid[i][j-1]);
-    			}
-    			if(j+1 < numCols) {
-    				cell.addAdjacency(grid[i][j+1]);
-    			}
-    		}
+	    		}
+	    	}
+	    	
+	    	//find every adjacency of each cell, hint said to do it here
+	    	for(int i = 0; i < numRows; i++) {
+	    		for(int j = 0; j < numCols; j++) {
+	    			BoardCell cell = grid[i][j];
+	    			
+	    			if(i - 1 >= 0) {
+	    				cell.addAdjacency(grid[i-1][j]);
+	    			}
+	    			if(i + 1 < numRows) {
+	    				cell.addAdjacency(grid[i+1][j]);
+	    			}
+	    			if(j - 1 >= 0) {
+	    				cell.addAdjacency(grid[i][j-1]);
+	    			}
+	    			if(j+1 < numCols) {
+	    				cell.addAdjacency(grid[i][j+1]);
+	    			}
+	    		}
+	    	}
     	}
     }
     
@@ -92,6 +105,7 @@ public class Board {
     	setupTxt = setup; 
     }
 
+    
 	public void loadSetupConfig() throws BadConfigFormatException {
 		try (BufferedReader reader = new BufferedReader(new FileReader(setupTxt))) {
 			String line;
@@ -152,35 +166,9 @@ public class Board {
 					continue;
 				}
 			}
+			numRows = rows.size();
+	        numCols = rows.get(0).split(",").length;
 		}
-
-
-		
-		
-		/* int rowNum = 1;
-		int colNum = 1;
-		String line;
-		String csvSplit = ",";
-		
-    	try (BufferedReader br = new BufferedReader(new FileReader(layoutCsv))) {
-    		while((line = br.readLine()) != null) {
-    			String[] data = line.split(csvSplit);
-    			if(rowNum == 1) {
-    				colNum = data.length + 1;
-    			}
-    			rowNum ++;
-    		}
-    	} 
-		catch (IOException e) {
-    		System.out.println("Error: " + e);
-    		//just doing this for original tests
-    		colNum = 4;
-    		rowNum = 4;
-    	}
-    	
-    	numRows = rowNum;
-    	numCols = colNum;
-		*/
     }
     
     public Room getRoom(char room) {

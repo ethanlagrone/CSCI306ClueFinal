@@ -1,13 +1,13 @@
 // Rooms and room cards
-Room, Red Rocks, R
-Room, Fidler's Green, F
-Room, Ball Arena, B
-Room, Mission Ballroom, M
-Room, Bluebird Theater, T
-Room, Larimer Lounge, L
-Room, Ogden Theatre, O
-Room, Marquis Theatre, Q
-Room, Gothic Theatre, G
+Room, Conservatory, C
+Room, Kitchen, K
+Room, Ballroom, B
+Room, Billiard Room, R
+Room, Library, L
+Room, Study, S
+Room, Dining Room, D
+Room, Lounge, O
+Room, Hall, H
 // other spaces on board
 Space, Unused, X
 Space, Walkway, W

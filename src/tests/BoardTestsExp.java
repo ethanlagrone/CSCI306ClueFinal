@@ -15,7 +15,9 @@ public class BoardTestsExp {
     
     @BeforeEach
     public void setUp() {
-        board = new Board();
+		board = Board.getInstance();
+		board.setConfigFiles(null, null);
+		board.initialize();
     }
 
     @Test

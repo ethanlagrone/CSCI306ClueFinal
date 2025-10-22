@@ -10,6 +10,9 @@ public class Room {
 		super();
 	}
 	
+	public Room(String name) {
+		this.name = name;
+	}
 	
 	//getters and setters
 	public BoardCell getCenterCell() {
