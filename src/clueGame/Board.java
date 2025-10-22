@@ -40,6 +40,9 @@ public class Board {
     public void initialize() {
     	//makes dummy 4x4 board for tests
     	if(layoutCsv == null || setupTxt == null) {
+    		grid = new BoardCell[4][4];
+    		targets = new HashSet<>();
+	    	visited = new HashSet<>();
     		for(int i = 0; i < 4; i++) {
         		for(int j = 0; j < 4; j++) {
         			grid[i][j] = new BoardCell(i, j);
