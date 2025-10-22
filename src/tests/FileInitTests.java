@@ -14,8 +14,8 @@ import clueGame.Room;
 public class FileInitTests {
 	// Constants
 	public static final int LEGEND_SIZE = 11;
-	public static final int NUM_ROWS = 22;
-	public static final int NUM_COLUMNS = 23;
+	public static final int NUM_ROWS = 23;
+	public static final int NUM_COLUMNS = 24;
 
 	// NOTE: I made clueGame static because I only want to set it up one
 	// time (using @BeforeAll), no need to do setup before each test.
@@ -50,16 +50,16 @@ public class FileInitTests {
 	@Test
 	public void FourDoorDirections() {
 		//testing real door cells in our board of each direction
-		BoardCell cell = board.getCell(7, 2);
+		BoardCell cell = board.getCell(2, 7);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.LEFT, cell.getDoorDirection());
-		cell = board.getCell(9, 4);
+		cell = board.getCell(5, 2);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.UP, cell.getDoorDirection());
-		cell = board.getCell(19, 14);
+		cell = board.getCell(6, 12);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.RIGHT, cell.getDoorDirection());
-		cell = board.getCell(18, 10);
+		cell = board.getCell(16, 2);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.DOWN, cell.getDoorDirection());
 		// Test that walkways are not doors
