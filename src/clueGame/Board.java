@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -39,62 +38,73 @@ public class Board {
     
     
     public void initialize() {
-    	//makes dummy 4x4 board for tests
-		try {
-			loadSetupConfig();
-			loadLayoutConfig();
-		}
-		catch (BadConfigFormatException e) {
-			System.out.print(e);
-		}
-
-		grid = new BoardCell[numRows][numCols];
-		
-		//setup board with cells
-		char roomChar;
-		char specialChar;
-		for(int i = 0; i < numRows; i++) {
-			String cells[] = rows.get(i).split(",");
-			for(int j = 0; j < numCols; j++) {
-				grid[i][j] = new BoardCell(i, j);
-				roomChar = cells[j].charAt(0);
-				if (roomMap.containsKey(roomChar)) {
-					grid[i][j].setInRoom(true);
-					grid[i][j].setRoom(roomMap.get(roomChar));
-					
-					if (cells[j].length() == 2) {
-						specialChar = cells[j].charAt(1);
-						if (roomMap.containsKey(specialChar)) {
-							grid[i][j].setIsSecretPassage(true);
-							grid[i][j].setSecretPassage(specialChar);
-						}
-						else {
-							switch (specialChar) {
-								case '*':
-									grid[i][j].setRoomCenter(true);
-									roomMap.get(roomChar).setCenterCell(grid[i][j]);
-									break;
-								case '#':
-									grid[i][j].setLabel(true);
-									roomMap.get(roomChar).setLabelCell(grid[i][j]);
-									break;
-								case '^':
-									grid[i][j].setDoorway(true);
-									grid[i][j].setDoorDirection(DoorDirection.UP);
-									break;
-								case '>':
-									grid[i][j].setDoorway(true);
-									grid[i][j].setDoorDirection(DoorDirection.RIGHT);
-									break;
-								case 'v':
-									grid[i][j].setDoorway(true);
-									grid[i][j].setDoorDirection(DoorDirection.DOWN);
-									break;
-								case '<':
-									grid[i][j].setDoorway(true);
-									grid[i][j].setDoorDirection(DoorDirection.LEFT);
-									break;
-							} 
+    	//makes dummy 4x4 board for BoardTestsExp
+    	if(layoutCsv == null || setupTxt == null) {
+    		numRows = 4;
+    		numCols = 4;
+			grid = new BoardCell[numRows][numCols];
+    		for(int i = 0; i < numRows; i++) {
+    			for(int j = 0; j < numCols; j++) {
+    				grid[i][j] = new BoardCell(i, j);
+    			}
+    		}
+    	} else {
+	    	try {
+				loadSetupConfig();
+				loadLayoutConfig();
+			}
+			catch (BadConfigFormatException e) {
+				System.out.print(e);
+			}
+	
+			grid = new BoardCell[numRows][numCols];
+			
+			//setup board with cells
+			char roomChar;
+			char specialChar;
+			for(int i = 0; i < numRows; i++) {
+				String cells[] = rows.get(i).split(",");
+				for(int j = 0; j < numCols; j++) {
+					grid[i][j] = new BoardCell(i, j);
+					roomChar = cells[j].charAt(0);
+					if (roomMap.containsKey(roomChar)) {
+						grid[i][j].setInRoom(true);
+						grid[i][j].setRoom(roomMap.get(roomChar));
+						
+						if (cells[j].length() == 2) {
+							specialChar = cells[j].charAt(1);
+							if (roomMap.containsKey(specialChar)) {
+								grid[i][j].setIsSecretPassage(true);
+								grid[i][j].setSecretPassage(specialChar);
+							}
+							else {
+								switch (specialChar) {
+									case '*':
+										grid[i][j].setRoomCenter(true);
+										roomMap.get(roomChar).setCenterCell(grid[i][j]);
+										break;
+									case '#':
+										grid[i][j].setLabel(true);
+										roomMap.get(roomChar).setLabelCell(grid[i][j]);
+										break;
+									case '^':
+										grid[i][j].setDoorway(true);
+										grid[i][j].setDoorDirection(DoorDirection.UP);
+										break;
+									case '>':
+										grid[i][j].setDoorway(true);
+										grid[i][j].setDoorDirection(DoorDirection.RIGHT);
+										break;
+									case 'v':
+										grid[i][j].setDoorway(true);
+										grid[i][j].setDoorDirection(DoorDirection.DOWN);
+										break;
+									case '<':
+										grid[i][j].setDoorway(true);
+										grid[i][j].setDoorDirection(DoorDirection.LEFT);
+										break;
+								} 
+							}
 						}
 					}
 				}
@@ -229,8 +239,18 @@ public class Board {
     
     
     public void calcTargets(BoardCell startCell, int numSteps) {
+    	//I think it was clearing everytime lol
+    	visited.clear();
+    	targets.clear();
+    	//this cell was being included in the file, thank god for debugger
+    	visited.add(startCell);
+    	//created this because things were clearing over and over again and idk how else to do it
+		recursiveCalcTargets(startCell, numSteps);
+    }
+    
+    public void recursiveCalcTargets(BoardCell startCell, int numSteps) {
     	//source: slides from clue path walkthrough
-		for(BoardCell adjCell : startCell.getAdjList()) {
+    	for(BoardCell adjCell : startCell.getAdjList()) {
     		if(visited.contains(adjCell)) {
     			//do nothing
     		} else {
@@ -238,7 +258,7 @@ public class Board {
     			if(numSteps == 1) {
 					targets.add(adjCell);
     			} else {
-    				calcTargets(adjCell, numSteps-1);
+    				recursiveCalcTargets(adjCell, numSteps-1);
     			}
 				visited.remove(adjCell);
     		}
@@ -249,11 +269,7 @@ public class Board {
     	return grid[row][column];
     }
 
-    public Set<BoardCell> getTargets(BoardCell startCell, int numSteps) {
-		targets.clear();
-		visited.clear();
-		visited.add(startCell);
-		calcTargets(startCell, numSteps);
+    public Set<BoardCell> getTargets() {
 		return targets;
     }
     
@@ -261,6 +277,9 @@ public class Board {
  		return numCols;
  	}
 
+    public Set<BoardCell> getAdjList(int row, int col) {
+        return grid[row][col].getAdjList();
+    }
 
  	public int getNumRows() {
  		return numRows;
