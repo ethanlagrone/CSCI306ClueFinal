@@ -67,19 +67,21 @@ public class Board {
 	    		String cells[] = rows.get(i).split(",");
 				for(int j = 0; j < numCols; j++) {
 	    			grid[i][j] = new BoardCell(i, j);
+					char roomChar = cells[j].charAt(0);
 					if (roomMap.containsKey(cells[j].charAt(0))) {
 						grid[i][j].setInRoom(true);
+						grid[i][j].setRoom(roomMap.get(roomChar));
 						
 						if (cells[j].length() == 2) {
 							char specialChar = cells[j].charAt(1);
 							switch (specialChar) {
 								case '*':
 									grid[i][j].setRoomCenter(true);
-									roomMap.get(cells[j].charAt(0)).setCenterCell(grid[i][j]);
+									roomMap.get(roomChar).setCenterCell(grid[i][j]);
 									break;
 								case '#':
 									grid[i][j].setLabel(true);
-									roomMap.get(cells[j].charAt(0)).setLabelCell(grid[i][j]);
+									roomMap.get(roomChar).setLabelCell(grid[i][j]);
 									break;
 								case '^':
 									grid[i][j].setDoorway(true);
