@@ -20,7 +20,7 @@ public class Board {
     private int numRows;
     private int numCols;
 	private static final char validExtensions[] = {'*', '#', '^', '>', 'v', '<'};
-	private static final char doors[] = {'^', '>', 'v', '<'};
+	//private static final char doors[] = {'^', '>', 'v', '<'};
     private static Board theInstance = new Board();
     private String layoutCsv;
     private String setupTxt;
@@ -72,22 +72,31 @@ public class Board {
 						
 						if (cells[j].length() == 2) {
 							char specialChar = cells[j].charAt(1);
-							if (specialChar == '*') {
-								grid[i][j].setRoomCenter(true);
-							} else if (specialChar == '#') {
-								grid[i][j].setLabel(true);
-							} else if (specialChar == '^') {
-								grid[i][j].setDoorway(true);
-								grid[i][j].setDoorDirection(DoorDirection.UP);
-							} else if (specialChar == '>') {
-								grid[i][j].setDoorway(true);
-								grid[i][j].setDoorDirection(DoorDirection.RIGHT);
-							} else if (specialChar == 'v') {
-								grid[i][j].setDoorway(true);
-								grid[i][j].setDoorDirection(DoorDirection.DOWN);
-							} else if (specialChar == '<') {
-								grid[i][j].setDoorway(true);
-								grid[i][j].setDoorDirection(DoorDirection.LEFT);
+							switch (specialChar) {
+								case '*':
+									grid[i][j].setRoomCenter(true);
+									roomMap.get(cells[j].charAt(0)).setCenterCell(grid[i][j]);
+									break;
+								case '#':
+									grid[i][j].setLabel(true);
+									roomMap.get(cells[j].charAt(0)).setLabelCell(grid[i][j]);
+									break;
+								case '^':
+									grid[i][j].setDoorway(true);
+									grid[i][j].setDoorDirection(DoorDirection.UP);
+									break;
+								case '>':
+									grid[i][j].setDoorway(true);
+									grid[i][j].setDoorDirection(DoorDirection.RIGHT);
+									break;
+								case 'v':
+									grid[i][j].setDoorway(true);
+									grid[i][j].setDoorDirection(DoorDirection.DOWN);
+									break;
+								case '<':
+									grid[i][j].setDoorway(true);
+									grid[i][j].setDoorDirection(DoorDirection.LEFT);
+									break;
 							} 
 						}
 					}
@@ -193,7 +202,7 @@ public class Board {
     }
     
     public Room getRoom(BoardCell cell) {
-    	return new Room();
+    	return cell.getRoom();
     	//stub
     }
     
