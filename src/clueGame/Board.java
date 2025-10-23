@@ -78,32 +78,34 @@ public class Board {
 								grid[i][j].setIsSecretPassage(true);
 								grid[i][j].setSecretPassage(specialChar);
 							}
-							switch (specialChar) {
-								case '*':
-									grid[i][j].setRoomCenter(true);
-									roomMap.get(roomChar).setCenterCell(grid[i][j]);
-									break;
-								case '#':
-									grid[i][j].setLabel(true);
-									roomMap.get(roomChar).setLabelCell(grid[i][j]);
-									break;
-								case '^':
-									grid[i][j].setDoorway(true);
-									grid[i][j].setDoorDirection(DoorDirection.UP);
-									break;
-								case '>':
-									grid[i][j].setDoorway(true);
-									grid[i][j].setDoorDirection(DoorDirection.RIGHT);
-									break;
-								case 'v':
-									grid[i][j].setDoorway(true);
-									grid[i][j].setDoorDirection(DoorDirection.DOWN);
-									break;
-								case '<':
-									grid[i][j].setDoorway(true);
-									grid[i][j].setDoorDirection(DoorDirection.LEFT);
-									break;
-							} 
+							else {
+								switch (specialChar) {
+									case '*':
+										grid[i][j].setRoomCenter(true);
+										roomMap.get(roomChar).setCenterCell(grid[i][j]);
+										break;
+									case '#':
+										grid[i][j].setLabel(true);
+										roomMap.get(roomChar).setLabelCell(grid[i][j]);
+										break;
+									case '^':
+										grid[i][j].setDoorway(true);
+										grid[i][j].setDoorDirection(DoorDirection.UP);
+										break;
+									case '>':
+										grid[i][j].setDoorway(true);
+										grid[i][j].setDoorDirection(DoorDirection.RIGHT);
+										break;
+									case 'v':
+										grid[i][j].setDoorway(true);
+										grid[i][j].setDoorDirection(DoorDirection.DOWN);
+										break;
+									case '<':
+										grid[i][j].setDoorway(true);
+										grid[i][j].setDoorDirection(DoorDirection.LEFT);
+										break;
+								} 
+							}
 						}
 					}
 	    		}
