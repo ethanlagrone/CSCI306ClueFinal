@@ -11,10 +11,12 @@ public class BoardCell {
     private boolean occupied = false;
     private Set<BoardCell> adjCells;
     private boolean isDoorway = false;
-    private boolean isLabel;
-    private boolean isRoomCenter;
+    private boolean isLabel = false;
+    private boolean isRoomCenter = false;
+    private boolean isSecretPassage = false;
     private DoorDirection doorDirection;
     private Room room;
+    private char secretPassage;
 
 
 	public BoardCell(int row, int column) {
@@ -23,13 +25,6 @@ public class BoardCell {
         //not needing sort so may as well use hashset
         adjCells = new HashSet<BoardCell>();
     }
-    
-
-	public char getSecretPassage(){
-		return 'C';
-		//stub
-	}
-	
 	
     public void addAdjacency(BoardCell cell) {
         adjCells.add(cell);
@@ -82,7 +77,13 @@ public class BoardCell {
 		this.isRoomCenter = isRoomCenter;
 	}
 
-
+    public void setSecretPassage(char secretPassage) {
+        this.secretPassage = secretPassage;
+    }
+    
+    public char getSecretPassage() {
+		return secretPassage;
+	}
 
 	public boolean isDoorway() {
     	return isDoorway;
@@ -102,6 +103,14 @@ public class BoardCell {
 
     public boolean isOccupied() {
         return occupied;
+    }
+
+    public void setIsSecretPassage(boolean b) {
+        isSecretPassage = b;
+    }
+
+    public boolean isSecretPassage() {
+        return isSecretPassage;
     }
 
     public int getRow() {

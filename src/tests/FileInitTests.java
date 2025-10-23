@@ -111,7 +111,7 @@ public class FileInitTests {
 		assertTrue( room.getCenterCell() == cell );
 		
 		// this is a secret passage test
-		cell = board.getCell(8, 1);
+		cell = board.getCell(1, 8);
 		room = board.getRoom( cell ) ;
 		assertTrue( room != null );
 		assertEquals( room.getName(), "Mission Ballroom" ) ;

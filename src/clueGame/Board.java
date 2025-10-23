@@ -74,6 +74,10 @@ public class Board {
 						
 						if (cells[j].length() == 2) {
 							char specialChar = cells[j].charAt(1);
+							if (roomMap.containsKey(specialChar)) {
+								grid[i][j].setIsSecretPassage(true);
+								grid[i][j].setSecretPassage(specialChar);
+							}
 							switch (specialChar) {
 								case '*':
 									grid[i][j].setRoomCenter(true);
@@ -175,17 +179,35 @@ public class Board {
 
 		String cells[] = rows.get(0).split(",");
 		int expectedNumCols = cells.length;
+		char roomChar;
+		boolean found = false;
 		for (String row : rows) {
 			cells = row.split(",");
 			if (cells.length != expectedNumCols) {
 				throw new BadConfigFormatException();
 			}
 			for (String cell : cells) {
-				if (!roomMap.containsKey(cell.charAt(0))) {
+				roomChar = cell.charAt(0);
+				if (!roomMap.containsKey(roomChar)) {
 					throw new BadConfigFormatException();
 				}
-				else if (cell.length() == 2 && Arrays.asList(validExtensions).contains(cell.charAt(1))) {
-					throw new BadConfigFormatException();
+				else if (cell.length() == 2) {
+					char specialChar = cell.charAt(1);
+					for (char c : validExtensions) {
+						if (specialChar == c) {
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						throw new BadConfigFormatException();
+					}
+					else if (!roomMap.containsKey(specialChar)) {
+						throw new BadConfigFormatException();
+					}
+					else {
+						continue;
+					}
 				}
 				else if (cell.length() > 2 || cell.length() < 1) {
 					throw new BadConfigFormatException();
