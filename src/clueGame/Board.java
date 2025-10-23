@@ -117,7 +117,7 @@ public class Board {
 	    			if(j - 1 >= 0) {
 	    				cell.addAdjacency(grid[i][j-1]);
 	    			}
-	    			if(j+1 < numCols) {
+	    			if(j + 1 < numCols) {
 	    				cell.addAdjacency(grid[i][j+1]);
 	    			}
 	    		}
@@ -203,7 +203,6 @@ public class Board {
     
     public Room getRoom(BoardCell cell) {
     	return cell.getRoom();
-    	//stub
     }
     
     
