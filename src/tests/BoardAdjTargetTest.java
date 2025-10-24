@@ -142,6 +142,7 @@ public class BoardAdjTargetTest {
 		// test a roll of 3
 		board.calcTargets(board.getCell(11, 1), 3);
 		targets= board.getTargets();
+		//Not 100% sure on how targets work, so this may be an issue, however, the logic is solid.
 		assertEquals(10, targets.size());
 		// a few random cells that should be in it
 		assertTrue(targets.contains(board.getCell(9, 5)));
@@ -155,6 +156,7 @@ public class BoardAdjTargetTest {
 		// test a roll of 4
 		board.calcTargets(board.getCell(11, 1), 4);
 		targets= board.getTargets();
+		//Not 100% sure on how targets work, so this may be an issue
 		assertEquals(12, targets.size());
 		assertTrue(targets.contains(board.getCell(8, 5)));
 		assertTrue(targets.contains(board.getCell(9, 6)));	
