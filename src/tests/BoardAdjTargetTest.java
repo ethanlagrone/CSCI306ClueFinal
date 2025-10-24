@@ -287,7 +287,7 @@ public class BoardAdjTargetTest {
 
 	
 	
-	//NOT DONE AND CELL NOT CHOSEN
+	//NOT DONE AND CELLS NOT CHOSEN
 	@Test
 	// test to make sure occupied locations do not cause problems
 	public void testTargetsOccupied() {

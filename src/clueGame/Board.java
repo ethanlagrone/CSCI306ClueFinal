@@ -254,14 +254,18 @@ public class Board {
     		if(visited.contains(adjCell)) {
     			//do nothing
     		} else {
-    			visited.add(adjCell);
-    			if(numSteps == 1) {
-					targets.add(adjCell);
-    			} else {
-    				recursiveCalcTargets(adjCell, numSteps-1);
-    			}
-				visited.remove(adjCell);
-    		}
+    	        visited.add(adjCell);
+        		if(adjCell.isInRoom()) {
+        			targets.add(adjCell);
+       			} else if(numSteps == 1) {
+       				if(!adjCell.isOccupied()) {
+        	            targets.add(adjCell);
+        	        }
+        		} else {
+        			recursiveCalcTargets(adjCell, numSteps-1);
+        		}
+    			visited.remove(adjCell);
+    	    }
     	}
     }
 
