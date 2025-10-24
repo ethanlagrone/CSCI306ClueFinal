@@ -292,6 +292,7 @@ public class BoardAdjTargetTest {
 	//NOT DONE AND CELLS NOT CHOSEN
 	@Test
 	// test to make sure occupied locations do not cause problems
+	// marked as RED on spreadsheet
 	public void testTargetsOccupied() {
 		// test a roll of 4 blocked 2 down
 		board.getCell(15, 7).setOccupied(true);
