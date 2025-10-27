@@ -142,25 +142,39 @@ public class BoardAdjTargetTest {
 		// test a roll of 3
 		board.calcTargets(board.getCell(11, 1), 3);
 		targets= board.getTargets();
-		//Not 100% sure on how targets work, so this may be an issue, however, the logic is solid.
+		// number of cells that should be included
 		assertEquals(10, targets.size());
-		// a few random cells that should be in it
+		// all cells that should be included
 		assertTrue(targets.contains(board.getCell(9, 5)));
 		assertTrue(targets.contains(board.getCell(10, 6)));	
 		assertTrue(targets.contains(board.getCell(11, 7)));
 		assertTrue(targets.contains(board.getCell(12, 6)));	
-		assertTrue(targets.contains(board.getCell(13, 5)));	
+		assertTrue(targets.contains(board.getCell(13, 5)));
+		assertTrue(targets.contains(board.getCell(14, 0)));	
+		assertTrue(targets.contains(board.getCell(15, 1)));	
 		assertTrue(targets.contains(board.getCell(16, 2)));	
+		assertTrue(targets.contains(board.getCell(15, 3)));	
+		assertTrue(targets.contains(board.getCell(14, 4)));	
 
 		
 		// test a roll of 4
 		board.calcTargets(board.getCell(11, 1), 4);
 		targets= board.getTargets();
-		//Not 100% sure on how targets work, so this may be an issue
-		assertEquals(12, targets.size());
+		assertEquals(14, targets.size());
+		// all cells that should be included
 		assertTrue(targets.contains(board.getCell(8, 5)));
 		assertTrue(targets.contains(board.getCell(9, 6)));	
 		assertTrue(targets.contains(board.getCell(10, 7)));
+		assertTrue(targets.contains(board.getCell(11, 6)));
+		assertTrue(targets.contains(board.getCell(11, 8)));
+		assertTrue(targets.contains(board.getCell(12, 7)));
+		assertTrue(targets.contains(board.getCell(13, 6)));
+		assertTrue(targets.contains(board.getCell(14, 5)));
+		assertTrue(targets.contains(board.getCell(15, 0)));
+		assertTrue(targets.contains(board.getCell(15, 2)));
+		assertTrue(targets.contains(board.getCell(15, 4)));
+		assertTrue(targets.contains(board.getCell(16, 1)));
+		assertTrue(targets.contains(board.getCell(16, 3)));										
 		assertTrue(targets.contains(board.getCell(20, 1)));	
 	}
 	
