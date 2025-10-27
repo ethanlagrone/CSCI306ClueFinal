@@ -14,7 +14,7 @@ public class BoardCell {
     private boolean isLabel = false;
     private boolean isRoomCenter = false;
     private boolean isSecretPassage = false;
-    private DoorDirection doorDirection;
+    private DoorDirection doorDirection = DoorDirection.NONE;
     private Room room;
     private char secretPassage;
 
