@@ -66,42 +66,45 @@ public class Board {
 				String cells[] = rows.get(i).split(",");
 				for(int j = 0; j < numCols; j++) {
 					grid[i][j] = new BoardCell(i, j);
+					BoardCell currentCell = grid[i][j];
 					roomChar = cells[j].charAt(0);
 					if (roomMap.containsKey(roomChar)) {
-						grid[i][j].setInRoom(true);
-						grid[i][j].setRoom(roomMap.get(roomChar));
-						
+						currentCell.setInRoom(true);
+						currentCell.setRoom(roomMap.get(roomChar));
+						if(currentCell.getRoom().getName().equals("Walkway")) {
+							currentCell.setInRoom(false);
+						}
 						if (cells[j].length() == 2) {
 							specialChar = cells[j].charAt(1);
 							if (roomMap.containsKey(specialChar)) {
-								grid[i][j].setIsSecretPassage(true);
-								grid[i][j].setSecretPassage(specialChar);
+								currentCell.setIsSecretPassage(true);
+								currentCell.setSecretPassage(specialChar);
 							}
 							else {
 								switch (specialChar) {
 									case '*':
-										grid[i][j].setRoomCenter(true);
+										currentCell.setRoomCenter(true);
 										roomMap.get(roomChar).setCenterCell(grid[i][j]);
 										break;
 									case '#':
-										grid[i][j].setLabel(true);
+										currentCell.setLabel(true);
 										roomMap.get(roomChar).setLabelCell(grid[i][j]);
 										break;
 									case '^':
-										grid[i][j].setDoorway(true);
-										grid[i][j].setDoorDirection(DoorDirection.UP);
+										currentCell.setDoorway(true);
+										currentCell.setDoorDirection(DoorDirection.UP);
 										break;
 									case '>':
-										grid[i][j].setDoorway(true);
-										grid[i][j].setDoorDirection(DoorDirection.RIGHT);
+										currentCell.setDoorway(true);
+										currentCell.setDoorDirection(DoorDirection.RIGHT);
 										break;
 									case 'v':
-										grid[i][j].setDoorway(true);
-										grid[i][j].setDoorDirection(DoorDirection.DOWN);
+										currentCell.setDoorway(true);
+										currentCell.setDoorDirection(DoorDirection.DOWN);
 										break;
 									case '<':
-										grid[i][j].setDoorway(true);
-										grid[i][j].setDoorDirection(DoorDirection.LEFT);
+										currentCell.setDoorway(true);
+										currentCell.setDoorDirection(DoorDirection.LEFT);
 										break;
 								} 
 							}
@@ -112,7 +115,54 @@ public class Board {
 		}
 		
 		//find every adjacency of each cell, hint said to do it here
-		for(int i = 0; i < numRows; i++) {
+    	//made helper to split up
+		calculateAdjacencies();
+	}
+
+    private void calculateAdjacencies() {
+    	for(int i = 0; i < numRows; i++) {
+    		for(int j = 0; j < numCols; j++) {
+    			BoardCell cell = grid[i][j];
+    			//not walkway cells
+    			if(!cell.getRoom().getName().equals("Walkway")) {
+    				//to handle here: room center, secretPassage
+    				if(cell.isSecretPassage()) {
+    					//handle
+    				}
+    			//doorway cells
+    			} else if(cell.getRoom().getName().equals("Walkway") && cell.isDoorway()) {
+    				//to  handle here: doorways
+    				switch(cell.getDoorDirection()) {
+    					case UP:
+    						//nada
+    					case DOWN:
+    						//nada
+    					case LEFT:
+    						//nada
+    					case RIGHT:
+    						//nada
+    				}
+    			//walkway cells
+    			} else {
+    				//handle non-door walkways
+    				if(i-1 >= 0) {
+    					cell.addAdjacency(grid[i-1][j]);
+    				}
+    				if(i+1 < numRows) {
+    					cell.addAdjacency(grid[i+1][j]);
+    				}
+    				if(j-1 >= 0) {
+    					cell.addAdjacency(grid[i][j-1]);
+    				}
+    				if(j+1 < numCols) {
+    					cell.addAdjacency(grid[i][j+1]);
+    				}
+    			}
+    		}
+    	}
+    	
+    	/*
+    	for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numCols; j++) {
 				BoardCell cell = grid[i][j];
 				
@@ -129,10 +179,10 @@ public class Board {
 					cell.addAdjacency(grid[i][j+1]);
 				}
 			}
-		}
-	}
-
-    
+		} original adj calcs
+		*/
+    	
+    }
     
     public void setConfigFiles(String csv, String setup) {
     	layoutCsv = csv;
