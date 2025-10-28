@@ -52,7 +52,6 @@ public class BoardAdjTargetTest {
 		assertTrue(testList.contains(board.getCell(19, 6)));
 		assertTrue(testList.contains(board.getCell(16, 2)));
 	}
-
 	
 	//DONE
 	// Ensure door locations include their rooms and also additional walkways
@@ -83,8 +82,6 @@ public class BoardAdjTargetTest {
 		assertTrue(testList.contains(board.getCell(20, 6)));
 		assertTrue(testList.contains(board.getCell(19, 7)));
 	}
-	
-	
 
 	//DONE
 	// Test a variety of walkway scenarios
@@ -124,8 +121,6 @@ public class BoardAdjTargetTest {
 		assertTrue(testList.contains(board.getCell(12, 15)));
 	
 	}
-	
-	
 	
 	// DONE
 	// Tests out of room center, 1, 3 and 4
@@ -178,7 +173,6 @@ public class BoardAdjTargetTest {
 		assertTrue(targets.contains(board.getCell(16, 3)));										
 		assertTrue(targets.contains(board.getCell(20, 1)));	
 	}
-	
 	
 	// DONE
 	@Test
@@ -249,7 +243,6 @@ public class BoardAdjTargetTest {
 		assertTrue(targets.contains(board.getCell(20, 1)));
 	}
 
-	
 	// DONE
 	// Tests out of room center, 1, 3 and 4
 	// These are LIGHT BLUE on the planning spreadsheet
@@ -306,9 +299,7 @@ public class BoardAdjTargetTest {
 		assertTrue(targets.contains(board.getCell(15, 5)));	
 	}
 
-	
-	
-	// CELL CHOSEN ON SPREADSHEET BUT NOT DONE
+	// DONE
 	@Test
 	public void testTargetsInWalkway1() {
 		// test a roll of 1
@@ -442,10 +433,8 @@ public class BoardAdjTargetTest {
 		assertTrue(targets.contains(board.getCell(20, 17)));
 		assertTrue(targets.contains(board.getCell(21, 16)));
 	}
-
 	
-	
-	//NOT DONE AND CELLS NOT CHOSEN
+	// DONE
 	@Test
 	// test to make sure occupied locations do not cause problems
 	// marked as RED on spreadsheet
@@ -500,7 +489,5 @@ public class BoardAdjTargetTest {
 		assertEquals(0, targets.size());
 		// should be redundant, but ensure targets does not included the blocked doorway
 		assertFalse(targets.contains(board.getCell(14, 19)));
-		
-
 	}
 }
