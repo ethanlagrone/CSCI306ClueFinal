@@ -48,6 +48,25 @@ public class Board {
     				grid[i][j] = new BoardCell(i, j);
     			}
     		}
+    		//putting in old adjacent calcs to keep test consistent
+    		for(int i = 0; i < numRows; i++) {
+    			for(int j = 0; j < numCols; j++) {
+    				BoardCell cell = grid[i][j];
+    				
+    				if(i-1 >= 0) {
+    					cell.addAdjacency(grid[i-1][j]);
+    				}
+    				if(i+1 < numRows) {
+    					cell.addAdjacency(grid[i+1][j]);
+    				}
+    				if(j-1 >= 0) {
+    					cell.addAdjacency(grid[i][j-1]);
+    				}
+    				if(j+1 < numCols) {
+    					cell.addAdjacency(grid[i][j+1]);
+    				}
+    			}
+    		} 
     	} else {
 	    	try {
 				loadSetupConfig();
@@ -127,6 +146,7 @@ public class Board {
     	for(int i = 0; i < numRows; i++) {
     		for(int j = 0; j < numCols; j++) {
     			BoardCell cell = grid[i][j];
+    			//I was still having nullptr issues
     			if (cell == null || cell.getRoom() == null) continue;
     			//just for the sake of avoiding problems lol
     			if(cell != null) {
@@ -138,8 +158,8 @@ public class Board {
 	    					Room targetRoom = roomMap.get(cell.getSecretPassage());
 	                        if (targetRoom != null && targetRoom.getCenterCell() != null) {
 	                        	BoardCell targetCenter = targetRoom.getCenterCell();
-	                            cell.addAdjacency(targetCenter);
-	                            targetCenter.addAdjacency(cell);
+	                            cell.getRoom().getCenterCell().addAdjacency(targetCenter);
+	                            targetCenter.addAdjacency(cell.getRoom().getCenterCell());
 	                        }
 	    				}
 	    			//doorway cells
@@ -185,6 +205,7 @@ public class Board {
 	    					case NONE:
 	    						throw new BadConfigFormatException("Should not be handled here, only doorway cells should be.");
 	    				}	
+	    				
 	    				if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
 	                        cell.addAdjacency(grid[i-1][j]);
 	                    }
@@ -197,7 +218,7 @@ public class Board {
 	                    if(j+1 < numCols && grid[i][j+1] != null && !grid[i][j+1].isInRoom()) {
 	                        cell.addAdjacency(grid[i][j+1]);
 	                    }
-	    			//walkway cells
+	    			//walkway cells not doorway
 	    			} else {
 	    				//handle non-door walkways
 	    				//UP
@@ -371,16 +392,12 @@ public class Board {
     public void recursiveCalcTargets(BoardCell startCell, int numSteps) {
     	//source: slides from clue path walkthrough
     	for(BoardCell adjCell : startCell.getAdjList()) {
-    		if(visited.contains(adjCell)) {
+    		if(visited.contains(adjCell) || adjCell.isOccupied()) {
     			//do nothing
     		} else {
     	        visited.add(adjCell);
-        		if(adjCell.isInRoom()) {
+        		if(adjCell.isInRoom() || numSteps == 1) {
         			targets.add(adjCell);
-       			} else if(numSteps == 1) {
-       				if(!adjCell.isOccupied()) {
-        	            targets.add(adjCell);
-        	        }
         		} else {
         			recursiveCalcTargets(adjCell, numSteps-1);
         		}
