@@ -116,49 +116,125 @@ public class Board {
 		
 		//find every adjacency of each cell, hint said to do it here
     	//made helper to split up
-		calculateAdjacencies();
+		try {
+			calculateAdjacencies();
+		} catch (BadConfigFormatException e) {
+			e.printStackTrace();
+		}
 	}
 
-    private void calculateAdjacencies() {
+    private void calculateAdjacencies() throws BadConfigFormatException {
     	for(int i = 0; i < numRows; i++) {
     		for(int j = 0; j < numCols; j++) {
     			BoardCell cell = grid[i][j];
-    			//not walkway cells
-    			if(!cell.getRoom().getName().equals("Walkway")) {
-    				//to handle here: room center, secretPassage
-    				if(cell.isSecretPassage()) {
-    					//handle
-    				}
-    			//doorway cells
-    			} else if(cell.getRoom().getName().equals("Walkway") && cell.isDoorway()) {
-    				//to  handle here: doorways
-    				switch(cell.getDoorDirection()) {
-    					case UP:
-    						//nada
-    					case DOWN:
-    						//nada
-    					case LEFT:
-    						//nada
-    					case RIGHT:
-    						//nada
-    				}
-    			//walkway cells
-    			} else {
-    				//handle non-door walkways
-    				if(i-1 >= 0) {
-    					cell.addAdjacency(grid[i-1][j]);
-    				}
-    				if(i+1 < numRows) {
-    					cell.addAdjacency(grid[i+1][j]);
-    				}
-    				if(j-1 >= 0) {
-    					cell.addAdjacency(grid[i][j-1]);
-    				}
-    				if(j+1 < numCols) {
-    					cell.addAdjacency(grid[i][j+1]);
-    				}
-    			}
+    			if (cell == null || cell.getRoom() == null) continue;
+    			//just for the sake of avoiding problems lol
+    			if(cell != null) {
+	    			//not walkway cells
+	    			if(!cell.getRoom().getName().equals("Walkway")) {
+	    				//to handle here: room center, secretPassage
+	    				if(cell.isSecretPassage()) {
+	    					//cell needs to add adjacency of the secretPassage so we 
+	    					Room targetRoom = roomMap.get(cell.getSecretPassage());
+	                        if (targetRoom != null && targetRoom.getCenterCell() != null) {
+	                        	BoardCell targetCenter = targetRoom.getCenterCell();
+	                            cell.addAdjacency(targetCenter);
+	                            targetCenter.addAdjacency(cell);
+	                        }
+	    				}
+	    			//doorway cells
+	    			} else if(cell.getRoom().getName().equals("Walkway") && cell.isDoorway()) {
+	    				//to  handle here: doorways
+	    				switch(cell.getDoorDirection()) {
+	    					case UP:
+	    						if (i-1 >= 0) {
+	                                Room roomUp = grid[i-1][j].getRoom();
+	                                if (roomUp.getCenterCell() != null) {
+	                                    cell.addAdjacency(roomUp.getCenterCell());
+	                                    roomUp.getCenterCell().addAdjacency(cell);
+	                                }
+	                            }
+	    						break;
+	    					case DOWN:
+	    						if (i+1 < numRows) {
+	                                Room roomDown = grid[i+1][j].getRoom();
+	                                if (roomDown.getCenterCell() != null) {
+	                                    cell.addAdjacency(roomDown.getCenterCell());
+	                                    roomDown.getCenterCell().addAdjacency(cell);
+	                                }
+	                            }
+	    						break;
+	    					case RIGHT:
+	    						if(j+1 < numCols) {
+	                                Room roomRight = grid[i][j+1].getRoom();
+	                                if (roomRight.getCenterCell() != null) {
+	                                    cell.addAdjacency(roomRight.getCenterCell());
+	                                    roomRight.getCenterCell().addAdjacency(cell);
+	                                }
+	                            }
+	    						break;
+	    					case LEFT:
+	    						if(j-1 >= 0) {
+	                                Room roomLeft = grid[i][j-1].getRoom();
+	                                if (roomLeft.getCenterCell() != null) {
+	                                    cell.addAdjacency(roomLeft.getCenterCell());
+	                                    roomLeft.getCenterCell().addAdjacency(cell);
+	                                }
+	                            }
+	    						break;
+	    					case NONE:
+	    						throw new BadConfigFormatException("Should not be handled here, only doorway cells should be.");
+	    				}	
+	    				if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
+	                        cell.addAdjacency(grid[i-1][j]);
+	                    }
+	                    if(i+1 < numRows && grid[i+1][j] != null && !grid[i+1][j].isInRoom()) {
+	                        cell.addAdjacency(grid[i+1][j]);
+	                    }
+	                    if(j-1 >= 0 && grid[i][j-1] != null && !grid[i][j-1].isInRoom()) {
+	                        cell.addAdjacency(grid[i][j-1]);
+	                    }
+	                    if(j+1 < numCols && grid[i][j+1] != null && !grid[i][j+1].isInRoom()) {
+	                        cell.addAdjacency(grid[i][j+1]);
+	                    }
+	    			//walkway cells
+	    			} else {
+	    				//handle non-door walkways
+	    				//UP
+	    				if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
+	                        cell.addAdjacency(grid[i-1][j]);
+	                    }
+	                    //DOWN
+	                    if(i+1 < numRows && grid[i+1][j] != null && !grid[i+1][j].isInRoom()) {
+	                        cell.addAdjacency(grid[i+1][j]);
+	                    }
+	                    //LEFT
+	                    if(j-1 >= 0 && grid[i][j-1] != null && !grid[i][j-1].isInRoom()) {
+	                        cell.addAdjacency(grid[i][j-1]);
+	                    }
+	                    //RIGHT
+	                    if(j+1 < numCols && grid[i][j+1] != null && !grid[i][j+1].isInRoom()) {
+	                        cell.addAdjacency(grid[i][j+1]);
+	                    }
+	    			}
+	    		}
     		}
+    	}
+    	
+    	for (Room room : roomMap.values()) {
+    	    BoardCell center = room.getCenterCell();
+    	    if (center == null) continue;
+
+    	    for(int i = 0; i < numRows; i++) {
+    	        for (int j = 0; j < numCols; j++) {
+    	            BoardCell cell = grid[i][j];
+    	            if (cell.isDoorway() && cell.getRoom() == room) {
+    	                // ensure both ways
+    	                center.addAdjacency(cell);
+    	                cell.addAdjacency(center);
+    	            }
+    	        }
+    	    }
     	}
     	
     	/*
@@ -183,7 +259,7 @@ public class Board {
 		*/
     	
     }
-    
+ 
     public void setConfigFiles(String csv, String setup) {
     	layoutCsv = csv;
     	setupTxt = setup; 
@@ -238,7 +314,6 @@ public class Board {
 		int expectedNumCols = firstRow.length;
 		char roomChar;
 		char specialChar;
-		boolean isExtension = false;
 		for (String row : rows) {
 			cells = row.split(regex);
 			if (cells.length != expectedNumCols) {
@@ -250,22 +325,17 @@ public class Board {
 					throw new BadConfigFormatException();
 				}
 				else if (cell.length() == 2) {
-					specialChar = cell.charAt(1);
-					for (char c : validExtensions) {
-						if (specialChar == c) {
-							isExtension = true;
-							break;
-						}
-					}
-					if (!isExtension) {
-						throw new BadConfigFormatException();
-					}
-					else if (!roomMap.containsKey(specialChar)) {
-						throw new BadConfigFormatException();
-					}
-					else {
-						continue;
-					}
+				    specialChar = cell.charAt(1);
+				    boolean isExtension = false;
+				    for (char c : validExtensions) {
+				        if (specialChar == c) {
+				            isExtension = true;
+				            break;
+				        }
+				    }
+				    if (!isExtension && !roomMap.containsKey(specialChar)) {
+				        throw new BadConfigFormatException();
+				    }
 				}
 				else if (cell.length() > 2 || cell.length() < 1) {
 					throw new BadConfigFormatException();
