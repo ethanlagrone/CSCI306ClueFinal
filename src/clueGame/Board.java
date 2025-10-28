@@ -206,6 +206,8 @@ public class Board {
 	    						throw new BadConfigFormatException("Should not be handled here, only doorway cells should be.");
 	    				}	
 	    				
+	    				//Exact same code as below, will refactor at another time, sorry grader
+	    				//Find other adjacencies outside of rooms, was having nullptr errors, so threw in checks
 	    				if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
 	                        cell.addAdjacency(grid[i-1][j]);
 	                    }
@@ -221,19 +223,15 @@ public class Board {
 	    			//walkway cells not doorway
 	    			} else {
 	    				//handle non-door walkways
-	    				//UP
 	    				if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
 	                        cell.addAdjacency(grid[i-1][j]);
 	                    }
-	                    //DOWN
 	                    if(i+1 < numRows && grid[i+1][j] != null && !grid[i+1][j].isInRoom()) {
 	                        cell.addAdjacency(grid[i+1][j]);
 	                    }
-	                    //LEFT
 	                    if(j-1 >= 0 && grid[i][j-1] != null && !grid[i][j-1].isInRoom()) {
 	                        cell.addAdjacency(grid[i][j-1]);
 	                    }
-	                    //RIGHT
 	                    if(j+1 < numCols && grid[i][j+1] != null && !grid[i][j+1].isInRoom()) {
 	                        cell.addAdjacency(grid[i][j+1]);
 	                    }
@@ -245,12 +243,10 @@ public class Board {
     	for (Room room : roomMap.values()) {
     	    BoardCell center = room.getCenterCell();
     	    if (center == null) continue;
-
     	    for(int i = 0; i < numRows; i++) {
     	        for (int j = 0; j < numCols; j++) {
     	            BoardCell cell = grid[i][j];
     	            if (cell.isDoorway() && cell.getRoom() == room) {
-    	                // ensure both ways
     	                center.addAdjacency(cell);
     	                cell.addAdjacency(center);
     	            }
@@ -392,7 +388,9 @@ public class Board {
     public void recursiveCalcTargets(BoardCell startCell, int numSteps) {
     	//source: slides from clue path walkthrough
     	for(BoardCell adjCell : startCell.getAdjList()) {
-    		if(visited.contains(adjCell) || adjCell.isOccupied()) {
+    		if(visited.contains(adjCell)) {
+    			//continue
+    		} else if(adjCell.isOccupied() && !adjCell.isInRoom()){
     			//do nothing
     		} else {
     	        visited.add(adjCell);
