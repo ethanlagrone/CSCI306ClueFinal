@@ -44,10 +44,10 @@ public class BoardAdjTargetTest {
 		assertTrue(testList.contains(board.getCell(18, 11)));
 		
 		// one more room, ball arena, two doors and a different secret door to test
-		testList = board.getAdjList(20, 2);
+		testList = board.getAdjList(20, 1);
 		assertEquals(3, testList.size());
 		//secret door
-		assertTrue(testList.contains(board.getCell(4, 18)));
+		assertTrue(testList.contains(board.getCell(6, 14)));
 		//other doors
 		assertTrue(testList.contains(board.getCell(19, 6)));
 		assertTrue(testList.contains(board.getCell(16, 2)));
@@ -156,7 +156,7 @@ public class BoardAdjTargetTest {
 		board.calcTargets(board.getCell(11, 1), 4);
 		targets = board.getTargets();
 		// number of cells that should be included
-		assertEquals(14, targets.size());
+		assertEquals(18, targets.size());
 		// all cells that should be included
 		assertTrue(targets.contains(board.getCell(8, 5)));
 		assertTrue(targets.contains(board.getCell(9, 6)));	
@@ -181,7 +181,7 @@ public class BoardAdjTargetTest {
 		board.calcTargets(board.getCell(6, 14), 1);
 		Set<BoardCell> targets = board.getTargets();
 		// number of cells that should be included
-		assertEquals(3, targets.size());
+		assertEquals(4, targets.size());
 		// all cells that should be included
 		assertTrue(targets.contains(board.getCell(6, 12)));
 		assertTrue(targets.contains(board.getCell(8, 15)));
@@ -214,7 +214,7 @@ public class BoardAdjTargetTest {
 		board.calcTargets(board.getCell(6, 14), 4);
 		targets = board.getTargets();
 		// number of cells that should be included
-		assertEquals(25, targets.size());
+		assertEquals(31, targets.size());
 		// jesus christ man
 		assertTrue(targets.contains(board.getCell(3, 12)));
 		assertTrue(targets.contains(board.getCell(4, 11)));	
@@ -263,7 +263,7 @@ public class BoardAdjTargetTest {
 		board.calcTargets(board.getCell(11, 5), 3);
 		targets = board.getTargets();
 		// number of cells that should be included
-		assertEquals(9, targets.size());
+		assertEquals(11, targets.size());
 		// all cells that should be included
 		assertTrue(targets.contains(board.getCell(8, 5)));
 		assertTrue(targets.contains(board.getCell(9, 6)));

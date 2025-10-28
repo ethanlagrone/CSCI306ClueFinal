@@ -146,15 +146,13 @@ public class Board {
     	for(int i = 0; i < numRows; i++) {
     		for(int j = 0; j < numCols; j++) {
     			BoardCell cell = grid[i][j];
-    			//I was still having nullptr issues
-    			if (cell == null || cell.getRoom() == null) continue;
-    			//just for the sake of avoiding problems lol
-    			if(cell != null) {
-	    			//not walkway cells
+    			//null checks
+    			if(cell != null && cell.getRoom() != null) {
+	    			//ROOM LOGIC
 	    			if(!cell.getRoom().getName().equals("Walkway")) {
-	    				//to handle here: room center, secretPassage
+	    				//ONLY HANDLING SECRET PASSAGE
 	    				if(cell.isSecretPassage()) {
-	    					//cell needs to add adjacency of the secretPassage so we 
+	    					//CONNECTS ROOM CENTERS
 	    					Room targetRoom = roomMap.get(cell.getSecretPassage());
 	                        if (targetRoom != null && targetRoom.getCenterCell() != null) {
 	                        	BoardCell targetCenter = targetRoom.getCenterCell();
@@ -162,13 +160,13 @@ public class Board {
 	                            targetCenter.addAdjacency(cell.getRoom().getCenterCell());
 	                        }
 	    				}
-	    			//doorway cells
+	    			//DOORWAY CELL LOGIC
 	    			} else if(cell.getRoom().getName().equals("Walkway") && cell.isDoorway()) {
-	    				//to  handle here: doorways
 	    				switch(cell.getDoorDirection()) {
 	    					case UP:
 	    						if (i-1 >= 0) {
 	                                Room roomUp = grid[i-1][j].getRoom();
+	                                //was having nullptr bugs
 	                                if (roomUp.getCenterCell() != null) {
 	                                    cell.addAdjacency(roomUp.getCenterCell());
 	                                    roomUp.getCenterCell().addAdjacency(cell);
@@ -206,7 +204,7 @@ public class Board {
 	    						throw new BadConfigFormatException("Should not be handled here, only doorway cells should be.");
 	    				}	
 	    				
-	    				//Exact same code as below, will refactor at another time, sorry grader
+	    				//Exact same code as below, will refactor at another time, I am sorry grader
 	    				//Find other adjacencies outside of rooms, was having nullptr errors, so threw in checks
 	    				if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
 	                        cell.addAdjacency(grid[i-1][j]);
@@ -220,9 +218,9 @@ public class Board {
 	                    if(j+1 < numCols && grid[i][j+1] != null && !grid[i][j+1].isInRoom()) {
 	                        cell.addAdjacency(grid[i][j+1]);
 	                    }
-	    			//walkway cells not doorway
+	                    
+	    			//WALKWAY CELLS THAT ARENT DOORWAYS
 	    			} else {
-	    				//handle non-door walkways
 	    				if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
 	                        cell.addAdjacency(grid[i-1][j]);
 	                    }
@@ -239,20 +237,7 @@ public class Board {
 	    		}
     		}
     	}
-    	
-    	for (Room room : roomMap.values()) {
-    	    BoardCell center = room.getCenterCell();
-    	    if (center == null) continue;
-    	    for(int i = 0; i < numRows; i++) {
-    	        for (int j = 0; j < numCols; j++) {
-    	            BoardCell cell = grid[i][j];
-    	            if (cell.isDoorway() && cell.getRoom() == room) {
-    	                center.addAdjacency(cell);
-    	                cell.addAdjacency(center);
-    	            }
-    	        }
-    	    }
-    	}
+   
     	
     	/*
     	for(int i = 0; i < numRows; i++) {
@@ -391,7 +376,7 @@ public class Board {
     		if(visited.contains(adjCell)) {
     			//continue
     		} else if(adjCell.isOccupied() && !adjCell.isInRoom()){
-    			//do nothing
+    			//do nothing fix for ADJtest when room is occupied.
     		} else {
     	        visited.add(adjCell);
         		if(adjCell.isInRoom() || numSteps == 1) {
