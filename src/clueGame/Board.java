@@ -35,7 +35,7 @@ public class Board {
     	return theInstance;
     }
     
-    
+
     public void initialize() {
     	//makes dummy 4x4 board for BoardTestsExp
     	if(layoutCsv == null || setupTxt == null) {
@@ -66,6 +66,7 @@ public class Board {
     			}
     		} 
     	} else {
+    		//load setup files
 	    	try {
 				loadSetupConfig();
 				loadLayoutConfig();
@@ -85,19 +86,23 @@ public class Board {
 					grid[i][j] = new BoardCell(i, j);
 					BoardCell currentCell = grid[i][j];
 					roomChar = cells[j].charAt(0);
+					//finds if cell is a room and sets it accordingly
 					if (roomMap.containsKey(roomChar)) {
 						currentCell.setInRoom(true);
 						currentCell.setRoom(roomMap.get(roomChar));
 						if(isWalkway(currentCell)) {
 							currentCell.setInRoom(false);
 						}
+						//check that there is two characters in a cell to know that the room is special
 						if (cells[j].length() == 2) {
 							specialChar = cells[j].charAt(1);
+							//checks initial char to see if it is another letter making it a secret passage
 							if (roomMap.containsKey(specialChar)) {
 								currentCell.setIsSecretPassage(true);
 								currentCell.setSecretPassage(specialChar);
 							}
 							else {
+								//CHECK SPECIAL CHARACTER AND SET ACCORDINGLY
 								switch (specialChar) {
 									case '*':
 										currentCell.setRoomCenter(true);
@@ -161,7 +166,7 @@ public class Board {
 	    			//DOORWAY CELL LOGIC
 	    			} else if(isWalkway(cell) && cell.isDoorway()) {
 	    				switch(cell.getDoorDirection()) {
-	    				//CHECK DOOR DIRECTION AND SET THE ADJACENT CEL
+	    				//CHECK DOOR DIRECTION AND SET THE ADJACENT CELL TO ROOM CENTER
 	    					case UP:
 	    						if (i-1 >= 0) {
 	                                Room roomUp = grid[i-1][j].getRoom();
