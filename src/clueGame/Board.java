@@ -88,7 +88,7 @@ public class Board {
 					if (roomMap.containsKey(roomChar)) {
 						currentCell.setInRoom(true);
 						currentCell.setRoom(roomMap.get(roomChar));
-						if(currentCell.getRoom().getName().equals("Walkway")) {
+						if(isWalkway(currentCell)) {
 							currentCell.setInRoom(false);
 						}
 						if (cells[j].length() == 2) {
@@ -147,7 +147,7 @@ public class Board {
     			//null checks
     			if(cell != null && cell.getRoom() != null) {
 	    			//ROOM LOGIC
-	    			if(!cell.getRoom().getName().equals("Walkway")) {
+	    			if(!isWalkway(cell)) {
 	    				//ONLY HANDLING SECRET PASSAGE
 	    				if(cell.isSecretPassage()) {
 	    					//CONNECTS ROOM CENTERS
@@ -159,8 +159,9 @@ public class Board {
 	                        }
 	    				}
 	    			//DOORWAY CELL LOGIC
-	    			} else if(cell.getRoom().getName().equals("Walkway") && cell.isDoorway()) {
+	    			} else if(isWalkway(cell) && cell.isDoorway()) {
 	    				switch(cell.getDoorDirection()) {
+	    				//CHECK DOOR DIRECTION AND SET THE ADJACENT CEL
 	    					case UP:
 	    						if (i-1 >= 0) {
 	                                Room roomUp = grid[i-1][j].getRoom();
@@ -200,9 +201,9 @@ public class Board {
 	    					case NONE:
 	    						throw new BadConfigFormatException("Should not be handled here, only doorway cells should be.");
 	    				}	
-
 	    				//after door direction found, find the other adjacency of the cell
 	    				findWalkwayAdjacency(cell, i, j);
+	    				
 	    			//WALKWAY CELLS THAT ARENT DOORWAYS
 	    			} else {
 	    				findWalkwayAdjacency(cell, i, j);
@@ -210,29 +211,6 @@ public class Board {
 	    		}
     		}
     	}
-   
-    	
-    	/*
-    	for(int i = 0; i < numRows; i++) {
-			for(int j = 0; j < numCols; j++) {
-				BoardCell cell = grid[i][j];
-				
-				if(i-1 >= 0) {
-					cell.addAdjacency(grid[i-1][j]);
-				}
-				if(i+1 < numRows) {
-					cell.addAdjacency(grid[i+1][j]);
-				}
-				if(j-1 >= 0) {
-					cell.addAdjacency(grid[i][j-1]);
-				}
-				if(j+1 < numCols) {
-					cell.addAdjacency(grid[i][j+1]);
-				}
-			}
-		} original adj calcs
-		*/
-    	
     }
  
     public void setConfigFiles(String csv, String setup) {
@@ -380,6 +358,14 @@ public class Board {
 
  	public int getNumRows() {
  		return numRows;
+ 	}
+ 	
+ 	public boolean isWalkway(BoardCell cell) {
+ 		if(cell.getRoom().getName().equals("Walkway")) {
+ 			return true;
+ 		} else {
+ 			return false;
+ 		}
  	}
  	
  	public boolean isAdjacentWalkway(BoardCell cell) {

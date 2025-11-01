@@ -147,3 +147,31 @@ public void findWalkwayAdjacency(BoardCell cell, int i, int j) {
             cell.addAdjacency(grid[i][j+1]);
         }
  	}
+ 	
+ 	
+ 	
+ COMMIT 4 BEFORE: 
+ 						if(currentCell.getRoom().getName().equals("Walkway")) {
+							currentCell.setInRoom(false);
+						}
+						
+						//ROOM LOGIC
+	    				if(!cell.getRoom().getName().equals("Walkway")) {
+	    				
+	    				
+	    				
+COMMIT 4 AFTER:
+	if(!isWalkway(cell))
+	
+	
+HELPER
+public boolean isWalkway(BoardCell cell) {
+ 		if(cell.getRoom().getName().equals("Walkway")) {
+ 			return true;
+ 		} else {
+ 			return false;
+ 		}
+ 	}
+ 	
+ 	
+COMMIT 5 BEFORE:
