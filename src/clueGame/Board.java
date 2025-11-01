@@ -19,7 +19,6 @@ public class Board {
     private int numRows;
     private int numCols;
 	private static final char validExtensions[] = {'*', '#', '^', '>', 'v', '<'};
-	//private static final char doors[] = {'^', '>', 'v', '<'};
     private static Board theInstance = new Board();
     private String layoutCsv;
     private String setupTxt;
@@ -51,8 +50,7 @@ public class Board {
     		//putting in old adjacent calcs to keep test consistent
     		for(int i = 0; i < numRows; i++) {
     			for(int j = 0; j < numCols; j++) {
-    				BoardCell cell = grid[i][j];
-    				
+    				BoardCell cell = grid[i][j];		
     				if(i-1 >= 0) {
     					cell.addAdjacency(grid[i-1][j]);
     				}
@@ -166,7 +164,6 @@ public class Board {
 	    					case UP:
 	    						if (i-1 >= 0) {
 	                                Room roomUp = grid[i-1][j].getRoom();
-	                                //was having nullptr bugs
 	                                if (roomUp.getCenterCell() != null) {
 	                                    cell.addAdjacency(roomUp.getCenterCell());
 	                                    roomUp.getCenterCell().addAdjacency(cell);
@@ -203,36 +200,12 @@ public class Board {
 	    					case NONE:
 	    						throw new BadConfigFormatException("Should not be handled here, only doorway cells should be.");
 	    				}	
-	    				
-	    				//Exact same code as below, will refactor at another time, I am sorry grader
-	    				//Find other adjacencies outside of rooms, was having nullptr errors, so threw in checks
-	    				if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
-	                        cell.addAdjacency(grid[i-1][j]);
-	                    }
-	                    if(i+1 < numRows && grid[i+1][j] != null && !grid[i+1][j].isInRoom()) {
-	                        cell.addAdjacency(grid[i+1][j]);
-	                    }
-	                    if(j-1 >= 0 && grid[i][j-1] != null && !grid[i][j-1].isInRoom()) {
-	                        cell.addAdjacency(grid[i][j-1]);
-	                    }
-	                    if(j+1 < numCols && grid[i][j+1] != null && !grid[i][j+1].isInRoom()) {
-	                        cell.addAdjacency(grid[i][j+1]);
-	                    }
-	                    
+
+	    				//after door direction found, find the other adjacency of the cell
+	    				findWalkwayAdjacency(cell, i, j);
 	    			//WALKWAY CELLS THAT ARENT DOORWAYS
 	    			} else {
-	    				if(i-1 >= 0 && isAdjacentWalkway(grid[i-1][j])) {
-	                        cell.addAdjacency(grid[i-1][j]);
-	                    }
-	                    if(i+1 < numRows && isAdjacentWalkway(grid[i+1][j])) {
-	                        cell.addAdjacency(grid[i+1][j]);
-	                    }
-	                    if(j-1 >= 0 && isAdjacentWalkway(grid[i][j-1])) {
-	                        cell.addAdjacency(grid[i][j-1]);
-	                    }
-	                    if(j+1 < numCols && isAdjacentWalkway(grid[i][j+1])) {
-	                        cell.addAdjacency(grid[i][j+1]);
-	                    }
+	    				findWalkwayAdjacency(cell, i, j);
 	    			}
 	    		}
     		}
@@ -415,6 +388,21 @@ public class Board {
  		} else {
  	 		return false;
  		}
+ 	}
+ 	
+ 	public void findWalkwayAdjacency(BoardCell cell, int i, int j) {
+ 		if(i-1 >= 0 && isAdjacentWalkway(grid[i-1][j])) {
+            cell.addAdjacency(grid[i-1][j]);
+        }
+        if(i+1 < numRows && isAdjacentWalkway(grid[i+1][j])) {
+            cell.addAdjacency(grid[i+1][j]);
+        }
+        if(j-1 >= 0 && isAdjacentWalkway(grid[i][j-1])) {
+            cell.addAdjacency(grid[i][j-1]);
+        }
+        if(j+1 < numCols && isAdjacentWalkway(grid[i][j+1])) {
+            cell.addAdjacency(grid[i][j+1]);
+        }
  	}
 
 }
