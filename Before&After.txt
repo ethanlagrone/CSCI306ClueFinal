@@ -1,0 +1,49 @@
+COMMIT 1 BEFORE:
+
+package clueGame;
+
+public enum DoorDirection {
+	LEFT, RIGHT, UP, DOWN
+}
+
+AFTER:
+
+package clueGame;
+
+public enum DoorDirection {
+	NONE, LEFT, RIGHT, UP, DOWN
+}
+
+COMMIT 2 BEFORE:
+
+if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
+	                        cell.addAdjacency(grid[i-1][j]);
+	                    }
+	                    if(i+1 < numRows && grid[i+1][j] != null && !grid[i+1][j].isInRoom()) {
+	                        cell.addAdjacency(grid[i+1][j]);
+	                    }
+	                    if(j-1 >= 0 && grid[i][j-1] != null && !grid[i][j-1].isInRoom()) {
+	                        cell.addAdjacency(grid[i][j-1]);
+	                    }
+	                    if(j+1 < numCols && grid[i][j+1] != null && !grid[i][j+1].isInRoom()) {
+	                        cell.addAdjacency(grid[i][j+1]);
+	                    }
+	                    
+	    			//WALKWAY CELLS THAT ARENT DOORWAYS
+	    			} else {
+	    				if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
+	                        cell.addAdjacency(grid[i-1][j]);
+	                    }
+	                    if(i+1 < numRows && grid[i+1][j] != null && !grid[i+1][j].isInRoom()) {
+	                        cell.addAdjacency(grid[i+1][j]);
+	                    }
+	                    if(j-1 >= 0 && grid[i][j-1] != null && !grid[i][j-1].isInRoom()) {
+	                        cell.addAdjacency(grid[i][j-1]);
+	                    }
+	                    if(j+1 < numCols && grid[i][j+1] != null && !grid[i][j+1].isInRoom()) {
+	                        cell.addAdjacency(grid[i][j+1]);
+	                    }
+	    			}
+	    			
+	    			
+AFTER:

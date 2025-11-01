@@ -1,0 +1,270 @@
+commit 80ce38a4d803dc3ed33e918f80c000f2664056c9
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Mon Oct 27 22:47:40 2025 -0600
+
+    I can't believe it is all actually working, did some refactoring, it DEFINITELY needs moer however.
+
+commit d8da049876a133c22b95ba6db9c305538233d447
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Mon Oct 27 22:27:31 2025 -0600
+
+    Finally occupied logic is working, our written tests are wrong though
+
+commit ae5f87f56e8e10f0ee4d2066fe4d48d6abeba853
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Mon Oct 27 21:40:00 2025 -0600
+
+    more issues fixed, to be honest I keep finding bugs and I don't know what I've fixed on this push. The recursive algo got improved for occupied cell and occupied is the only part failing
+
+commit 5fcd295c7cc479807aa1bf9062b15bed57c59fd7
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Mon Oct 27 21:16:51 2025 -0600
+
+    Adj logic except for secret doors is functional
+
+commit f45e0f502f6c4129b066e260db113a6a29bc846f
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Mon Oct 27 20:28:00 2025 -0600
+
+    skeleton code to handle adjcalcs
+
+commit 80278056508a842535bdeec4eda98bbb2dff2f50
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Mon Oct 27 18:53:32 2025 -0600
+
+    minor formatting change
+
+commit 546d7008fc3119f2ab082417ff7ec2f022d5a84f
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Mon Oct 27 18:51:47 2025 -0600
+
+    testTargetsInWalkway2 and testTargetsOccupied
+
+commit d9122272baefc054e7c291f0d527e5df673cdfa2
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Mon Oct 27 18:01:14 2025 -0600
+
+    testTargetsInWalkway1
+
+commit 18602f0e222b10f578a8fa69a20cdb833d713191
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Mon Oct 27 17:50:51 2025 -0600
+
+    testTargetsAtDoor
+
+commit aa998b531bcf30f1e40580023f966a620253a19b
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Mon Oct 27 17:37:13 2025 -0600
+
+    testTargetsInFidlersGreen
+
+commit c5217ff4a9c894027fd8bd25bb8cf8f3a6315eb3
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Mon Oct 27 17:19:40 2025 -0600
+
+    update marquis targets tests
+
+commit a63ce98c1d4a325217f0d065b57b4578d0f0a183
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Mon Oct 27 16:53:48 2025 -0600
+
+    added NONE to DoorDirection and make it the default value
+
+commit 230248b5c2f2c70a1b7aa17d6500fcff8e4f3720
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Fri Oct 24 13:30:11 2025 -0600
+
+    added more comments
+
+commit b5505ca05e704b76e14ebafb26601f52538d2cf4
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Fri Oct 24 13:17:13 2025 -0600
+
+    added a few comments
+
+commit ab68577f0e44e6c4529bedec4e31380477e0ec89
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Thu Oct 23 23:05:14 2025 -0600
+
+    recursive logic fix'
+    '
+
+commit 95986fd96bfa32cbb78b4e26c2fb08ea42b21e81
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Thu Oct 23 22:23:42 2025 -0600
+
+    marquis theater tests
+
+commit 26fcb9c8d44b17ef0ef32b79c3e6e4d7e764c5f2
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Thu Oct 23 20:05:07 2025 -0600
+
+    Did testAdjacenciesRooms, testAdjacencyDoor, testAdjacencyWalkways, and chose cells on the spreadsheet
+
+commit 1c055612988ad87feaa449ccb4dc0ade4b7f791d
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Thu Oct 23 13:18:20 2025 -0600
+
+    created empty file for new tests
+
+commit 9c9f2b7dc01a0dff88b5490a5e92c1075f2aa471
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Thu Oct 23 12:58:44 2025 -0600
+
+    Found bug for initial tests, all old tests work, test for Clue Board 1 pasted in. I have not added the new tests we need to add
+
+commit a0a64fff756c8192b145a3a34bd81deadbee5775
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Wed Oct 22 23:03:10 2025 -0600
+
+    refactoring
+
+commit 9d871c354aa4ceae5a794ae919209051069a809e
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Wed Oct 22 22:15:25 2025 -0600
+
+    minor logic change
+
+commit f04016f0aa014c29cb0ec8339e8640197fa9d267
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Wed Oct 22 22:07:41 2025 -0600
+
+    implemeted secret passageway logic
+
+commit fe56f9bf421aadbb0ed13311818a07042a2ef1b3
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Wed Oct 22 21:45:11 2025 -0600
+
+    room setting
+
+commit bbddf17e946d01b965615c92f9182935503e6def
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Wed Oct 22 21:31:34 2025 -0600
+
+    formatting change
+
+commit 456965e9741e8c15cd9c5ba61750af29d15ecf6e
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Wed Oct 22 21:26:09 2025 -0600
+
+    small logic change
+
+commit 98ab64a1dcb7cd81729d4f004d9dce2828cabb8a
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Wed Oct 22 15:36:19 2025 -0600
+
+    fixed our tests, dimensions were wrong, and door locations were wrong in our test file
+
+commit 456870f2d520ecd44939ebfe74cc7219a98653ba
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Wed Oct 22 15:24:57 2025 -0600
+
+    Added door direction logic, most tests pass
+
+commit f93910c2a32b27bec5ddecaea1bd1c2dfc83a4eb
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Wed Oct 22 14:49:13 2025 -0600
+
+    Made a dummy 4x4 board for first tests using if else, everything fails with no errors, should be good for part 1
+
+commit e0fb3941803952f9cedaed5e7b152ea9426f3c14
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Wed Oct 22 14:44:20 2025 -0600
+
+    Fixed data issues and did BadConfigForamtException
+
+commit 14eb4b68ba3da2232840246789939c27731324d2
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Wed Oct 22 13:46:12 2025 -0600
+
+    count spaces as rooms
+
+commit eca182668e3172bb033cdec1026716fff5bbf57e
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Wed Oct 22 13:32:09 2025 -0600
+
+    better exception handling
+
+commit e9ae16c22c179ce48f0b6b95ab5fce53c982afb1
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Wed Oct 22 13:15:24 2025 -0600
+
+    added loadLayoutConfig call
+
+commit 3d9f620da298635cac223e256ad123b1ea5a36fc
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Tue Oct 21 23:25:33 2025 -0600
+
+    loadLayoutConfig() and changes to initialize()
+
+commit a7df3f982ddef9e7eec061c924ffc9d99657530c
+Author: Morgan Smith <msmith120304@gmail.com>
+Date:   Tue Oct 21 22:11:32 2025 -0600
+
+    loadSetupConfig()
+
+commit 3048b859b712c1625cd60b27bff1d68813c3757d
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Mon Oct 20 20:12:09 2025 -0600
+
+    Added unique tests for our board, numbers and names should all be right. Everything fails, no errors though as the rubric asks
+
+commit 33185b7f50b1436ea82bdb590f58b70657888138
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Mon Oct 20 18:35:30 2025 -0600
+
+    Figured out how to load a csv and everything except the original test has no errors
+
+commit ec2c87746ab94ea9563d4a342e2963a40e0f8453
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Mon Oct 20 18:11:49 2025 -0600
+
+    Added new stub fileInitTests file and fixed a few of the errors preventing the tests from failing
+
+commit badb27e7646561575321d86bec96a465715384e4
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Sun Oct 19 23:07:42 2025 -0600
+
+    clean up
+
+commit a3138663ed58668bccc7f6326b1a4425aede15e7
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Sun Oct 19 23:00:05 2025 -0600
+
+    Fleshed out more getters and setters. Fixed return types
+
+commit 9e4ff557a26ab4148ff4f9d3b62b1fa142a6333d
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Sun Oct 19 22:52:47 2025 -0600
+
+    Implemented a few getters and setters, got it all to compile but JUnits have errors.
+
+commit 4c2b2085384fafd45cb1520c055e2a3cf8ddfaff
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Sun Oct 19 22:43:15 2025 -0600
+
+    Added all stub functions, created enum, and removed most errors
+
+commit a50cd40aef851ac29e5bdbedc457c43739908d6d
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Sun Oct 19 22:21:44 2025 -0600
+
+    Finished refactoring, implemented Singleton Pattern I think?, and fixed package name problem
+
+commit 19050fa83b9ce1e755b4723e036385cf5a20df44
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Sun Oct 19 22:11:48 2025 -0600
+
+    Added stub files and refactored
+
+commit b65b3f3d3c1e2663ac6c666d6058bbb07cfa81a2
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Sun Oct 19 22:03:55 2025 -0600
+
+    Fixed dumb problem with imports
+
+commit ca0c554bc58fd196348bd34df38d96a26098bb9c
+Author: ethanlagrone <ethan_lagrone@mines.edu>
+Date:   Sun Oct 19 21:55:02 2025 -0600
+
+    initial commit

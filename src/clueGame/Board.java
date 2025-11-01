@@ -221,16 +221,16 @@ public class Board {
 	                    
 	    			//WALKWAY CELLS THAT ARENT DOORWAYS
 	    			} else {
-	    				if(i-1 >= 0 && grid[i-1][j] != null && !grid[i-1][j].isInRoom()) {
+	    				if(i-1 >= 0 && isAdjacentWalkway(grid[i-1][j])) {
 	                        cell.addAdjacency(grid[i-1][j]);
 	                    }
-	                    if(i+1 < numRows && grid[i+1][j] != null && !grid[i+1][j].isInRoom()) {
+	                    if(i+1 < numRows && isAdjacentWalkway(grid[i+1][j])) {
 	                        cell.addAdjacency(grid[i+1][j]);
 	                    }
-	                    if(j-1 >= 0 && grid[i][j-1] != null && !grid[i][j-1].isInRoom()) {
+	                    if(j-1 >= 0 && isAdjacentWalkway(grid[i][j-1])) {
 	                        cell.addAdjacency(grid[i][j-1]);
 	                    }
-	                    if(j+1 < numCols && grid[i][j+1] != null && !grid[i][j+1].isInRoom()) {
+	                    if(j+1 < numCols && isAdjacentWalkway(grid[i][j+1])) {
 	                        cell.addAdjacency(grid[i][j+1]);
 	                    }
 	    			}
@@ -407,6 +407,14 @@ public class Board {
 
  	public int getNumRows() {
  		return numRows;
+ 	}
+ 	
+ 	public boolean isAdjacentWalkway(BoardCell cell) {
+ 		if(cell != null && !cell.isInRoom()) {
+ 			return true;
+ 		} else {
+ 	 		return false;
+ 		}
  	}
 
 }
