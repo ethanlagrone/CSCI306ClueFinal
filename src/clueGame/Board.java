@@ -22,6 +22,8 @@ public class Board {
     private static Board theInstance = new Board();
     private String layoutCsv;
     private String setupTxt;
+    private Card[] deck;
+    
     
     public Board() {
     	super();
@@ -38,6 +40,7 @@ public class Board {
     
 
     public void initialize() {
+    	clearBoard();
     	//makes dummy 4x4 board for BoardTestsExp
     	if(layoutCsv == null || setupTxt == null) {
     		numRows = 4;
@@ -184,6 +187,7 @@ public class Board {
 					String type = spaceInfo[0];
 					String name = spaceInfo[1];
 					char label = spaceInfo[2].charAt(0);
+
 					// if valid type of room (proper room or space)
 					if (type.equals("Room") || type.equals("Space")) {
 						// create new room, set name, add to room map
@@ -393,7 +397,7 @@ public class Board {
  	}
  	
  	public boolean isWalkway(BoardCell cell) {
- 		if(cell.getRoom().getName().equals("Walkway")) {
+ 		if(cell != null && cell.getRoom().getName().equals("Walkway")) {
  			return true;
  		} else {
  			return false;
@@ -421,6 +425,16 @@ public class Board {
         if(j+1 < numCols && isAdjacentWalkway(grid[i][j+1])) {
             cell.addAdjacency(grid[i][j+1]);
         }
+ 	}
+ 	
+ 	public void clearBoard() {
+ 	    roomMap.clear();
+ 	    rows.clear();
+ 	    targets.clear();
+ 	    visited.clear();
+ 	    grid = null;
+ 	    numRows = 0;
+ 	    numCols = 0;
  	}
 
 }
