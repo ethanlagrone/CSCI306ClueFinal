@@ -171,21 +171,27 @@ public class Board {
     
 	public void loadSetupConfig() throws BadConfigFormatException {
 		try (BufferedReader reader = new BufferedReader(new FileReader(setupTxt))) {
+			// set up line string for reading txt line by line
 			String line;
 			while ((line = reader.readLine()) != null) {
+				// ignore if line begins with //
 				if (line.charAt(0) == '/') {
 					continue;
 				}
 				else {
+					// split with delimiter ", " to get type, name, and label from an entry
 					String[] spaceInfo = line.split(", ");
 					String type = spaceInfo[0];
 					String name = spaceInfo[1];
 					char label = spaceInfo[2].charAt(0);
+					// if valid type of room (proper room or space)
 					if (type.equals("Room") || type.equals("Space")) {
+						// create new room, set name, add to room map
 						Room room = new Room();
 						room.setName(name);
 						roomMap.put(label, room);
 					}
+					// throw exception if not valid type of room
 					else {
 						throw new BadConfigFormatException("Invalid room type found in setup txt file: " + type);
 					}
@@ -200,8 +206,11 @@ public class Board {
     public void loadLayoutConfig() throws BadConfigFormatException {
     	//couldn't figure how to split up a csv properly, so this worked:
 		//source: https://labex.io/tutorials/java-how-to-split-csv-lines-correctly-421487
+
+		// set up line string for reading csv line by line
 		String line;
 		try (BufferedReader reader = new BufferedReader(new FileReader(layoutCsv))) {
+			// add line from the csv to the ArrayList of rows
 			while ((line = reader.readLine()) != null) {
 				rows.add(line);
 			}
@@ -210,42 +219,52 @@ public class Board {
 			System.out.println(e);
 		}
 
+		// get the first row and add each of its individual spaces to an array
+		// the length of this array becomes the expected length of every subsequent array
 		String regex = ",";
-		String firstRow[] = rows.get(0).split(regex);
-		String cells[];
-		int expectedNumCols = firstRow.length;
+		String cells[] = rows.get(0).split(regex);
+		int expectedNumCols = cells.length;
 		char roomChar;
 		char specialChar;
 		for (String row : rows) {
 			cells = row.split(regex);
+			// check if row has the correct number of spaces
 			if (cells.length != expectedNumCols) {
 				throw new BadConfigFormatException("Found row in layout csv file containing more columns than expected.");
 			}
 			for (String cell : cells) {
 				roomChar = cell.charAt(0);
+				// if cell doesn't correspond to one of the rooms/spaces in the setup file, throw an exception
 				if (!roomMap.containsKey(roomChar)) {
 					throw new BadConfigFormatException("Found cell in layout csv file corresponding to invalid room: " + cell);
 				}
+				// incorrect special space handling
 				else if (cell.length() == 2) {
 				    specialChar = cell.charAt(1);
 				    boolean isExtension = false;
-				    for (char c : validExtensions) {
+				    // check if the extension is valid (door, room center, room label)
+					for (char c : validExtensions) {
 				        if (specialChar == c) {
 				            isExtension = true;
 				            break;
 				        }
 				    }
-				    if (!isExtension && !roomMap.containsKey(specialChar)) {
+				    // if extension is not valid (or another room for a secret passage), throw an exception
+					if (!isExtension && !roomMap.containsKey(specialChar)) {
 				        throw new BadConfigFormatException("Found cell in layout csv file with an invalid extension: " + cell);
 				    }
 				}
+				// if number of characters in the cell is not 1 or 2, throw an exception
 				else if (cell.length() > 2 || cell.length() < 1) {
 					throw new BadConfigFormatException("Invalid cell format found in layout csv file: " + cell);
 				}
+				// normal cell, no action needed
 				else {
 					continue;
 				}
 			}
+			
+			// set number of rows and columns accordingly
 			numRows = rows.size();
 	        numCols = expectedNumCols;
 		}
