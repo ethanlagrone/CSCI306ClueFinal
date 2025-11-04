@@ -280,7 +280,7 @@ public class Board {
 			for (String cell : cells) {
 				roomChar = cell.charAt(0);
 				if (!roomMap.containsKey(roomChar)) {
-					throw new BadConfigFormatException("Found cell corresponding to invalid room: " + cell);
+					throw new BadConfigFormatException("Found cell in layout csv file corresponding to invalid room: " + cell);
 				}
 				else if (cell.length() == 2) {
 				    specialChar = cell.charAt(1);
@@ -292,7 +292,7 @@ public class Board {
 				        }
 				    }
 				    if (!isExtension && !roomMap.containsKey(specialChar)) {
-				        throw new BadConfigFormatException();
+				        throw new BadConfigFormatException("Found cell in layout csv file with an invalid extension: " + cell);
 				    }
 				}
 				else if (cell.length() > 2 || cell.length() < 1) {
