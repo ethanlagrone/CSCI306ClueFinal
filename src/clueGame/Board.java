@@ -22,7 +22,31 @@ public class Board {
     private static Board theInstance = new Board();
     private String layoutCsv;
     private String setupTxt;
-    private ArrayList<Card> deck = new ArrayList<Card>();
+    public ArrayList<Card> getDeck() {
+		return deck;
+	}
+
+
+	public void setDeck(ArrayList<Card> deck) {
+		this.deck = deck;
+	}
+
+
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+
+
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
+	}
+
+
+	public String[] getWeaponCards() {
+		return weaponCards;
+	}
+
+	private ArrayList<Card> deck = new ArrayList<Card>();
     private final String[] weaponCards = {"Guitar", "Piano", "Violin", "Drums", "Saxophone", "Bass"};
     private ArrayList<Player> players = new ArrayList<Player>();
 
@@ -93,6 +117,7 @@ public class Board {
 		} catch (BadConfigFormatException e) {
 			e.printStackTrace();
 		}
+		createDeck();
 	}
     
     public void createDeck() {
@@ -115,6 +140,9 @@ public class Board {
         }
         
         //ADD PEOPLE CARDS
+        for(Player player: players) {
+        	deck.add(new Card(player.getName(), CardType.PERSON));
+        }
     }
     
     public void deal() {
@@ -227,14 +255,15 @@ public class Board {
 						roomMap.put(label, room);
 					} else if(type.equals("Player")) {
 						//setup players
-						if(spaceInfo.length != 5) {
-							throw new BadConfigFormatException("Txt file player error.");
-						}
 						String name = spaceInfo[1];
 						String color = spaceInfo[2];
 						int xCoordinate = Integer.parseInt(spaceInfo[3]);
 						int yCoordinate = Integer.parseInt(spaceInfo[4]);
-						players.add(new ComputerPlayer(name, color, xCoordinate, yCoordinate));
+						if(name.equals("D'Angelo")) {
+							players.add(new HumanPlayer(name, color, xCoordinate, yCoordinate));
+						} else {
+							players.add(new ComputerPlayer(name, color, xCoordinate, yCoordinate));
+						}
 						
 					}
 					// throw exception if not valid type of room
@@ -477,6 +506,8 @@ public class Board {
  	    grid = null;
  	    numRows = 0;
  	    numCols = 0;
+ 	    deck.clear();
+ 	    players.clear();
  	}
  	
 
