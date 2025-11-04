@@ -81,8 +81,9 @@ public class Board {
 			//setup board with cells
 			char roomChar;
 			char specialChar;
+			String cells[];
 			for(int i = 0; i < numRows; i++) {
-				String cells[] = rows.get(i).split(",");
+				cells = rows.get(i).split(",");
 				for(int j = 0; j < numCols; j++) {
 					grid[i][j] = new BoardCell(i, j);
 					BoardCell currentCell = grid[i][j];
