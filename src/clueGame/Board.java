@@ -215,17 +215,27 @@ public class Board {
 					// split with delimiter ", " to get type, name, and label from an entry
 					String[] spaceInfo = line.split(", ");
 					String type = spaceInfo[0];
-					String name = spaceInfo[1];
-					char label = spaceInfo[2].charAt(0);
 
 					// if valid type of room (proper room or space)
 					if (type.equals("Room") || type.equals("Space")) {
 						// create new room, set name, add to room map
+						String name = spaceInfo[1];
+						char label = spaceInfo[2].charAt(0);
+						
 						Room room = new Room();
 						room.setName(name);
 						roomMap.put(label, room);
 					} else if(type.equals("Player")) {
 						//setup players
+						if(spaceInfo.length != 5) {
+							throw new BadConfigFormatException("Txt file player error.");
+						}
+						String name = spaceInfo[1];
+						String color = spaceInfo[2];
+						int xCoordinate = Integer.parseInt(spaceInfo[3]);
+						int yCoordinate = Integer.parseInt(spaceInfo[4]);
+						players.add(new ComputerPlayer(name, color, xCoordinate, yCoordinate));
+						
 					}
 					// throw exception if not valid type of room
 					else {
