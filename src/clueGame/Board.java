@@ -24,6 +24,7 @@ public class Board {
     private String setupTxt;
     private ArrayList<Card> deck = new ArrayList<Card>();
     private final String[] weaponCards = {"Guitar", "Piano", "Violin", "Drums", "Saxophone", "Bass"};
+    private ArrayList<Player> players = new ArrayList<Player>();
 
     
     public Board() {
@@ -216,6 +217,8 @@ public class Board {
 					String type = spaceInfo[0];
 					String name = spaceInfo[1];
 					char label = spaceInfo[2].charAt(0);
+					//String color = spaceInfo[2];
+					//String location = spaceInfo[3];
 
 					// if valid type of room (proper room or space)
 					if (type.equals("Room") || type.equals("Space")) {
@@ -223,6 +226,9 @@ public class Board {
 						Room room = new Room();
 						room.setName(name);
 						roomMap.put(label, room);
+					} else if(type.equals("Player")) {
+						//setup players
+						//players.add(new Player())
 					}
 					// throw exception if not valid type of room
 					else {
