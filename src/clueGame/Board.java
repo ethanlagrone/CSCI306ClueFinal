@@ -25,6 +25,7 @@ public class Board {
     
     public Board() {
     	super();
+		rows = new ArrayList<>();
     	roomMap = new HashMap<>();
 		targets = new HashSet<>();
 		visited = new HashSet<>();
@@ -256,7 +257,6 @@ public class Board {
     	//couldn't figure how to split up a csv properly, so this worked:
 		//source: https://labex.io/tutorials/java-how-to-split-csv-lines-correctly-421487
 		String line;
-		rows = new ArrayList<>();
 		try (BufferedReader reader = new BufferedReader(new FileReader(layoutCsv))) {
 			while ((line = reader.readLine()) != null) {
 				rows.add(line);
