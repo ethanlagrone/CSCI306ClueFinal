@@ -242,7 +242,7 @@ public class Board {
 						roomMap.put(label, room);
 					}
 					else {
-						throw new BadConfigFormatException();
+						throw new BadConfigFormatException("Invalid room type found in setup txt file: " + type);
 					}
 				}
 			}
@@ -275,12 +275,12 @@ public class Board {
 		for (String row : rows) {
 			cells = row.split(regex);
 			if (cells.length != expectedNumCols) {
-				throw new BadConfigFormatException();
+				throw new BadConfigFormatException("Found row in layout csv file containing more columns than expected.");
 			}
 			for (String cell : cells) {
 				roomChar = cell.charAt(0);
 				if (!roomMap.containsKey(roomChar)) {
-					throw new BadConfigFormatException();
+					throw new BadConfigFormatException("Found cell corresponding to invalid room: " + cell);
 				}
 				else if (cell.length() == 2) {
 				    specialChar = cell.charAt(1);
@@ -296,7 +296,7 @@ public class Board {
 				    }
 				}
 				else if (cell.length() > 2 || cell.length() < 1) {
-					throw new BadConfigFormatException();
+					throw new BadConfigFormatException("Invalid cell format found in layout csv file: " + cell);
 				}
 				else {
 					continue;
