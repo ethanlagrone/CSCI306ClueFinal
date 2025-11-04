@@ -22,8 +22,9 @@ public class Board {
     private static Board theInstance = new Board();
     private String layoutCsv;
     private String setupTxt;
-    private Card[] deck;
-    
+    private ArrayList<Card> deck = new ArrayList<Card>();
+    private final String[] weaponCards = {"Guitar", "Piano", "Violin", "Drums", "Saxophone", "Bass"};
+
     
     public Board() {
     	super();
@@ -92,6 +93,34 @@ public class Board {
 			e.printStackTrace();
 		}
 	}
+    
+    public void createDeck() {
+    	//add all the weapons to the deck
+    	for(String weapon : weaponCards) {
+    		deck.add(new Card(weapon, CardType.WEAPON));
+    	}
+    	
+    	//add all the rooms to the deck
+    	Set<String> roomNames = new HashSet<>();
+        for (Room room : roomMap.values()) {
+            String name = room.getName();
+            if (!name.equals("Walkway") && !name.equals("Unused")) {
+                roomNames.add(name);
+            }
+        }
+
+        for (String name : roomNames) {
+            deck.add(new Card(name, CardType.ROOM));
+        }
+        
+        //ADD PEOPLE CARDS
+    }
+    
+    public void deal() {
+    	//stub
+    	
+    }
+    
 
     private void calculateAdjacencies() throws BadConfigFormatException {
     	for(int i = 0; i < numRows; i++) {
@@ -436,5 +465,6 @@ public class Board {
  	    numRows = 0;
  	    numCols = 0;
  	}
+ 	
 
 }

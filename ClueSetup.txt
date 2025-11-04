@@ -12,10 +12,10 @@ Room, Gothic Theatre, G
 Space, Unused, X
 Space, Walkway, W
 // Players
-//D'Angelo, Brown, Computer, (2, 17)
-//Bob Dylan, White, Computer, (10, 20)
-//Rivers Cuomo, Blue, Computer, (17, 7)
-//Marvin Gaye, Red, Computer, (9, 12)
-//Kendrick Lamar, Green, Computer, (7, 5)
-//Robert Plant, Black, Human, (10, 19) 
+// D'Angelo, Brown, Computer, (2, 17)
+// Bob Dylan, White, Computer, (10, 20)
+// Rivers Cuomo, Blue, Computer, (17, 7)
+// Marvin Gaye, Red, Computer, (9, 12)
+// Kendrick Lamar, Green, Computer, (7, 5)
+// Robert Plant, Black, Human, (10, 19) 
 //Instruments: Guitar, Piano, Violin, Drums, Saxophone, Bass

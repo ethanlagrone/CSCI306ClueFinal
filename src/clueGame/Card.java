@@ -10,9 +10,8 @@ public class Card {
 		this.cardType = cardType;
 	}
 	
-	public boolean equals() {
-		//stub
-		return false;
+	public boolean equals(CardType cardType) {
+		return cardType == this.cardType;
 	}
 	
 }
