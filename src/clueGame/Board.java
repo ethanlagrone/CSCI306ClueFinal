@@ -66,76 +66,19 @@ public class Board {
     				}
     			}
     		} 
-    	} else {
-    		//load setup files
-	    	try {
+    	
+		} else {
+			//load setup files
+			try {
 				loadSetupConfig();
 				loadLayoutConfig();
 			}
 			catch (BadConfigFormatException e) {
 				System.out.print(e);
 			}
-	
-			grid = new BoardCell[numRows][numCols];
-			
-			//setup board with cells
-			char roomChar;
-			char specialChar;
-			String cells[];
-			for(int i = 0; i < numRows; i++) {
-				cells = rows.get(i).split(",");
-				for(int j = 0; j < numCols; j++) {
-					grid[i][j] = new BoardCell(i, j);
-					BoardCell currentCell = grid[i][j];
-					roomChar = cells[j].charAt(0);
-					//finds if cell is a room and sets it accordingly
-					if (roomMap.containsKey(roomChar)) {
-						currentCell.setInRoom(true);
-						currentCell.setRoom(roomMap.get(roomChar));
-						if(isWalkway(currentCell)) {
-							currentCell.setInRoom(false);
-						}
-						//check that there is two characters in a cell to know that the room is special
-						if (cells[j].length() == 2) {
-							specialChar = cells[j].charAt(1);
-							//checks initial char to see if it is another letter making it a secret passage
-							if (roomMap.containsKey(specialChar)) {
-								currentCell.setIsSecretPassage(true);
-								currentCell.setSecretPassage(specialChar);
-							}
-							else {
-								//CHECK SPECIAL CHARACTER AND SET ACCORDINGLY
-								switch (specialChar) {
-									case '*':
-										currentCell.setRoomCenter(true);
-										roomMap.get(roomChar).setCenterCell(grid[i][j]);
-										break;
-									case '#':
-										currentCell.setLabel(true);
-										roomMap.get(roomChar).setLabelCell(grid[i][j]);
-										break;
-									case '^':
-										currentCell.setDoorway(true);
-										currentCell.setDoorDirection(DoorDirection.UP);
-										break;
-									case '>':
-										currentCell.setDoorway(true);
-										currentCell.setDoorDirection(DoorDirection.RIGHT);
-										break;
-									case 'v':
-										currentCell.setDoorway(true);
-										currentCell.setDoorDirection(DoorDirection.DOWN);
-										break;
-									case '<':
-										currentCell.setDoorway(true);
-										currentCell.setDoorDirection(DoorDirection.LEFT);
-										break;
-								} 
-							}
-						}
-					}
-				}
-			}
+
+			// set up board from this setup/layout info
+			boardSetup();
 		}
 		
 		//find every adjacency of each cell, hint said to do it here
@@ -307,6 +250,70 @@ public class Board {
 	        numCols = expectedNumCols;
 		}
     }
+
+	public void boardSetup() {
+		grid = new BoardCell[numRows][numCols];
+		
+		//setup board with cells
+		char roomChar;
+		char specialChar;
+		String cells[];
+		for(int i = 0; i < numRows; i++) {
+			cells = rows.get(i).split(",");
+			for(int j = 0; j < numCols; j++) {
+				grid[i][j] = new BoardCell(i, j);
+				BoardCell currentCell = grid[i][j];
+				String currentCellLabel = cells[j];
+				roomChar = currentCellLabel.charAt(0);
+				//finds if cell is a room and sets it accordingly
+				if (roomMap.containsKey(roomChar)) {
+					currentCell.setInRoom(true);
+					currentCell.setRoom(roomMap.get(roomChar));
+					if(isWalkway(currentCell)) {
+						currentCell.setInRoom(false);
+					}
+					//check that there is two characters in a cell to know that the room is special
+					if (cells[j].length() == 2) {
+						specialChar = currentCellLabel.charAt(1);
+						//checks initial char to see if it is another letter making it a secret passage
+						if (roomMap.containsKey(specialChar)) {
+							currentCell.setIsSecretPassage(true);
+							currentCell.setSecretPassage(specialChar);
+						}
+						else {
+							//CHECK SPECIAL CHARACTER AND SET ACCORDINGLY
+							switch (specialChar) {
+								case '*':
+									currentCell.setRoomCenter(true);
+									roomMap.get(roomChar).setCenterCell(grid[i][j]);
+									break;
+								case '#':
+									currentCell.setLabel(true);
+									roomMap.get(roomChar).setLabelCell(grid[i][j]);
+									break;
+								case '^':
+									currentCell.setDoorway(true);
+									currentCell.setDoorDirection(DoorDirection.UP);
+									break;
+								case '>':
+									currentCell.setDoorway(true);
+									currentCell.setDoorDirection(DoorDirection.RIGHT);
+									break;
+								case 'v':
+									currentCell.setDoorway(true);
+									currentCell.setDoorDirection(DoorDirection.DOWN);
+									break;
+								case '<':
+									currentCell.setDoorway(true);
+									currentCell.setDoorDirection(DoorDirection.LEFT);
+									break;
+							} 
+						}
+					}
+				}
+			}
+		}
+	}
     
     public Room getRoom(char room) {
     	return roomMap.get(room);
