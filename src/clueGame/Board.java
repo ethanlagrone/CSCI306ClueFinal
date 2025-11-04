@@ -205,7 +205,7 @@ public class Board {
 	                            }
 	    						break;
 	    					case NONE:
-	    						throw new BadConfigFormatException("Should not be handled here, only doorway cells should be.");
+	    						break;
 	    				}	
 	    				//after door direction found, find the other adjacency of the cell
 	    				findWalkwayAdjacency(cell, i, j);
