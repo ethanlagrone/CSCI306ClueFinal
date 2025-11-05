@@ -108,5 +108,9 @@ public class GamesSetupTests {
 		//stub
 	}
 	
+	@Test public void testSolution() {
+		//stub
+	}
+	
 	
 }
