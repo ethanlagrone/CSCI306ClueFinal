@@ -94,6 +94,8 @@ public class Board {
 		} catch (BadConfigFormatException e) {
 			e.printStackTrace();
 		}
+		
+		//create the deck for the board
 		createDeck();
 	}
     
@@ -122,9 +124,9 @@ public class Board {
         }
     }
     
+    
     public void deal() {
     	//stub
-    	
     }
     
 

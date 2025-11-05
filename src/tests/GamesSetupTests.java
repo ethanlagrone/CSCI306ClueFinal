@@ -81,7 +81,9 @@ public class GamesSetupTests {
 		//make sure player objects are correct
 		ArrayList<Player> players = new ArrayList<Player>();
 		players = board.getPlayers();
+		//check correct count
 		assertTrue(players.size() == 6);
+		//check that the names loaded in in the right order
 		assertEquals(players.get(0).getName(), "D'Angelo");
 		assertTrue(players.get(0).isHuman());
 		assertEquals(players.get(3).getName(), "Marvin Gaye");
@@ -96,10 +98,15 @@ public class GamesSetupTests {
 				roboCount++;
 			}
 		}
-		
+		//check right amount of humans and robots
 		assertEquals(1, humanCount);
 		assertEquals(5, roboCount);
-		
-		
 	}
+	
+	@Test
+	public void testDealing() {
+		//stub
+	}
+	
+	
 }
