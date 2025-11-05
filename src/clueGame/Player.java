@@ -14,6 +14,7 @@ public abstract class Player {
 		this.column = column;
 	}
 
+	public abstract boolean isHuman();
 
 	public void updateHand(Card card) {
 		//stub

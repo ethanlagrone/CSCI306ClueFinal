@@ -22,34 +22,11 @@ public class Board {
     private static Board theInstance = new Board();
     private String layoutCsv;
     private String setupTxt;
-    public ArrayList<Card> getDeck() {
-		return deck;
-	}
-
-
-	public void setDeck(ArrayList<Card> deck) {
-		this.deck = deck;
-	}
-
-
-	public ArrayList<Player> getPlayers() {
-		return players;
-	}
-
-
-	public void setPlayers(ArrayList<Player> players) {
-		this.players = players;
-	}
-
-
-	public String[] getWeaponCards() {
-		return weaponCards;
-	}
-
 	private ArrayList<Card> deck = new ArrayList<Card>();
     private final String[] weaponCards = {"Guitar", "Piano", "Violin", "Drums", "Saxophone", "Bass"};
     private ArrayList<Player> players = new ArrayList<Player>();
 
+    
     
     public Board() {
     	super();
@@ -497,6 +474,30 @@ public class Board {
             cell.addAdjacency(grid[i][j+1]);
         }
  	}
+ 	
+ 	public ArrayList<Card> getDeck() {
+		return deck;
+	}
+
+
+	public void setDeck(ArrayList<Card> deck) {
+		this.deck = deck;
+	}
+
+
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+
+
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
+	}
+
+
+	public String[] getWeaponCards() {
+		return weaponCards;
+	}
  	
  	public void clearBoard() {
  	    roomMap.clear();

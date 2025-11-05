@@ -6,4 +6,8 @@ public class ComputerPlayer extends Player{
 		super(name, color, row, column);
 	}
 	
+	@Override
+	public boolean isHuman() {
+		return false;
+	}
 }

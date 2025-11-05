@@ -10,40 +10,11 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import clueGame.Board;
-import clueGame.BoardCell;
-import clueGame.Card;
-import clueGame.CardType;
+import clueGame.*;
 
 public class GamesSetupTests {
 	private static Board board;
 	
-	/*@Test
-	public void testAdjacenciesRooms()
-	{
-		// Larimer Lounge should only have one door
-		Set<BoardCell> testList = board.getAdjList(21, 21);
-		assertEquals(1, testList.size());
-		assertTrue(testList.contains(board.getCell(20, 19)));
-		
-		// Bluebird theater has 2 doors and one secret door
-		testList = board.getAdjList(21, 9);
-		assertEquals(3, testList.size());
-		//secret door goes to where it will be
-		assertTrue(testList.contains(board.getCell(2, 9)));
-		//other doors
-		assertTrue(testList.contains(board.getCell(18, 10)));
-		assertTrue(testList.contains(board.getCell(18, 11)));
-		
-		// one more room, ball arena, two doors and a different secret door to test
-		testList = board.getAdjList(20, 1);
-		assertEquals(3, testList.size());
-		//secret door
-		assertTrue(testList.contains(board.getCell(6, 14)));
-		//other doors
-		assertTrue(testList.contains(board.getCell(19, 6)));
-		assertTrue(testList.contains(board.getCell(16, 2)));
-	}*/
 	
 	@BeforeAll
 	public static void setUp() {
@@ -59,30 +30,76 @@ public class GamesSetupTests {
 
 		People are loaded in
 		Proper Human or Computer player is initialized based on people data
-		Deck of all cards is created (composed of rooms, weapons, and people)
 		The solution to the game is dealt
-		The other cards are dealt to the players.*/
+		The other cards are dealt to the players.
+		
+		Load people and weapons from ClueSetup.txt and ensure the data was loaded properly.
+		Create Player class with human and computer child classes.   
+		Use people data to instantiate 6 players (1 human and 5 computer)
+		Create complete deck of cards (weapons, people and rooms)
+		Deal cards to the Answer and the players 
+		(all cards dealt, players have roughly same # of cards, no card dealt twice)*/
 	    
 		
 	
 	@Test
-	public void testDeck() {
+	public void testDeck() throws BadConfigFormatException {
 		//test deck length
 		ArrayList<Card> deck = new ArrayList<Card>();
 	    deck = board.getDeck();
 		assertTrue(deck.size() == 21);
 		
-		//ADD MORE TESTS TO FLESH OUT DECK
+		int weaponCount = 0;
+		int roomCount = 0;
+		int personCount = 0;
+		for (Card c : deck) {
+	        switch (c.getCardType()) {
+	            case WEAPON:
+	                weaponCount++;
+	                break;
+	            case ROOM:
+	                roomCount++;
+	                break;
+	            case PERSON:
+	                personCount++;
+	                break;
+	            default:
+	                throw new BadConfigFormatException("Card of unknown type.");
+	        }
+	    }
+		
+		//check deck for right card counts
+		assertEquals(6, weaponCount);
+		assertEquals(9, roomCount);
+		assertEquals(6, personCount);
 
 	}
 	
-	@Test
-	public void testDeltCards() {
-		
-	}
 	
 	@Test
 	public void testPlayers() {
 		//make sure player objects are correct
+		ArrayList<Player> players = new ArrayList<Player>();
+		players = board.getPlayers();
+		assertTrue(players.size() == 6);
+		assertEquals(players.get(0).getName(), "D'Angelo");
+		assertTrue(players.get(0).isHuman());
+		assertEquals(players.get(3).getName(), "Marvin Gaye");
+		assertTrue(!players.get(3).isHuman());
+		
+		int humanCount = 0;
+		int roboCount = 0;
+		for(Player player: players) {
+			if(player.isHuman()) {
+				humanCount++;
+			} else {
+				roboCount++;
+			}
+		}
+		
+		assertEquals(1, humanCount);
+		assertEquals(5, roboCount);
+		
+		
 	}
 }

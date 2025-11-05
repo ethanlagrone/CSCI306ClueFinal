@@ -13,5 +13,16 @@ public class Card {
 	public boolean equals(CardType cardType) {
 		return cardType == this.cardType;
 	}
+
+	
+	
+	//GETTERS AND SETTERS FOR TESTING
+	public CardType getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(CardType cardType) {
+		this.cardType = cardType;
+	}
 	
 }
