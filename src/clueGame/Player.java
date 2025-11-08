@@ -1,9 +1,12 @@
 package clueGame;
 
+import java.util.ArrayList;
+
 public abstract class Player {
 	private String name;
 	private String color;
 	private int row, column;
+	private ArrayList<Card> hand;
 	
 	
 	public Player(String name, String color, int row, int column) {
@@ -12,12 +15,15 @@ public abstract class Player {
 		this.color = color;
 		this.row = row;
 		this.column = column;
+		hand = new ArrayList<>();
 	}
 
 	public abstract boolean isHuman();
 
 	public void updateHand(Card card) {
-		//stub
+		if (!hand.contains(card)) {
+			hand.add(card);
+		}
 	}
 
 	
