@@ -107,10 +107,9 @@ public class GamesSetupTests {
 	@Test
 	public void testDealing() {
 		// make sure cards are dealt as expected
-		ArrayList<Player> players = new ArrayList<Player>();
-		players = board.getPlayers();
 		board.deal();
 		Solution solution = board.getSolution();
+		ArrayList<Player> players = board.getPlayers();
 		for (Player p : players) {
 			// ensure each player has 3 cards (assuming 6 player game)
 			assertEquals(3, p.getHand().size());
@@ -133,7 +132,11 @@ public class GamesSetupTests {
 	}
 	
 	@Test public void testSolution() {
-		//stub
+		board.deal();
+		Solution solution = board.getSolution();
+		assertTrue(solution.getRoom().getCardType() == CardType.ROOM);
+		assertTrue(solution.getPerson().getCardType() == CardType.PERSON);
+		assertTrue(solution.getWeapon().getCardType() == CardType.WEAPON);
 	}
 	
 	
