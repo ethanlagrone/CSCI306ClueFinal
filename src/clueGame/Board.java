@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import clueGame.Solution;
+
 public class Board {
     
     private BoardCell[][] grid;
@@ -25,7 +27,7 @@ public class Board {
 	private ArrayList<Card> deck = new ArrayList<Card>();
     private final String[] weaponCards = {"Guitar", "Piano", "Violin", "Drums", "Saxophone", "Bass"};
     private ArrayList<Player> players = new ArrayList<Player>();
-
+	private Solution solution;
     
     
     public Board() {
@@ -499,6 +501,10 @@ public class Board {
 
 	public String[] getWeaponCards() {
 		return weaponCards;
+	}
+
+	public Solution getSolution() {
+		return solution;
 	}
  	
  	public void clearBoard() {

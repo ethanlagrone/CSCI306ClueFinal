@@ -105,7 +105,12 @@ public class GamesSetupTests {
 	
 	@Test
 	public void testDealing() {
-		//stub
+		ArrayList<Player> players = new ArrayList<Player>();
+		players = board.getPlayers();
+		board.deal();
+		for (Player p : players) {
+			assertEquals(3, p.getHand().size());
+		}
 	}
 	
 	@Test public void testSolution() {

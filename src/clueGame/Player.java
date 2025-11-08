@@ -67,6 +67,8 @@ public abstract class Player {
 		this.column = column;
 	}
 
-
+	public ArrayList<Card> getHand() {
+		return hand;
+	}
 
 }
