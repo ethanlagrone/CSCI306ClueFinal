@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -121,14 +122,58 @@ public class Board {
         }
         
         //ADD PEOPLE CARDS
-        for(Player player: players) {
+        for (Player player : players) {
         	deck.add(new Card(player.getName(), CardType.PERSON));
         }
     }
     
     
     public void deal() {
-    	//stub
+    	Card solutionRoom = null;
+		Card solutionPerson = null;
+		Card solutionWeapon = null;
+		Card currentCard = null;
+		boolean solutionMade = false;
+		while (!solutionMade) {
+			if (solutionRoom != null && solutionPerson != null && solutionWeapon != null) {
+				solutionMade = true;
+			}
+			else {
+				currentCard = deck.get((int)Math.random() * deck.size());
+				switch (currentCard.getCardType()) {
+					case CardType.ROOM:
+						if (solutionRoom == null) {
+							solutionRoom = currentCard;
+						}
+						break;
+					case CardType.PERSON:
+						if (solutionPerson == null) {
+							solutionPerson = currentCard;
+						}
+						break;
+					case CardType.WEAPON:
+						if (solutionWeapon == null) {
+							solutionWeapon = currentCard;
+						}
+						break;
+				}
+			}
+		}
+		solution = new Solution(solutionRoom, solutionPerson, solutionWeapon);
+		Collections.shuffle(deck);
+		int currentPlayer = 0;
+		for (Card c : deck) {
+			if (c.equals(solutionRoom) || c.equals(solutionPerson) || c.equals(solutionWeapon)) {
+				continue;
+			}
+			else if (players.get(currentPlayer).getHand().size() < 3) {
+				players.get(currentPlayer).updateHand(c);
+			}
+			else {
+				currentPlayer++;
+				players.get(currentPlayer).updateHand(c);
+			}
+		}
     }
     
 

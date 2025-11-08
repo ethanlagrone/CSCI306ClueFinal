@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -87,7 +88,7 @@ public class GamesSetupTests {
 		assertEquals(players.get(0).getName(), "D'Angelo");
 		assertTrue(players.get(0).isHuman());
 		assertEquals(players.get(3).getName(), "Marvin Gaye");
-		assertTrue(!players.get(3).isHuman());
+		assertFalse(players.get(3).isHuman());
 		
 		int humanCount = 0;
 		int roboCount = 0;
@@ -105,11 +106,29 @@ public class GamesSetupTests {
 	
 	@Test
 	public void testDealing() {
+		// make sure cards are dealt as expected
 		ArrayList<Player> players = new ArrayList<Player>();
 		players = board.getPlayers();
 		board.deal();
+		Solution solution = board.getSolution();
 		for (Player p : players) {
+			// ensure each player has 3 cards (assuming 6 player game)
 			assertEquals(3, p.getHand().size());
+			// ensure that each player doesn't have a solution card in their hand
+			for (Card c : p.getHand()) {
+				assertFalse(c.equals(solution.getRoom()));
+				assertFalse(c.equals(solution.getRoom()));
+				assertFalse(c.equals(solution.getWeapon()));
+			}
+		}
+
+		// check to make sure that a card has not been dealt to >1 player
+		for (int i = 0; i < players.size() - 1; i++) {
+			for (Card c1 : players.get(i).getHand()) {
+				for (Card c2: players.get(i + 1).getHand()) {
+					assertFalse(c1.equals(c2));
+				}
+			}
 		}
 	}
 	
