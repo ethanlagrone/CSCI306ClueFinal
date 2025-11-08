@@ -134,6 +134,7 @@ public class GamesSetupTests {
 	@Test public void testSolution() {
 		board.deal();
 		Solution solution = board.getSolution();
+		// ensure the solution properly contains a room, person, and weapon card
 		assertTrue(solution.getRoom().getCardType() == CardType.ROOM);
 		assertTrue(solution.getPerson().getCardType() == CardType.PERSON);
 		assertTrue(solution.getWeapon().getCardType() == CardType.WEAPON);

@@ -139,7 +139,7 @@ public class Board {
 				solutionMade = true;
 			}
 			else {
-				currentCard = deck.get((int)Math.random() * deck.size());
+				currentCard = deck.get((int)(Math.random() * deck.size()));
 				switch (currentCard.getCardType()) {
 					case CardType.ROOM:
 						if (solutionRoom == null) {
