@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import clueGame.*;
@@ -17,8 +17,8 @@ public class GamesSetupTests {
 	private static Board board;
 	
 	
-	@BeforeAll
-	public static void setUp() {
+	@BeforeEach
+	public void setUp() {
 		// clueGame is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files

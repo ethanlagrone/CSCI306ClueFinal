@@ -561,7 +561,7 @@ public class Board {
  	    numRows = 0;
  	    numCols = 0;
  	    deck.clear();
- 	    players.clear();
+		players.clear();
  	}
  	
 
