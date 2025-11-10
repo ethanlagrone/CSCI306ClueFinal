@@ -1,12 +1,15 @@
 package clueGame;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class Player {
 	private String name;
 	private String color;
 	private int row, column;
 	private ArrayList<Card> hand;
+	private Set<Card> seen;
 	
 	
 	public Player(String name, String color, int row, int column) {
@@ -15,6 +18,7 @@ public abstract class Player {
 		this.color = color;
 		this.row = row;
 		this.column = column;
+		seen = new HashSet<>();
 		hand = new ArrayList<>();
 	}
 
@@ -23,9 +27,18 @@ public abstract class Player {
 	public void updateHand(Card card) {
 		if (!hand.contains(card)) {
 			hand.add(card);
+			seen.add(card);
 		}
 	}
+	
+	public void updateSeen(Card card) {
+		seen.add(card);
+	}
 
+	public Card disproveSuggestion() {
+		//stub
+		return null;
+	}
 	
 	//SETTERS AND GETTERS FOR TESTING
 	public String getName() {

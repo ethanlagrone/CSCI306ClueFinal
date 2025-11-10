@@ -102,6 +102,18 @@ public class Board {
 		createDeck();
 	}
     
+    
+    public boolean checkAccusation(Card weapon, Card room, Card person){
+    	//stub
+    	return false;
+    }
+    
+    
+    public void handleSuggestion(Card weapon, Card room, Card person) {
+    	//stub
+    }
+    
+    
     public void createDeck() {
     	//add all the weapons to the deck
     	for(String weapon : weaponCards) {

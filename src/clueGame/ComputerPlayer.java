@@ -10,4 +10,14 @@ public class ComputerPlayer extends Player{
 	public boolean isHuman() {
 		return false;
 	}
+	
+	public Solution createSuggestion(Solution suggestion) {
+		return null;
+		//stub
+	}
+	
+	public BoardCell selectTarget(BoardCell cell) {
+		return null;
+		//stub
+	}
 }
