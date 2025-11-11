@@ -5,8 +5,11 @@ public class Solution {
 	private Card person;
 	private Card weapon;
 	
-	public Solution(Card room, Card person, Card weapon) {
+	public Solution(Card room, Card person, Card weapon) throws BadConfigFormatException {
 		super();
+		if(room.getCardType() != CardType.ROOM || person.getCardType() != CardType.PERSON || weapon.getCardType() != CardType.WEAPON) {
+			throw new BadConfigFormatException("CardType not right");
+		}
 		this.room = room;
 		this.person = person;
 		this.weapon = weapon;

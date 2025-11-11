@@ -25,7 +25,7 @@ public class GameSolutionTest {
 	
 	
 	@Test
-	public void checkAccusationTest() {
+	public void checkAccusationTest() throws BadConfigFormatException {
 
 		//correct accusation
 		Solution accusation = new Solution(board.getSolution().getRoom(), board.getSolution().getPerson(), board.getSolution().getWeapon());
@@ -33,24 +33,20 @@ public class GameSolutionTest {
 		
 		
 		//incorrect accusation wrong weapon
-		Solution incorrectAccusationWeapon = new Solution(board.getSolution().getRoom(), board.getSolution().getPerson(), null);
+		Solution incorrectAccusationWeapon = new Solution(board.getSolution().getRoom(), board.getSolution().getPerson(), new Card(null, CardType.WEAPON));
 		assertTrue(!board.checkAccusation(incorrectAccusationWeapon));
 		
 		//incorrect accusation wrong person
-		Solution incorrectAccusationPerson = new Solution(board.getSolution().getRoom(), null, board.getSolution().getWeapon());
+		Solution incorrectAccusationPerson = new Solution(board.getSolution().getRoom(), new Card(null, CardType.PERSON), board.getSolution().getWeapon());
 		assertTrue(!board.checkAccusation(incorrectAccusationPerson));
 		
 		//incorrect accusation wrong place
-		Solution incorrectAccusationPlace = new Solution(null, board.getSolution().getPerson(), board.getSolution().getWeapon());
+		Solution incorrectAccusationPlace = new Solution(new Card(null, CardType.ROOM), board.getSolution().getPerson(), board.getSolution().getWeapon());
 		assertTrue(!board.checkAccusation(incorrectAccusationPlace));
 	}
 	
 	@Test
-	public void dissproveSuggestionTest() {
-		/*If player has only one matching card it should be returned
-		If players has >1 matching card, returned card should be chosen randomly
-		If player has no matching cards, null is returned*/
-		
+	public void dissproveSuggestionTest() throws BadConfigFormatException {
 		//Create garbage cards and a garbage player with three cards and a garbage solution
 		Card dissprovedCard;
 		ComputerPlayer cp = new ComputerPlayer("John", "Green", 1, 1);
@@ -96,7 +92,15 @@ public class GameSolutionTest {
 	
 	@Test
 	public void handleSuggestionTest() {
-		//stub
+		/*Suggestion no one can disprove returns null
+		Suggestion only suggesting player can disprove returns null
+		Suggestion only human can disprove returns answer (i.e., card that disproves suggestion)
+		Suggestion that two players can disprove, correct player 
+		(based on starting with next player in list) returns answer*/
+		
+		
+		
+		
 	}
 	
 }

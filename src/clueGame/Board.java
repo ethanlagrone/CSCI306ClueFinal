@@ -179,7 +179,11 @@ public class Board {
 				}
 			}
 		}
-		solution = new Solution(solutionRoom, solutionPerson, solutionWeapon);
+		try {
+			solution = new Solution(solutionRoom, solutionPerson, solutionWeapon);
+		} catch (BadConfigFormatException e) {
+			e.printStackTrace();
+		}
 		Collections.shuffle(deck);
 		int currentPlayer = 0;
 		for (Card c : deck) {
