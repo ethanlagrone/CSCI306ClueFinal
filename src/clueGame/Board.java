@@ -103,13 +103,13 @@ public class Board {
 	}
     
     
-    public boolean checkAccusation(Card weapon, Card room, Card person){
+    public boolean checkAccusation(Solution accusation){
     	//stub
     	return false;
     }
     
     
-    public void handleSuggestion(Card weapon, Card room, Card person) {
+    public void handleSuggestion(Solution suggestion) {
     	//stub
     }
     
