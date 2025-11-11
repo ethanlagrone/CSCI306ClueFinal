@@ -100,6 +100,7 @@ public class Board {
 		
 		//create the deck for the board
 		createDeck();
+		deal();
 	}
     
     
@@ -112,8 +113,9 @@ public class Board {
     }
     
     
-    public void handleSuggestion(Solution suggestion) {
+    public Card handleSuggestion(Solution suggestion) {
     	//stub
+    	return new Card(null, null);
     }
     
     

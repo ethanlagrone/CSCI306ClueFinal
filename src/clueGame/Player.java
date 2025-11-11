@@ -60,6 +60,8 @@ public abstract class Player {
 		}
 	}
 	
+	
+
 	//SETTERS AND GETTERS FOR TESTING
 	public String getName() {
 		return name;

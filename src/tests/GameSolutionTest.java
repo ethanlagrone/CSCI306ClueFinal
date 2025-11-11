@@ -1,5 +1,6 @@
 package tests;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,6 @@ public class GameSolutionTest {
 		// set the file names to use my config files
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 		board.initialize();
-		board.deal();
 	}
 	
 	
@@ -91,16 +91,48 @@ public class GameSolutionTest {
 	}
 	
 	@Test
-	public void handleSuggestionTest() {
+	public void handleSuggestionTest() throws BadConfigFormatException {
 		/*Suggestion no one can disprove returns null
 		Suggestion only suggesting player can disprove returns null
 		Suggestion only human can disprove returns answer (i.e., card that disproves suggestion)
 		Suggestion that two players can disprove, correct player 
 		(based on starting with next player in list) returns answer*/
 		
+		Card dissprovedCard;
+		ComputerPlayer cpu1 = new ComputerPlayer("John", "Green", 1, 1);
+		ComputerPlayer cpu2 = new ComputerPlayer("Hank", "Green", 1, 1);
+		HumanPlayer humanPlayer = new HumanPlayer("Mario", "Red", 1 ,1);
+		Card garbageCardPerson = new Card("John", CardType.PERSON);
+		Card garbageCardRoom = new Card("Kansas", CardType.ROOM);
+		Card garbageCardWeapon = new Card("Gun", CardType.WEAPON);
+		Solution suggestion = new Solution(garbageCardRoom, garbageCardPerson, garbageCardWeapon);
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(cpu1);
+		players.add(cpu2);
 		
+		//no one can disprove
+		dissprovedCard = board.handleSuggestion(suggestion);
+		assertTrue(dissprovedCard == null);
 		
+		//Only suggesting player can disprove
+		cpu1.updateHand(garbageCardWeapon);
+		dissprovedCard = board.handleSuggestion(suggestion);
+		assertTrue(dissprovedCard == null);
 		
+		//Only human player can disprove
+		cpu1.getHand().remove(garbageCardWeapon);
+		players.add(humanPlayer);
+		humanPlayer.updateHand(garbageCardWeapon);
+		dissprovedCard = board.handleSuggestion(suggestion);
+		assertTrue(humanPlayer.getHand().contains(dissprovedCard));
+		assertTrue(!cpu1.getHand().contains(dissprovedCard));
+		
+		//Multiple players can disprove it but only the person next in the list does
+		cpu2.updateHand(garbageCardPerson);
+		dissprovedCard = board.handleSuggestion(suggestion);
+		assertTrue(cpu2.getHand().contains(dissprovedCard));
+		assertTrue(!humanPlayer.getHand().contains(dissprovedCard));
+		assertTrue(!cpu1.getHand().contains(dissprovedCard));
 	}
 	
 }
