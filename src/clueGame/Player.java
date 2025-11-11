@@ -106,4 +106,8 @@ public abstract class Player {
 		return hand;
 	}
 
+	public Set<String> getSeen() {
+		return seen;
+	}
+
 }
