@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameSolutionTest {
 	
-	private static Board board;
+	private Board board;
 	
 	@BeforeEach
 	public void setUp() {
@@ -109,30 +109,33 @@ public class GameSolutionTest {
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(cpu1);
 		players.add(cpu2);
+		board.setPlayers(players);
 		
 		//no one can disprove
-		dissprovedCard = board.handleSuggestion(suggestion);
+		dissprovedCard = board.handleSuggestion(suggestion, cpu1);
 		assertTrue(dissprovedCard == null);
 		
 		//Only suggesting player can disprove
 		cpu1.updateHand(garbageCardWeapon);
-		dissprovedCard = board.handleSuggestion(suggestion);
+		dissprovedCard = board.handleSuggestion(suggestion, cpu1);
 		assertTrue(dissprovedCard == null);
 		
 		//Only human player can disprove
 		cpu1.getHand().remove(garbageCardWeapon);
 		players.add(humanPlayer);
 		humanPlayer.updateHand(garbageCardWeapon);
-		dissprovedCard = board.handleSuggestion(suggestion);
+		dissprovedCard = board.handleSuggestion(suggestion, cpu1);
 		assertTrue(humanPlayer.getHand().contains(dissprovedCard));
 		assertTrue(!cpu1.getHand().contains(dissprovedCard));
 		
 		//Multiple players can disprove it but only the person next in the list does
 		cpu2.updateHand(garbageCardPerson);
-		dissprovedCard = board.handleSuggestion(suggestion);
+		dissprovedCard = board.handleSuggestion(suggestion, cpu1);
 		assertTrue(cpu2.getHand().contains(dissprovedCard));
 		assertTrue(!humanPlayer.getHand().contains(dissprovedCard));
 		assertTrue(!cpu1.getHand().contains(dissprovedCard));
+		board.setPlayers(null);
 	}
 	
 }
+

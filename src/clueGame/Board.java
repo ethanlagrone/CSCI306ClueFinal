@@ -113,9 +113,31 @@ public class Board {
     }
     
     
-    public Card handleSuggestion(Solution suggestion) {
-    	//stub
-    	return new Card(null, null);
+    public Card handleSuggestion(Solution suggestion, Player player) {
+    	Card shownCard;
+    	int index = players.indexOf(player);
+    	int startIndex = index;
+    	int currentIndex;
+    	if(index == players.size()-1) {
+    		currentIndex = 0;
+    	} else {
+    		currentIndex = (index + 1);
+    	}
+    	 
+
+    	while (currentIndex != startIndex) {
+    	    Player nextPlayer = players.get(currentIndex);
+    	    shownCard = nextPlayer.disproveSuggestion(suggestion);
+    	    if (shownCard != null) {
+    	        return shownCard;
+    	    }
+    	    
+    	    currentIndex ++;
+    	    if(currentIndex == players.size()) {
+    	    	currentIndex = 0;
+    	    }
+    	}
+    	return null;
     }
     
     
@@ -588,6 +610,7 @@ public class Board {
  	    numCols = 0;
  	    deck.clear();
 		players.clear();
+		solution = null;
  	}
  	
 
