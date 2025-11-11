@@ -16,13 +16,17 @@ public class Card {
 
 	
 	
-	//GETTERS AND SETTERS FOR TESTING
+	//GETTERS AND SETTERS
 	public CardType getCardType() {
 		return cardType;
 	}
 
 	public void setCardType(CardType cardType) {
 		this.cardType = cardType;
+	}
+
+	public String getCardName() {
+		return cardName;
 	}
 	
 }

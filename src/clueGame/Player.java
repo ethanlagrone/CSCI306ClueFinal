@@ -10,7 +10,7 @@ public abstract class Player {
 	private String color;
 	private int row, column;
 	private ArrayList<Card> hand;
-	private Set<Card> seen;
+	protected Set<String> seen;
 	
 	
 	public Player(String name, String color, int row, int column) {
@@ -28,12 +28,12 @@ public abstract class Player {
 	public void updateHand(Card card) {
 		if (!hand.contains(card)) {
 			hand.add(card);
-			seen.add(card);
+			seen.add(card.getCardName());
 		}
 	}
 	
 	public void updateSeen(Card card) {
-		seen.add(card);
+		seen.add(card.getCardName());
 	}
 
 	public Card disproveSuggestion(Solution suggestion) {

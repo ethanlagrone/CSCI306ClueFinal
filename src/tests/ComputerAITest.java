@@ -25,10 +25,11 @@ public class ComputerAITest {
 	
 	@Test
 	public void selectTargetsTestNoRoom() {
-		// set up sample computer player at (9, 9) and have it roll a number that gives it no room targets
-		ComputerPlayer testPlayer = new ComputerPlayer(null, null, 9, 9);
+		// set up sample computer player at (7, 9) and have it roll a number that gives it no room targets
+		ComputerPlayer testPlayer = new ComputerPlayer(null, null, 7, 9);
 		board.calcTargets(board.getCell(testPlayer.getRow(), testPlayer.getColumn()), 2);
 		Set<BoardCell> targets = board.getTargets();
+		System.out.println(targets.size());
 		
 		// have it select the target 200 times
 		ArrayList<BoardCell> selections = new ArrayList<>();
