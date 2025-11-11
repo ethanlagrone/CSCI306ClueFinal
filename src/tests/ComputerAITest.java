@@ -124,8 +124,16 @@ public class ComputerAITest {
 	
 	@Test 
 	public void createSuggestionsTest() {
-		// create a test player, place them just outside Larimer Lounge
-		ComputerPlayer testPlayer = new ComputerPlayer(null, null, 20, 19);
-		board.calcTargets(board.getCell(testPlayer.getRow(), testPlayer.getColumn()), 1);
+		// create a test player, place them in Larimer Lounge, assume they just moved there
+		ComputerPlayer testPlayer = new ComputerPlayer(null, null, 21, 21);
+		Room currentRoom = board.getCell(testPlayer.getRow(), testPlayer.getColumn()).getRoom();
+		Solution suggestion = testPlayer.createSuggestion(currentRoom);
+		
+		// ensure that the room in the suggestion is the one entered
+		assertTrue(suggestion.getRoom().getCardName().equals(currentRoom.getName()));
+		
+		// ensure that the person and weapon in the suggestion are not in the computer's seen cards
+		assertFalse(testPlayer.getSeen().contains(suggestion.getPerson().getCardName()));
+		assertFalse(testPlayer.getSeen().contains(suggestion.getWeapon().getCardName()));
 	}
 }

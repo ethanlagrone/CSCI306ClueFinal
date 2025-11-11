@@ -14,7 +14,7 @@ public class ComputerPlayer extends Player{
 		return false;
 	}
 	
-	public Solution createSuggestion(Solution suggestion) {
+	public Solution createSuggestion(Room room) {
 		return null;
 		//stub
 	}
