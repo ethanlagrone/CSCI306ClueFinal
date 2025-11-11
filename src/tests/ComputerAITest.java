@@ -124,10 +124,16 @@ public class ComputerAITest {
 	
 	@Test 
 	public void createSuggestionsTest() {
+		/*If only one weapon not seen, it's selected
+		If only one person not seen, it's selected (can be same test as weapon)*/
+		
 		// create a test player, place them in Larimer Lounge, assume they just moved there
 		ComputerPlayer testPlayer = new ComputerPlayer(null, null, 21, 21);
 		Room currentRoom = board.getCell(testPlayer.getRow(), testPlayer.getColumn()).getRoom();
-		board.createDeck();
+		board.prepareCards();
+		
+		
+		//Multiple weapons not seen
 		Solution suggestion = testPlayer.createSuggestion(currentRoom, board.getDeck());
 		
 		// ensure that the room in the suggestion is the one entered
@@ -136,5 +142,43 @@ public class ComputerAITest {
 		// ensure that the person and weapon in the suggestion are not in the computer's seen cards
 		assertFalse(testPlayer.getSeen().contains(suggestion.getPerson().getCardName()));
 		assertFalse(testPlayer.getSeen().contains(suggestion.getWeapon().getCardName()));
+		
+		//ensure that it is picked randomly
+		int dAngeloCount = 0;
+		for(int i = 0; i < 500; i++) {
+			suggestion = testPlayer.createSuggestion(currentRoom, board.getDeck());
+			if(suggestion.getPerson().getCardName().equals("D'Angelo")) {
+				dAngeloCount++;
+			}
+		}
+		assertTrue(dAngeloCount != 0);
+		assertTrue(dAngeloCount > 0);
+		
+		int guitarCount = 0;
+		for(int i = 0; i < 500; i++) {
+			suggestion = testPlayer.createSuggestion(currentRoom, board.getDeck());
+			if(suggestion.getWeapon().getCardName().equals("Guitar")) {
+				guitarCount++;
+			}
+		}
+		
+		assertTrue(guitarCount != 0);
+		assertTrue(guitarCount > 0);
+		
+		for(Card c : board.getDeck()) {
+			testPlayer.updateSeen(c);
+		}
+		
+		for(Card c : board.getDeck()) {
+			if(c.getCardName().equals("D'Angelo")) {
+				testPlayer.removeSeen(c);
+			} else if(c.getCardName().equals("Guitar")) {
+				testPlayer.removeSeen(c);
+			}
+		}
+		
+		suggestion = testPlayer.createSuggestion(currentRoom, board.getDeck());
+		assertTrue(suggestion.getPerson().getCardName().equals("D'Angelo"));
+		assertTrue(suggestion.getWeapon().getCardName().equals("Guitar"));
 	}
 }

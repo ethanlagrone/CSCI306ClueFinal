@@ -35,6 +35,10 @@ public abstract class Player {
 	public void updateSeen(Card card) {
 		seen.add(card.getCardName());
 	}
+	
+	public void removeSeen(Card card) {
+		seen.remove(card.getCardName());
+	}
 
 	public Card disproveSuggestion(Solution suggestion) {
 		ArrayList<Card> possibleCards = new ArrayList<Card>();
