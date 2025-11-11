@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import clueGame.*;
@@ -15,16 +15,16 @@ public class GamesSetupTests {
 	private static Board board;
 	
 	
-	@BeforeAll
+	@BeforeEach
 	public void setUp() {
 		// clueGame is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 		board.initialize();
+		board.prepareCards();
 	}
-	    
-		
+	
 	
 	@Test
 	public void testDeck() throws BadConfigFormatException {
@@ -90,7 +90,6 @@ public class GamesSetupTests {
 	@Test
 	public void testDealing() {
 		// make sure cards are dealt as expected
-		board.deal();
 		Solution solution = board.getSolution();
 		ArrayList<Player> players = board.getPlayers();
 		for (Player p : players) {
@@ -115,7 +114,6 @@ public class GamesSetupTests {
 	}
 	
 	@Test public void testSolution() {
-		board.deal();
 		Solution solution = board.getSolution();
 		// ensure the solution properly contains a room, person, and weapon card
 		assertTrue(solution.getRoom().getCardType() == CardType.ROOM);

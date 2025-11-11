@@ -98,6 +98,9 @@ public class Board {
 			e.printStackTrace();
 		}
 		
+	}
+
+	public void prepareCards() {
 		//create the deck for the board
 		createDeck();
 		deal();
@@ -210,7 +213,10 @@ public class Board {
 		}
 		Collections.shuffle(deck);
 		int currentPlayer = 0;
+		int loop = 0;
 		for (Card c : deck) {
+			loop++;
+			System.out.println("Loop: " + loop + ", Player: " + currentPlayer);
 			if (c.equals(solutionRoom) || c.equals(solutionPerson) || c.equals(solutionWeapon)) {
 				continue;
 			}

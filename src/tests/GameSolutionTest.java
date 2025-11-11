@@ -21,6 +21,7 @@ public class GameSolutionTest {
 		// set the file names to use my config files
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 		board.initialize();
+		board.prepareCards();
 	}
 	
 	
