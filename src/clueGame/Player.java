@@ -35,9 +35,9 @@ public abstract class Player {
 		seen.add(card);
 	}
 
-	public Card disproveSuggestion() {
+	public Card disproveSuggestion(Solution suggestion) {
 		//stub
-		return null;
+		return new Card("John", CardType.PERSON);
 	}
 	
 	//SETTERS AND GETTERS FOR TESTING
