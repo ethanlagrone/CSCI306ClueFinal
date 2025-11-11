@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import clueGame.*;
@@ -15,7 +15,7 @@ public class GamesSetupTests {
 	private static Board board;
 	
 	
-	@BeforeEach
+	@BeforeAll
 	public void setUp() {
 		// clueGame is singleton, get the only instance
 		board = Board.getInstance();
@@ -23,21 +23,6 @@ public class GamesSetupTests {
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
 		board.initialize();
 	}
-	
-		/*Setup Test
-		So what do we need to be concerned with testing setup?   Here are some of our necessary concerns:
-
-		People are loaded in
-		Proper Human or Computer player is initialized based on people data
-		The solution to the game is dealt
-		The other cards are dealt to the players.
-		
-		Load people and weapons from ClueSetup.txt and ensure the data was loaded properly.
-		Create Player class with human and computer child classes.   
-		Use people data to instantiate 6 players (1 human and 5 computer)
-		Create complete deck of cards (weapons, people and rooms)
-		Deal cards to the Answer and the players 
-		(all cards dealt, players have roughly same # of cards, no card dealt twice)*/
 	    
 		
 	

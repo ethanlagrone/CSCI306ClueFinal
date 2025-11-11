@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameSolutionTest {
 	
-	private Board board;
+	private static Board board;
 	
 	@BeforeEach
 	public void setUp() {
@@ -92,11 +92,7 @@ public class GameSolutionTest {
 	
 	@Test
 	public void handleSuggestionTest() throws BadConfigFormatException {
-		/*Suggestion no one can disprove returns null
-		Suggestion only suggesting player can disprove returns null
-		Suggestion only human can disprove returns answer (i.e., card that disproves suggestion)
-		Suggestion that two players can disprove, correct player 
-		(based on starting with next player in list) returns answer*/
+	
 		
 		Card dissprovedCard;
 		ComputerPlayer cpu1 = new ComputerPlayer("John", "Green", 1, 1);
@@ -134,7 +130,6 @@ public class GameSolutionTest {
 		assertTrue(cpu2.getHand().contains(dissprovedCard));
 		assertTrue(!humanPlayer.getHand().contains(dissprovedCard));
 		assertTrue(!cpu1.getHand().contains(dissprovedCard));
-		board.setPlayers(null);
 	}
 	
 }
