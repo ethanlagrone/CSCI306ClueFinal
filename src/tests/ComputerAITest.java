@@ -127,7 +127,8 @@ public class ComputerAITest {
 		// create a test player, place them in Larimer Lounge, assume they just moved there
 		ComputerPlayer testPlayer = new ComputerPlayer(null, null, 21, 21);
 		Room currentRoom = board.getCell(testPlayer.getRow(), testPlayer.getColumn()).getRoom();
-		Solution suggestion = testPlayer.createSuggestion(currentRoom);
+		board.createDeck();
+		Solution suggestion = testPlayer.createSuggestion(currentRoom, board.getDeck());
 		
 		// ensure that the room in the suggestion is the one entered
 		assertTrue(suggestion.getRoom().getCardName().equals(currentRoom.getName()));
