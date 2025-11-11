@@ -104,7 +104,6 @@ public class Board {
     
     
     public boolean checkAccusation(Solution accusation){
-    	//stub
     	return false;
     }
     
@@ -140,7 +139,12 @@ public class Board {
     }
     
     
-    public void deal() {
+    public void setSolution(Solution solution) {
+		this.solution = solution;
+	}
+
+
+	public void deal() {
     	Card solutionRoom = null;
 		Card solutionPerson = null;
 		Card solutionWeapon = null;

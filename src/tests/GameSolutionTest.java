@@ -25,7 +25,24 @@ public class GameSolutionTest {
 	
 	@Test
 	public void checkAccusationTest() {
-		//stub
+		board.deal();
+
+		//correct accusation
+		Solution accusation = new Solution(board.getSolution().getRoom(), board.getSolution().getPerson(), board.getSolution().getWeapon());
+		assertTrue(board.checkAccusation(accusation));
+		
+		
+		//incorrect accusation wrong weapon
+		Solution incorrectAccusationWeapon = new Solution(board.getSolution().getRoom(), board.getSolution().getPerson(), null);
+		assertTrue(!board.checkAccusation(incorrectAccusationWeapon));
+		
+		//incorrect accusation wrong person
+		Solution incorrectAccusationPerson = new Solution(board.getSolution().getRoom(), null, board.getSolution().getWeapon());
+		assertTrue(!board.checkAccusation(incorrectAccusationPerson));
+		
+		//incorrect accusation wrong place
+		Solution incorrectAccusationPlace = new Solution(null, board.getSolution().getPerson(), board.getSolution().getWeapon());
+		assertTrue(!board.checkAccusation(incorrectAccusationPlace));
 	}
 	
 	@Test
