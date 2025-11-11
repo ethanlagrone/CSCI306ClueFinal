@@ -96,7 +96,7 @@ public class ComputerAITest {
 	@Test
 	public void selectTargetsTestSeenRoom() {
 		// set up computer player just outside Larimer Lounge, add it to seen
-		ComputerPlayer testPlayer = new ComputerPlayer(null, null, 20, 20);
+		ComputerPlayer testPlayer = new ComputerPlayer(null, null, 20, 19);
 		Card larimer = new Card("Larimer Lounge", CardType.ROOM);
 		testPlayer.updateSeen(larimer);
 		board.calcTargets(board.getCell(testPlayer.getRow(), testPlayer.getColumn()), 1);

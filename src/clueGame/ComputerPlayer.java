@@ -22,9 +22,12 @@ public class ComputerPlayer extends Player{
 	public BoardCell selectTarget(Set<BoardCell> targets) {
 		ArrayList<BoardCell> unseenRooms = new ArrayList<>();
 		for (BoardCell cell : targets) {
-			if (cell.getRoom() != null && !seen.contains(cell.getRoom().getName())) {
+			if (!cell.getRoom().getName().equals("Walkway") && !seen.contains(cell.getRoom().getName())) {
 				unseenRooms.add(cell);
 			}
+		}
+		for (BoardCell cell : unseenRooms) {
+			System.out.println(cell.getRoom().getName());
 		}
 
 		if (unseenRooms.size() != 0) {
