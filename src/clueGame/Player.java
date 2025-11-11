@@ -2,6 +2,7 @@ package clueGame;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public abstract class Player {
@@ -36,8 +37,27 @@ public abstract class Player {
 	}
 
 	public Card disproveSuggestion(Solution suggestion) {
-		//stub
-		return new Card("John", CardType.PERSON);
+		ArrayList<Card> possibleCards = new ArrayList<Card>();
+		for(Card c : hand) {
+			if(c.equals(suggestion.getPerson())) {
+				possibleCards.add(c);
+			} else if(c.equals(suggestion.getRoom())) {
+				possibleCards.add(c);
+			} else if(c.equals(suggestion.getWeapon())) {
+				possibleCards.add(c);
+			}
+		}
+		
+		Random random = new Random();
+		
+		if(possibleCards.size() == 0) {
+			return null;
+		} else if (possibleCards.size() == 1){
+			return possibleCards.get(0);
+		} else {
+			int chosenCard = random.nextInt(0, possibleCards.size());
+			return possibleCards.get(chosenCard);
+		}
 	}
 	
 	//SETTERS AND GETTERS FOR TESTING

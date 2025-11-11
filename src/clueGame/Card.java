@@ -10,8 +10,8 @@ public class Card {
 		this.cardType = cardType;
 	}
 	
-	public boolean equals(CardType cardType) {
-		return cardType == this.cardType;
+	public boolean equals(CardType cardType, String cardName) {
+		return cardType == this.cardType && cardName == this.cardName;
 	}
 
 	
