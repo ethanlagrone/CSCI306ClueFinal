@@ -213,10 +213,10 @@ public class Board {
 		}
 		Collections.shuffle(deck);
 		int currentPlayer = 0;
-		int loop = 0;
+		//int loop = 0;
 		for (Card c : deck) {
-			loop++;
-			System.out.println("Loop: " + loop + ", Player: " + currentPlayer);
+			//loop++;
+			//System.out.println("Loop: " + loop + ", Player: " + currentPlayer);
 			if (c.equals(solutionRoom) || c.equals(solutionPerson) || c.equals(solutionWeapon)) {
 				continue;
 			}

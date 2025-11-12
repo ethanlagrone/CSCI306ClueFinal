@@ -29,7 +29,6 @@ public class ComputerAITest {
 		ComputerPlayer testPlayer = new ComputerPlayer(null, null, 7, 9);
 		board.calcTargets(board.getCell(testPlayer.getRow(), testPlayer.getColumn()), 2);
 		Set<BoardCell> targets = board.getTargets();
-		System.out.println(targets.size());
 		
 		// have it select the target 200 times
 		ArrayList<BoardCell> selections = new ArrayList<>();
