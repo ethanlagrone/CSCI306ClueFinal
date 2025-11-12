@@ -178,7 +178,7 @@ public class ComputerAITest {
 		}
 		
 		suggestion = testPlayer.createSuggestion(currentRoom, board.getDeck());
-		//assertTrue(suggestion.getPerson().getCardName().equals("D'Angelo"));
+		assertTrue(suggestion.getPerson().getCardName().equals("D'Angelo"));
 		assertTrue(suggestion.getWeapon().getCardName().equals("Guitar"));
 	}
 }
