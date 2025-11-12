@@ -115,6 +115,7 @@ public class ComputerAITest {
 			else outsideRoom++;
 		}
 		assertFalse(inRoom == 0);
+		assertTrue(outsideRoom == 0);
 
 		// ensure that the amount each target is chosen sums to 10
 		int sum = inRoom + outsideRoom;
