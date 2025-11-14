@@ -19,6 +19,12 @@ public class ClueCardsGUI extends JPanel{
 	Player humanPlayer;
 
 	public ClueCardsGUI(ArrayList<Player> players) {
+		this.removeAll();
+		reMakeUI(players);
+	}
+	
+	public void reMakeUI(ArrayList<Player> players) {
+		this.removeAll();
 		setLayout(new GridLayout(3,1));
 		setBorder(new TitledBorder("Known Cards"));
 		for(Player p: players) {
@@ -96,6 +102,9 @@ public class ClueCardsGUI extends JPanel{
 		add(people, BorderLayout.NORTH);
 		add(rooms);
 		add(weapons);
+		
+		revalidate();
+		repaint();
 	}
 	
 	public JTextField cardText(Card card, ArrayList<Player> players) {
@@ -108,6 +117,11 @@ public class ClueCardsGUI extends JPanel{
 		}
 		
 		return cardText;
+		
+	}
+	
+	
+	public void tearDownPanel() {
 		
 	}
 	
@@ -134,6 +148,9 @@ public class ClueCardsGUI extends JPanel{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
 		frame.setVisible(true); // make it visible
 		
-		
+		for(Card c : players.get(1).getHand()) {
+			players.get(0).updateSeen(c);
+		}
+		panel.reMakeUI(players);
 	}
 }
