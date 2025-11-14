@@ -20,10 +20,10 @@ public class ClueCardsGUI extends JPanel{
 
 	public ClueCardsGUI(ArrayList<Player> players) {
 		this.removeAll();
-		reMakeUI(players);
+		reMakeGUI(players);
 	}
 	
-	public void reMakeUI(ArrayList<Player> players) {
+	public void reMakeGUI(ArrayList<Player> players) {
 		this.removeAll();
 		setLayout(new GridLayout(3,1));
 		setBorder(new TitledBorder("Known Cards"));
@@ -121,10 +121,6 @@ public class ClueCardsGUI extends JPanel{
 	}
 	
 	
-	public void tearDownPanel() {
-		
-	}
-	
 	public static void main(String[] args) {
 		Board board;
 		
@@ -151,6 +147,6 @@ public class ClueCardsGUI extends JPanel{
 		for(Card c : players.get(1).getHand()) {
 			players.get(0).updateSeen(c);
 		}
-		panel.reMakeUI(players);
+		panel.reMakeGUI(players);
 	}
 }
