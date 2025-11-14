@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class GameControlPanel extends JPanel {
@@ -61,10 +60,10 @@ public class GameControlPanel extends JPanel {
     	JPanel bottomRightPanel = new JPanel(new GridLayout(2,1));
     	
     	//Add to bottomPanel
-    	bottomLeftPanel.add(new JLabel("Guess"), BorderLayout.NORTH);
+    	bottomLeftPanel.setBorder(new TitledBorder("Guess"));
     	bottomLeftPanel.add(guessText);
     	
-    	bottomRightPanel.add(new JLabel("Guess Result"), BorderLayout.NORTH);
+    	bottomRightPanel.setBorder(new TitledBorder("Guess Result"));
     	bottomRightPanel.add(guessResultText);
     	
     	bottomMainPanel.add(bottomLeftPanel);
