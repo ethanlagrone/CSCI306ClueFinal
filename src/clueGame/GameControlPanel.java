@@ -79,6 +79,7 @@ public class GameControlPanel extends JPanel {
     
     
 	public void setTurn(Player player, int turn) {
+		//get player name and color to set who's turn it is
 		turnText.setText(player.getName() + "'s");
 		turnText.setBackground(player.getColorCode());
 		rollText.setText(String.valueOf(turn));
@@ -93,7 +94,7 @@ public class GameControlPanel extends JPanel {
 	}
 	
 	public static void main(String[] args) {
-		//THIS IS GARBAGE CODE FYI
+		//test code
 		GameControlPanel panel = new GameControlPanel();  // create the panel
 		JFrame frame = new JFrame();  // create the frame 
 		frame.setContentPane(panel); // put the panel in the frame
@@ -102,7 +103,7 @@ public class GameControlPanel extends JPanel {
 		frame.setVisible(true); // make it visible
 		
 		// test filling in the data
-		panel.setTurn(new ComputerPlayer( "Joe Mama", "black", 0, 0), 5);
+		panel.setTurn(new ComputerPlayer( "Joe Mama", "red", 0, 0), 5);
 		panel.setGuess( "I have no guess!");
 		panel.setGuessResult( "So you have nothing?");
 	}

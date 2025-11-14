@@ -23,6 +23,7 @@ public class ClueCardsGUI extends JPanel{
 		reMakeGUI(players);
 	}
 	
+	
 	public void reMakeGUI(ArrayList<Player> players) {
 		this.removeAll();
 		setLayout(new GridLayout(3,1));
@@ -57,6 +58,7 @@ public class ClueCardsGUI extends JPanel{
 		JPanel weaponHand = new JPanel(new GridLayout(3,1));
 		JPanel weaponSeen = new JPanel(new GridLayout(9,1));
 		
+		//adding text to panels
 		peopleHand.add(peopleHandLabel, BorderLayout.NORTH);
 		peopleSeen.add(peopleSeenLabel);
 		roomsHand.add(roomsHandLabel, BorderLayout.NORTH);
@@ -64,6 +66,7 @@ public class ClueCardsGUI extends JPanel{
 		weaponHand.add(weaponHandLabel, BorderLayout.NORTH);
 		weaponSeen.add(weaponSeenLabel);
 		
+		//adding panels
 		people.add(peopleHand);
 		people.add(peopleSeen);
 		rooms.add(roomsHand);
@@ -71,10 +74,9 @@ public class ClueCardsGUI extends JPanel{
 		weapons.add(weaponHand);
 		weapons.add(weaponSeen);
 		
-		//go through 
+		//go through human player's seen cards and see if it is in its hand or another players
 		for(Card c : humanPlayer.getSeen()) {
 			//new JPanel that uses attributes of the card to create it
-			//We could do isInHand boolean 
 			JTextField handCardText = new JTextField();
 			handCardText = cardText(c, players);
 			if(c.getCardType() == CardType.PERSON) {
@@ -103,11 +105,14 @@ public class ClueCardsGUI extends JPanel{
 		add(rooms);
 		add(weapons);
 		
+		//revalidate and repaint to delete and remake
 		revalidate();
 		repaint();
 	}
 	
+	
 	public JTextField cardText(Card card, ArrayList<Player> players) {
+		//get card name and color of player that has it and return textField
 		JTextField cardText = new JTextField(card.getCardName());
 
 		for(Player p : players) {
@@ -132,6 +137,7 @@ public class ClueCardsGUI extends JPanel{
 		board.initialize();
 		board.prepareCards();
 		players = board.getPlayers();
+		//adding seen values for testing
 		for(Card c : players.get(2).getHand()) {
 			players.get(0).updateSeen(c);
 		}
@@ -144,6 +150,7 @@ public class ClueCardsGUI extends JPanel{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
 		frame.setVisible(true); // make it visible
 		
+		//adding more seen values for testing reMakeGUI
 		for(Card c : players.get(1).getHand()) {
 			players.get(0).updateSeen(c);
 		}
