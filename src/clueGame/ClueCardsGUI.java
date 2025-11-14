@@ -3,6 +3,7 @@ package clueGame;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Set;
@@ -11,12 +12,20 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+
 
 public class ClueCardsGUI extends JPanel{
+	Player humanPlayer;
 
-	public ClueCardsGUI(Player player) {
+	public ClueCardsGUI(ArrayList<Player> players) {
 		setLayout(new GridLayout(3,1));
 		setBorder(new TitledBorder("Known Cards"));
+		for(Player p: players) {
+			if(p.isHuman()) {
+				humanPlayer = p;
+			}
+		}
 		
 		//Create three JPanels for People rooms and weapons
 		JPanel people = new JPanel(new GridLayout(2,1));
@@ -28,47 +37,57 @@ public class ClueCardsGUI extends JPanel{
 		
 		
 		//Create two JPanels for each of those that has inHand and Seen
-		JTextField hand = new JTextField("In Hand");
-		JTextField seen = new JTextField("Seen");
+		JTextField peopleHandLabel = new JTextField("In Hand");
+		JTextField peopleSeenLabel = new JTextField("Seen");
+		JTextField roomsHandLabel = new JTextField("In Hand");
+		JTextField roomsSeenLabel = new JTextField("Seen");
+		JTextField weaponHandLabel = new JTextField("In Hand");
+		JTextField weaponSeenLabel = new JTextField("Seen");
 		
-		JPanel peopleHand = new JPanel();
-		JPanel peopleSeen = new JPanel();
-		JPanel roomsHand = new JPanel();
-		JPanel roomsSeen = new JPanel();
-		JPanel weaponHand = new JPanel();
-		JPanel weaponSeen = new JPanel();
+		JPanel peopleHand = new JPanel(new GridLayout(3,1));
+		JPanel peopleSeen = new JPanel(new GridLayout(6,1));
+		JPanel roomsHand = new JPanel(new GridLayout(3,1));
+		JPanel roomsSeen = new JPanel(new GridLayout(9,1));
+		JPanel weaponHand = new JPanel(new GridLayout(3,1));
+		JPanel weaponSeen = new JPanel(new GridLayout(9,1));
 		
-		peopleHand.add(hand, BorderLayout.NORTH);
-		peopleSeen.add(seen);
-		roomsHand.add(hand, BorderLayout.NORTH);
-		roomsSeen.add(seen);
-		weaponHand.add(hand, BorderLayout.NORTH);
-		weaponSeen.add(seen);
+		peopleHand.add(peopleHandLabel, BorderLayout.NORTH);
+		peopleSeen.add(peopleSeenLabel);
+		roomsHand.add(roomsHandLabel, BorderLayout.NORTH);
+		roomsSeen.add(roomsSeenLabel);
+		weaponHand.add(weaponHandLabel, BorderLayout.NORTH);
+		weaponSeen.add(weaponSeenLabel);
 		
+		people.add(peopleHand);
+		people.add(peopleSeen);
+		rooms.add(roomsHand);
+		rooms.add(roomsSeen);
+		weapons.add(weaponHand);
+		weapons.add(weaponSeen);
 		
 		//go through 
-		for(Card c : player.getSeen()) {
+		for(Card c : humanPlayer.getSeen()) {
 			//new JPanel that uses attributes of the card to create it
 			//We could do isInHand boolean 
-			JPanel handCardPanel = new JPanel();
-			handCardPanel = cardPanel(c);
+			JTextField handCardText = new JTextField();
+			handCardText = cardText(c, players);
 			if(c.getCardType() == CardType.PERSON) {
-				if(player.isInHand(c)) {
-					peopleHand.add(handCardPanel);
+				if(humanPlayer.isInHand(c)) {
+					peopleHand.add(handCardText);
 				} else {
-					peopleSeen.add(handCardPanel);
+					peopleSeen.add(handCardText);
 				}
 			} else if(c.getCardType() == CardType.ROOM) {
-				if(player.isInHand(c)) {
-					roomsHand.add(handCardPanel);
+				if(humanPlayer.isInHand(c)) {
+					roomsHand.add(handCardText);
 				} else {
-					roomsSeen.add(handCardPanel);
+					roomsSeen.add(handCardText);
 				}
 			} else if(c.getCardType() == CardType.WEAPON) {
-				if(player.isInHand(c)) {
-					weaponHand.add(handCardPanel);
+				if(humanPlayer.isInHand(c)) {
+					weaponHand.add(handCardText);
 				} else {
-					weaponSeen.add(handCardPanel);
+					weaponSeen.add(handCardText);
 				}
 			}
 			
@@ -79,10 +98,17 @@ public class ClueCardsGUI extends JPanel{
 		add(weapons);
 	}
 	
-	public JPanel cardPanel(Card card) {
-		//JUST THIS
-		//Create JPanel From Card
-		return null;
+	public JTextField cardText(Card card, ArrayList<Player> players) {
+		JTextField cardText = new JTextField(card.getCardName());
+
+		for(Player p : players) {
+			if(p.getHand().contains(card)) {
+				cardText.setBackground(p.getColorCode());
+			}
+		}
+		
+		return cardText;
+		
 	}
 	
 	public static void main(String[] args) {
@@ -96,9 +122,12 @@ public class ClueCardsGUI extends JPanel{
 		board.initialize();
 		board.prepareCards();
 		players = board.getPlayers();
+		for(Card c : players.get(2).getHand()) {
+			players.get(0).updateSeen(c);
+		}
 
 
-		ClueCardsGUI panel = new ClueCardsGUI(players.get(0));  // create the panel
+		ClueCardsGUI panel = new ClueCardsGUI(players);  // create the panel
 		JFrame frame = new JFrame();  // create the frame 
 		frame.setContentPane(panel); // put the panel in the frame
 		frame.setSize(300, 800);  // size the frame
