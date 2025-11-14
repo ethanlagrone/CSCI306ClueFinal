@@ -115,6 +115,13 @@ public abstract class Player {
 		return seen;
 	}
 	
+	public boolean isInHand(Card c) {
+		if(hand.contains(c)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public Color getColorCode() {
 		/*Player, D'Angelo, Brown, 2, 17, 
 		Player, Bob Dylan, White, 10, 20, 
