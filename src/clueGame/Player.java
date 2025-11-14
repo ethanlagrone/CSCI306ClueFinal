@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -112,6 +113,36 @@ public abstract class Player {
 
 	public Set<Card> getSeen() {
 		return seen;
+	}
+	
+	public Color getColorCode() {
+		/*Player, D'Angelo, Brown, 2, 17, 
+		Player, Bob Dylan, White, 10, 20, 
+		Player, Rivers Cuomo, Blue, 17, 7, 
+		Player, Marvin Gaye, Red, 9, 12, 
+		Player, Kendrick Lamar, Green, 7, 5, 
+		Player, Robert Plant, Black, 10, 19, */
+		if(color == null) {
+			return Color.WHITE;
+		}
+		String newColor = color.toLowerCase();
+		switch(newColor) {
+			case "white":
+				return Color.WHITE;
+			case "brown":
+				//had to look up rgb value
+				return new Color(181, 101, 29);
+			case "blue":
+				return Color.BLUE;
+			case "red":
+				return Color.RED;
+			case "green":
+				return Color.GREEN;
+			case "black":
+				return Color.GRAY;
+			default:
+				return Color.WHITE;
+		}
 	}
 
 }

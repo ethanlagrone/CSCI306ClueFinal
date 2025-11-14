@@ -25,6 +25,11 @@ public class GameControlPanel extends JPanel {
         rollText = new JTextField(5);
         guessText = new JTextField(20);
         guessResultText = new JTextField(20);
+        
+        turnText.setEditable(false);
+        rollText.setEditable(false);
+        guessText.setEditable(false);
+        guessResultText.setEditable(false);
     	
     	//Big Panel two rows
     	JPanel MainPanel = new JPanel();
@@ -76,6 +81,7 @@ public class GameControlPanel extends JPanel {
     
 	public void setTurn(Player player, int turn) {
 		turnText.setText(player.getName() + "'s");
+		turnText.setBackground(player.getColorCode());
 		rollText.setText(String.valueOf(turn));
 	}
 	
@@ -97,7 +103,7 @@ public class GameControlPanel extends JPanel {
 		frame.setVisible(true); // make it visible
 		
 		// test filling in the data
-		panel.setTurn(new ComputerPlayer( "Col. Mustard", "orange", 0, 0), 5);
+		panel.setTurn(new ComputerPlayer( "Joe Mama", "black", 0, 0), 5);
 		panel.setGuess( "I have no guess!");
 		panel.setGuessResult( "So you have nothing?");
 	}
