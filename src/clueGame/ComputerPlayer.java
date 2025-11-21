@@ -22,32 +22,29 @@ public class ComputerPlayer extends Player{
 		Card weaponCard = null;
 		Card currentCard = null;
 		Random random = new Random();
-		while (personCard == null) {
+		
+		//Go through the deck and set the cards as random choices, but you need both a person and weapon card
+		while (personCard == null || weaponCard == null) {
 			int index;
 			if(deck.size() == 0) {
 				return null;
 			} else {
+				//get random index
 				index = random.nextInt(0, deck.size());
 			}
 			currentCard = deck.get(index);
-			if(currentCard.getCardType() == CardType.PERSON && !seen.contains(currentCard)) {
+			//check if personCard is empty and if the random card is a person card, set person card
+			if(personCard == null && currentCard.getCardType() == CardType.PERSON && !seen.contains(currentCard)) {
 				personCard = currentCard;
 			}
-		}
-		currentCard = null;
-		while (weaponCard == null) {
-			int index;
-			if(deck.size() == 0) {
-				return null;
-			} else {
-				index = random.nextInt(0, deck.size());
-			}
-			currentCard = deck.get(index);
-			if(currentCard.getCardType() == CardType.WEAPON && !seen.contains(currentCard)) {
+			//check if weaponCard is empty and if the random card is a weapon card, set weapon card
+			if(weaponCard == null && currentCard.getCardType() == CardType.WEAPON && !seen.contains(currentCard)) {
 				weaponCard = currentCard;
 			}
-		} 
-		
+			currentCard = null;
+
+		}
+
 		try {
 			return new Solution(roomCard, personCard, weaponCard);
 		} catch (BadConfigFormatException e) {

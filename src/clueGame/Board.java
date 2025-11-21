@@ -243,7 +243,7 @@ public class Board {
 	    				if(cell.isSecretPassage()) {
 	    					//CONNECTS ROOM CENTERS
 	    					Room targetRoom = roomMap.get(cell.getSecretPassage());
-	                        if (targetRoom != null && targetRoom.getCenterCell() != null) {
+	                        if(targetRoom != null && targetRoom.getCenterCell() != null) {
 	                        	BoardCell targetCenter = targetRoom.getCenterCell();
 	                            cell.getRoom().getCenterCell().addAdjacency(targetCenter);
 	                            targetCenter.addAdjacency(cell.getRoom().getCenterCell());
