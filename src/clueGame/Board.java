@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.BufferedReader;
@@ -658,13 +659,19 @@ public class Board extends JPanel {
 	    board.prepareCards();
 
 
+	    ClueCardsGUI clueCards = new ClueCardsGUI(board.getPlayers());
+	    GameControlPanel gameControlPanel = new GameControlPanel();
 	    JFrame frame = new JFrame("Clue Game Board");
 
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setSize(900, 900);
-	    frame.add(board);
-
+	    frame.add(board, BorderLayout.CENTER);
+	    frame.add(clueCards, BorderLayout.EAST);	    
+	    frame.add(gameControlPanel, BorderLayout.SOUTH);
+	    
 	    frame.setVisible(true);
+	    
+	    
 	    
 	    
 	}
