@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
@@ -649,4 +650,22 @@ public class Board extends JPanel {
 			g.drawOval(xOffset * cellWidth, yOffset * height, cellWidth, cellHeight);
 		}
     }
+	
+	public static void main(String[] args) {
+		Board board = Board.getInstance();
+		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
+	    board.initialize();
+	    board.prepareCards();
+
+
+	    JFrame frame = new JFrame("Clue Game Board");
+
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setSize(900, 900);
+	    frame.add(board);
+
+	    frame.setVisible(true);
+	    
+	    
+	}
 }

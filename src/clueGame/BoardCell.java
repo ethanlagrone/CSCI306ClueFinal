@@ -129,17 +129,17 @@ public class BoardCell {
         // draw each individual cell
         if (room.getName().equals("Walkway")) {
             g.setColor(Color.YELLOW);
-            g.fillRect(xOffset, yOffset, height, width);
+            g.fillRect(xOffset, yOffset, width, height);
             g.setColor(Color.BLACK);
             g.drawRect(xOffset, yOffset, width, height);
         }
         else if (room.getName().equals("Unused")) {
             g.setColor(Color.DARK_GRAY);
-            g.fillRect(xOffset, yOffset, height, width);
+            g.fillRect(xOffset, yOffset, width, height);
         }
         else {
             g.setColor(Color.GREEN);
-            g.fillRect(xOffset, yOffset, height, width);
+            g.fillRect(xOffset, yOffset, width, height);
         }
 
         // handle doors
@@ -148,16 +148,16 @@ public class BoardCell {
             case DoorDirection.NONE:
                 break;
             case DoorDirection.LEFT:
-                g.fillRect(xOffset, yOffset, width / 6, height);
+                g.fillRect(xOffset, yOffset, width, height);
                 break;
             case DoorDirection.UP:
-                g.fillRect(xOffset, yOffset, width, height / 6);
+                g.fillRect(xOffset, yOffset, width, height);
                 break;
             case DoorDirection.RIGHT:
-                g.fillRect(xOffset + (5 / 6) * width, yOffset, width, height);
+                g.fillRect(xOffset, yOffset, width, height);
                 break;
             case DoorDirection.DOWN:
-                g.fillRect(xOffset, yOffset + (5 / 6) * height, width, height);
+                g.fillRect(xOffset, yOffset, width, height);
                 break;
         }
 
