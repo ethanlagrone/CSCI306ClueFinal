@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -624,7 +625,28 @@ public class Board extends JPanel {
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
 		
-    }
- 	
+		// calculate important values
+		int width = getWidth();
+		int height = getHeight();
+		int cellWidth = width / numRows;
+		int cellHeight = height / numCols;
+		
+		// draw cells
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numCols; j++) {
+				grid[i][j].draw(i * cellWidth, j * cellHeight, cellHeight, cellWidth, g);
+			}
+		}
 
+		// draw players
+		int[][] startingCoordinates = {{1, 7}, {0, 15}, {7, 22}, {18, 22}, {23, 9}, {18, 0}};
+		for (int i = 0; i < players.size(); i++) {
+			int xOffset = startingCoordinates[i][0];
+			int yOffset = startingCoordinates[i][1];
+			g.setColor(players.get(i).getColorCode());
+			g.fillOval(xOffset * cellWidth, yOffset * height, cellWidth, cellHeight);
+			g.setColor(Color.BLACK);
+			g.drawOval(xOffset * cellWidth, yOffset * height, cellWidth, cellHeight);
+		}
+    }
 }
