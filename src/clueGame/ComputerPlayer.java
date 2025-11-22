@@ -56,30 +56,33 @@ public class ComputerPlayer extends Player{
 	}
 	
 	public BoardCell selectTarget(Set<BoardCell> targets) {
-		// get all rooms in the target (if any) that are unseen to the player
-		ArrayList<BoardCell> unseenRooms = new ArrayList<>();
-		boolean roomSeen = false;
-		for (BoardCell cell : targets) {
-			if (!cell.getRoom().getName().equals("Walkway")) {
-				for (Card c : seen) {
-					if (c.getCardName().equals(cell.getRoom().getName())) {
-						roomSeen = true;
-					}
-				}
-			}
-			if (!roomSeen) {
-				unseenRooms.add(cell);
-			}
-		}
-
-		// if there are any unseen rooms in the target, pick a random one out of that list
-		if (unseenRooms.size() != 0) {
-			return unseenRooms.get((int)(Math.random() * unseenRooms.size()));
-		}
-		// if there are no unseen rooms in the target, pick a random target
-		else {
-			ArrayList<BoardCell> targetsList = new ArrayList<>(targets);
-			return targetsList.get((int)(Math.random() * targets.size()));
-		}
+	    ArrayList<BoardCell> allRoomCells = new ArrayList<>();
+	    for (BoardCell cell : targets) {
+	        String roomName = cell.getRoom().getName();
+	        if (!roomName.equals("Walkway") && !roomName.equals("Unused")) {
+	            allRoomCells.add(cell);
+	        }
+	    }
+	    
+	    ArrayList<BoardCell> unseenRooms = new ArrayList<>();
+	    for (BoardCell roomCell : allRoomCells) {
+	        boolean seenFlag = false;
+	        for (Card c : seen) {
+	            if (c.getCardName().equals(roomCell.getRoom().getName())) {
+	                seenFlag = true;
+	                break;
+	            }
+	        }
+	        if (!seenFlag) {
+	            unseenRooms.add(roomCell);
+	        }
+	    }
+	    
+	    if (!unseenRooms.isEmpty()) {
+	        return unseenRooms.get((int)(Math.random() * unseenRooms.size()));
+	    } else {
+	        ArrayList<BoardCell> targetsList = new ArrayList<>(targets);
+	        return targetsList.get((int)(Math.random() * targetsList.size()));
+	    }
 	}
 }
