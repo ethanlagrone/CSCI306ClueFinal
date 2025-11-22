@@ -10,8 +10,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import clueGame.Solution;
-
 public class Board {
     
     private BoardCell[][] grid;

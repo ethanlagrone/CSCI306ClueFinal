@@ -139,8 +139,8 @@ public class ComputerAITest {
 		assertTrue(suggestion.getRoom().getCardName().equals(currentRoom.getName()));
 		
 		// ensure that the person and weapon in the suggestion are not in the computer's seen cards
-		assertFalse(testPlayer.getSeen().contains(suggestion.getPerson().getCardName()));
-		assertFalse(testPlayer.getSeen().contains(suggestion.getWeapon().getCardName()));
+		assertFalse(testPlayer.getSeen().contains(suggestion.getPerson()));
+		assertFalse(testPlayer.getSeen().contains(suggestion.getWeapon()));
 		
 		//ensure that it is picked randomly
 		int dAngeloCount = 0;

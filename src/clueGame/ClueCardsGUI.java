@@ -3,16 +3,11 @@ package clueGame;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.Set;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
 
 
 public class ClueCardsGUI extends JPanel{

@@ -58,8 +58,16 @@ public class ComputerPlayer extends Player{
 	public BoardCell selectTarget(Set<BoardCell> targets) {
 		// get all rooms in the target (if any) that are unseen to the player
 		ArrayList<BoardCell> unseenRooms = new ArrayList<>();
+		boolean roomSeen = false;
 		for (BoardCell cell : targets) {
-			if (!cell.getRoom().getName().equals("Walkway") && !seen.contains(cell.getRoom().getName())) {
+			if (!cell.getRoom().getName().equals("Walkway")) {
+				for (Card c : seen) {
+					if (c.getCardName().equals(cell.getRoom().getName())) {
+						roomSeen = true;
+					}
+				}
+			}
+			if (!roomSeen) {
 				unseenRooms.add(cell);
 			}
 		}
