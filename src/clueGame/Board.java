@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,7 +11,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Board {
+import javax.swing.JPanel;
+
+public class Board extends JPanel {
     
     private BoardCell[][] grid;
     private Set<BoardCell> targets;
@@ -616,6 +619,12 @@ public class Board {
 		players.clear();
 		solution = null;
  	}
+
+	// DRAWING
+	public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+		
+    }
  	
 
 }

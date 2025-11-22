@@ -1,5 +1,8 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -119,5 +122,50 @@ public class BoardCell {
 
     public int getColumn() {
         return column;
+    }
+
+    // DRAWING
+    public void draw(int xOffset, int yOffset, int height, int width, Graphics g) {
+        // draw each individual cell
+        if (room.getName().equals("Walkway")) {
+            g.setColor(Color.YELLOW);
+            g.fillRect(xOffset, yOffset, height, width);
+            g.setColor(Color.BLACK);
+            g.drawRect(xOffset, yOffset, width, height);
+        }
+        else if (room.getName().equals("Unused")) {
+            g.setColor(Color.DARK_GRAY);
+            g.fillRect(xOffset, yOffset, height, width);
+        }
+        else {
+            g.setColor(Color.GREEN);
+            g.fillRect(xOffset, yOffset, height, width);
+        }
+
+        // handle doors
+        g.setColor(Color.BLUE);
+        switch (doorDirection) {
+            case DoorDirection.NONE:
+                break;
+            case DoorDirection.LEFT:
+                g.fillRect(xOffset, yOffset, width / 6, height);
+                break;
+            case DoorDirection.UP:
+                g.fillRect(xOffset, yOffset, width, height / 6);
+                break;
+            case DoorDirection.RIGHT:
+                g.fillRect(xOffset + (5 / 6) * width, yOffset, width, height);
+                break;
+            case DoorDirection.DOWN:
+                g.fillRect(xOffset, yOffset + (5 / 6) * height, width, height);
+                break;
+        }
+
+        // handle room labels
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("SansSerif", Font.BOLD, 12));
+        if (isLabel) {
+            g.drawString(room.getName(), xOffset, yOffset);
+        }
     }
 }
