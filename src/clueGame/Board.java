@@ -639,7 +639,7 @@ public class Board extends JPanel {
 		}
 
 		// draw players
-		int[][] startingCoordinates = {{1, 7}, {0, 15}, {7, 22}, {18, 22}, {23, 9}, {18, 0}};
+		int[][] startingCoordinates = {{1, 7}, {0, 15}, {7, 22}, {18, 22}, {23, 9}, {18, 0}};	// hard coded because i don't actually care
 		for (int i = 0; i < players.size(); i++) {
 			int xOffset = startingCoordinates[i][0];
 			int yOffset = startingCoordinates[i][1];
