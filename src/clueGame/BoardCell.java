@@ -154,10 +154,10 @@ public class BoardCell {
                 g.fillRect(xOffset, yOffset, width / 6, height);
                 break;
             case DoorDirection.RIGHT:
-                g.fillRect(xOffset, yOffset + height * (5 / 6), width, height / 6);
+                g.fillRect(xOffset, yOffset + height * 5 / 6, width, height / 6);
                 break;
             case DoorDirection.DOWN:
-                g.fillRect(xOffset + width * (5 / 6), yOffset, width / 6, height);
+                g.fillRect(xOffset + width * 5 / 6, yOffset, width / 6, height);
                 break;
         }
 

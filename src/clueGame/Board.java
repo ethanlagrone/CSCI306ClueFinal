@@ -1,6 +1,5 @@
 package clueGame;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.BufferedReader;
@@ -13,7 +12,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
@@ -650,28 +648,4 @@ public class Board extends JPanel {
 			g.drawOval(xOffset, yOffset, cellWidth, cellHeight);
 		}
     }
-	
-	public static void main(String[] args) {
-		Board board = Board.getInstance();
-		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
-	    board.initialize();
-	    board.prepareCards();
-
-
-	    ClueCardsGUI clueCards = new ClueCardsGUI(board.getPlayers());
-	    GameControlPanel gameControlPanel = new GameControlPanel();
-	    JFrame frame = new JFrame("Clue Game Board");
-
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setSize(900, 900);
-	    frame.add(board, BorderLayout.CENTER);
-	    frame.add(clueCards, BorderLayout.EAST);	    
-	    frame.add(gameControlPanel, BorderLayout.SOUTH);
-	    
-	    frame.setVisible(true);
-	    
-	    
-	    
-	    
-	}
 }
