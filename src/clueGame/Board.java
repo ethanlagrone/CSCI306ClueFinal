@@ -636,19 +636,18 @@ public class Board extends JPanel {
 		// draw cells
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numCols; j++) {
-				grid[i][j].draw(i * cellWidth, j * cellHeight, cellHeight, cellWidth, g);
+				grid[i][j].draw(i * cellWidth, j * cellHeight, cellWidth, cellHeight, g);
 			}
 		}
 
 		// draw players
-		int[][] startingCoordinates = {{1, 7}, {0, 15}, {7, 22}, {18, 22}, {23, 9}, {18, 0}};	// hard coded because i don't actually care
 		for (int i = 0; i < players.size(); i++) {
-			int xOffset = startingCoordinates[i][0];
-			int yOffset = startingCoordinates[i][1];
+			int xOffset = players.get(i).getRow() * cellWidth;
+			int yOffset = players.get(i).getColumn() * cellHeight;
 			g.setColor(players.get(i).getColorCode());
-			g.fillOval(xOffset * cellWidth, yOffset * height, cellWidth, cellHeight);
+			g.fillOval(xOffset, yOffset, cellWidth, cellHeight);
 			g.setColor(Color.BLACK);
-			g.drawOval(xOffset * cellWidth, yOffset * height, cellWidth, cellHeight);
+			g.drawOval(xOffset, yOffset, cellWidth, cellHeight);
 		}
     }
 	
