@@ -638,6 +638,15 @@ public class Board extends JPanel {
 			}
 		}
 
+		// loop again for text labels to ensure they are in the foreground
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numCols; j++) {
+				if (grid[i][j].isLabel()) {
+					grid[i][j].drawLabel(i * cellWidth, j * cellHeight, cellWidth, cellHeight, g);
+				}
+			}
+		}
+
 		// draw players
 		for (int i = 0; i < players.size(); i++) {
 			int xOffset = players.get(i).getRow() * cellWidth;

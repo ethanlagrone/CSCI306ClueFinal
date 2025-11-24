@@ -160,7 +160,9 @@ public class BoardCell {
                 g.fillRect(xOffset + width * 5 / 6, yOffset, width / 6, height);
                 break;
         }
+    }
 
+    public void drawLabel(int xOffset, int yOffset, int width, int height, Graphics g) {
         // handle room labels
         g.setColor(Color.BLACK);
         g.setFont(new Font("SansSerif", Font.BOLD, 12));
