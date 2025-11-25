@@ -1,6 +1,6 @@
 R,R,R,R,R,R,R,W,X,M,M,M,X,X,X,X,W,W,W,W,W,X,G,G
-R,R#,R,R,R,R,R,W,MT,M#,M,M,M,W,W,W,W,W,W,W,G,G,G,G
-R,R*,R,R,R,R,R,W<,M,M*,M,M,M,W,W,W,W,W,W,W,G#,G*,G,G
+R,R#,R,R,R,R,R,W,MT,M,M,M,M,W,W,W,W,W,W,W,G,G,G,G
+R,R*,R,R,R,R,R,W<,M#,M*,M,M,M,W,W,W,W,W,W,W,G#,G*,G,G
 R,R,R,R,R,R,R,W,W,M,M,W,W,W,W,W,W,W,W,W,W,G,G,X
 X,R,R,R,R,R,W,W,W,W^,W^,W,W,F,F,F,F,F,FB,W,W,W^,W,X
 X,W,W^,W^,W,W,W,W,W,W,W,W,W,F,F#,F,F,F,F,W,W,W,W,X

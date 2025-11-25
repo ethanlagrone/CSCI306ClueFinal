@@ -31,6 +31,7 @@ public class Board extends JPanel {
     private final String[] weaponCards = {"Guitar", "Piano", "Violin", "Drums", "Saxophone", "Bass"};
     private ArrayList<Player> players = new ArrayList<Player>();
 	private Solution solution;
+	private String humanPlayer;
     
     
     public Board() {
@@ -323,25 +324,26 @@ public class Board extends JPanel {
 				}
 				else {
 					// split with delimiter ", " to get type, name, and label from an entry
-					String[] spaceInfo = line.split(", ");
-					String type = spaceInfo[0];
+					String[] setupInfo = line.split(", ");
+					String type = setupInfo[0];
 
 					// if valid type of room (proper room or space)
 					if (type.equals("Room") || type.equals("Space")) {
 						// create new room, set name, add to room map
-						String name = spaceInfo[1];
-						char label = spaceInfo[2].charAt(0);
+						String name = setupInfo[1];
+						char label = setupInfo[2].charAt(0);
 						
 						Room room = new Room();
 						room.setName(name);
 						roomMap.put(label, room);
 					} else if(type.equals("Player")) {
 						//setup players
-						String name = spaceInfo[1];
-						String color = spaceInfo[2];
-						int xCoordinate = Integer.parseInt(spaceInfo[3]);
-						int yCoordinate = Integer.parseInt(spaceInfo[4]);
+						String name = setupInfo[1];
+						String color = setupInfo[2];
+						int xCoordinate = Integer.parseInt(setupInfo[3]);
+						int yCoordinate = Integer.parseInt(setupInfo[4]);
 						if(name.equals("D'Angelo")) {
+							humanPlayer = name;
 							players.add(new HumanPlayer(name, color, xCoordinate, yCoordinate));
 						} else {
 							players.add(new ComputerPlayer(name, color, xCoordinate, yCoordinate));
@@ -620,6 +622,10 @@ public class Board extends JPanel {
 		players.clear();
 		solution = null;
  	}
+
+	public String getHumanPlayer() {
+		return humanPlayer;
+	}
 
 	// DRAWING
 	public void paintComponent(Graphics g) {

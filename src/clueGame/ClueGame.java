@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class ClueGame extends JFrame {
     
@@ -24,5 +25,10 @@ public class ClueGame extends JFrame {
 	    frame.add(gameControlPanel, BorderLayout.SOUTH);
 	    
 	    frame.setVisible(true);
+
+		JOptionPane.showMessageDialog(frame, 
+			"You are " + board.getHumanPlayer() + ".\nTry to find the solution before the other players!",
+			"Welcome!",
+			JOptionPane.INFORMATION_MESSAGE);
 	}
 }
