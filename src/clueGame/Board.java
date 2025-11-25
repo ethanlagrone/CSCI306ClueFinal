@@ -630,11 +630,15 @@ public class Board extends JPanel {
 		int height = getHeight();
 		int cellWidth = width / numRows;
 		int cellHeight = height / numCols;
+		int xOffset;
+		int yOffset;
 		
 		// draw cells
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numCols; j++) {
-				grid[i][j].draw(i * cellWidth, j * cellHeight, cellWidth, cellHeight, g);
+				xOffset = j * cellWidth;
+				yOffset = i * cellHeight;
+				grid[i][j].draw(xOffset, yOffset, cellWidth, cellHeight, g);
 			}
 		}
 
@@ -642,15 +646,15 @@ public class Board extends JPanel {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numCols; j++) {
 				if (grid[i][j].isLabel()) {
-					grid[i][j].drawLabel(i * cellWidth, j * cellHeight, cellWidth, cellHeight, g);
+					grid[i][j].drawLabel(j * cellWidth, i * cellHeight, cellWidth, cellHeight, g);
 				}
 			}
 		}
 
 		// draw players
 		for (int i = 0; i < players.size(); i++) {
-			int xOffset = players.get(i).getRow() * cellWidth;
-			int yOffset = players.get(i).getColumn() * cellHeight;
+			xOffset = players.get(i).getColumn() * cellWidth;
+			yOffset = players.get(i).getRow() * cellHeight;
 			g.setColor(players.get(i).getColorCode());
 			g.fillOval(xOffset, yOffset, cellWidth, cellHeight);
 			g.setColor(Color.BLACK);
