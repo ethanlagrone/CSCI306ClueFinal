@@ -25,6 +25,7 @@ public abstract class Player {
 	}
 
 	public abstract boolean isHuman();
+	public abstract BoardCell selectTarget(Set<BoardCell> targets);
 
 	public void updateHand(Card card) {
 		if (!hand.contains(card)) {
@@ -123,12 +124,12 @@ public abstract class Player {
 	}
 	
 	public Color getColorCode() {
-		/*Player, D'Angelo, Brown, 2, 17, 
-		Player, Bob Dylan, White, 10, 20, 
-		Player, Rivers Cuomo, Blue, 17, 7, 
-		Player, Marvin Gaye, Red, 9, 12, 
-		Player, Kendrick Lamar, Green, 7, 5, 
-		Player, Robert Plant, Black, 10, 19, */
+		/* Player, D'Angelo, Brown, 2, 18, 
+		Player, Bob Dylan, White, 6, 10, 
+		Player, Rivers Cuomo, Blue, 7, 1, 
+		Player, Marvin Gaye, Red, 9, 21, 
+		Player, Kendrick Lamar, Green, 16, 7, 
+		Player, Robert Plant, Black, 19, 17, */
 		if(color == null) {
 			return Color.WHITE;
 		}

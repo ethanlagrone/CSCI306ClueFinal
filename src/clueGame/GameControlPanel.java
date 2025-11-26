@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
@@ -29,7 +28,6 @@ public class GameControlPanel extends JPanel implements ActionListener {
     private	JPanel bottomRightPanel;
 
 	private static Board board;
-	private Player currentPlayer;
     
     public GameControlPanel() {
     	//constructor
@@ -114,14 +112,11 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == nextPlayerButton) {
-			currentPlayer = board.getCurrentPlayer();
-			if (currentPlayer.isHuman()) {
-				if (!currentPlayer.getTurnDone()) {
-					JOptionPane.showMessageDialog(null, 
-					"Please finish your turn first.",
-					"Error",
-					JOptionPane.WARNING_MESSAGE);
-				}	
+			if (board.turnProgressable()) {
+				board.progressTurn();
+				int roll = (int)(Math.random() * 6);
+				setTurn(board.getCurrentPlayer(), roll);
+				board.movePlayer(roll);
 			}
 		}
 	}

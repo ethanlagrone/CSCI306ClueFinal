@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
@@ -634,6 +635,48 @@ public class Board extends JPanel {
 
 	public Player getCurrentPlayer() {
 		return currentPlayer;
+	}
+
+	public boolean turnProgressable() {
+		if (currentPlayer.isHuman()) {
+			if (!currentPlayer.getTurnDone()) {
+				JOptionPane.showMessageDialog(null, 
+				"Please finish your turn first.",
+				"Error",
+				JOptionPane.WARNING_MESSAGE);
+				return false;
+			}
+			else {
+				return true;
+			}	
+		}
+		else {
+			return true;
+		}
+	}
+
+	public void progressTurn() {
+		if (players.getLast().getName().equals(currentPlayer.getName())) {
+			currentPlayer = players.getFirst();
+		}
+		else {
+			for (int i = 0; i < players.size(); i++) {
+				if (players.get(i).getName().equals(currentPlayer.getName())) {
+					currentPlayer = players.get(i + 1);
+					break;
+				}
+			}
+		}
+	}
+
+	public void movePlayer(int roll) {
+		calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
+		if (currentPlayer.isHuman()) {
+
+		}
+		else {
+			currentPlayer.selectTarget(targets);
+		}
 	}
 
 	// DRAWING
