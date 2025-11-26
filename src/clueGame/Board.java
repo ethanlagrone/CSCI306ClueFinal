@@ -31,7 +31,8 @@ public class Board extends JPanel {
     private final String[] weaponCards = {"Guitar", "Piano", "Violin", "Drums", "Saxophone", "Bass"};
     private ArrayList<Player> players = new ArrayList<Player>();
 	private Solution solution;
-	private String humanPlayer;
+	private Player humanPlayer;
+	private Player currentPlayer;
     
     
     public Board() {
@@ -343,8 +344,8 @@ public class Board extends JPanel {
 						int xCoordinate = Integer.parseInt(setupInfo[3]);
 						int yCoordinate = Integer.parseInt(setupInfo[4]);
 						if(name.equals("D'Angelo")) {
-							humanPlayer = name;
-							players.add(new HumanPlayer(name, color, xCoordinate, yCoordinate));
+							humanPlayer = new HumanPlayer(name, color, xCoordinate, yCoordinate);
+							players.add(humanPlayer);
 						} else {
 							players.add(new ComputerPlayer(name, color, xCoordinate, yCoordinate));
 						}
@@ -623,8 +624,16 @@ public class Board extends JPanel {
 		solution = null;
  	}
 
-	public String getHumanPlayer() {
+	public Player getHumanPlayer() {
 		return humanPlayer;
+	}
+
+	public void setCurrentPlayer(Player player) {
+		currentPlayer = player;
+	}
+
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 	// DRAWING

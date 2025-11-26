@@ -12,7 +12,7 @@ public abstract class Player {
 	private int row, column;
 	private ArrayList<Card> hand;
 	protected Set<Card> seen;
-	
+	private boolean turnDone = false;
 	
 	public Player(String name, String color, int row, int column) {
 		super();
@@ -152,4 +152,11 @@ public abstract class Player {
 		}
 	}
 
+	public void setTurnDone(boolean b) {
+		turnDone = b;
+	}
+
+	public boolean getTurnDone() {
+		return turnDone;
+	}
 }

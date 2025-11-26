@@ -1,23 +1,40 @@
 package clueGame;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-public class GameControlPanel extends JPanel {
+public class GameControlPanel extends JPanel implements ActionListener {
 
-    private JTextField turnText;
+	private JTextField turnText;
     private JTextField rollText;
     private JTextField guessText;
     private JTextField guessResultText;
+	private JPanel MainPanel;
+	private JPanel topMainPanel;
+    private JPanel top1Panel;
+    private JPanel top2Panel;
+    private JButton accusationButton;
+    private JButton nextPlayerButton;
+	private JPanel bottomMainPanel;
+    private	JPanel bottomLeftPanel;
+    private	JPanel bottomRightPanel;
+
+	private static Board board;
+	private Player currentPlayer;
     
     public GameControlPanel() {
     	//constructor
+		board = Board.getInstance();
+
     	setLayout(new BorderLayout());
     	
     	turnText = new JTextField(15);
@@ -31,15 +48,16 @@ public class GameControlPanel extends JPanel {
         guessResultText.setEditable(false);
     	
     	//Big Panel two rows
-    	JPanel MainPanel = new JPanel();
+    	MainPanel = new JPanel();
     	MainPanel.setLayout(new GridLayout(2,1));
     	
     	//Create the top panel in the big panel
-    	JPanel topMainPanel = new JPanel();
-    	JPanel top1Panel = new JPanel(new GridLayout(1,2));
-    	JPanel top2Panel = new JPanel(new GridLayout(2,1));
-    	JButton accusationButton = new JButton("Make Accusation");
-    	JButton nextPlayerButton = new JButton("NEXT!");
+    	topMainPanel = new JPanel();
+    	top1Panel = new JPanel(new GridLayout(1,2));
+    	top2Panel = new JPanel(new GridLayout(2,1));
+    	accusationButton = new JButton("Make Accusation");
+    	nextPlayerButton = new JButton("NEXT!");
+		nextPlayerButton.addActionListener(this);
     	
     	top2Panel.add(new JLabel("Whose turn?"), BorderLayout.NORTH);
     	top2Panel.add(turnText);
@@ -55,9 +73,9 @@ public class GameControlPanel extends JPanel {
     	MainPanel.add(topMainPanel, BorderLayout.NORTH);
     	
     	//Create the bottom panel in the big panel
-    	JPanel bottomMainPanel = new JPanel(new GridLayout(1,2));
-    	JPanel bottomLeftPanel = new JPanel(new GridLayout(2,1));
-    	JPanel bottomRightPanel = new JPanel(new GridLayout(2,1));
+    	bottomMainPanel = new JPanel(new GridLayout(1,2));
+    	bottomLeftPanel = new JPanel(new GridLayout(2,1));
+    	bottomRightPanel = new JPanel(new GridLayout(2,1));
     	
     	//Add to bottomPanel
     	bottomLeftPanel.setBorder(new TitledBorder("Guess"));
@@ -78,11 +96,11 @@ public class GameControlPanel extends JPanel {
     
     
     
-	public void setTurn(Player player, int turn) {
+	public void setTurn(Player player, int roll) {
 		//get player name and color to set who's turn it is
 		turnText.setText(player.getName() + "'s");
 		turnText.setBackground(player.getColorCode());
-		rollText.setText(String.valueOf(turn));
+		rollText.setText(String.valueOf(roll));
 	}
 	
 	public void setGuess(String guess) {
@@ -92,19 +110,19 @@ public class GameControlPanel extends JPanel {
 	public void setGuessResult(String result) {
 		guessResultText.setText(result);
 	}
-	
-	public static void main(String[] args) {
-		//test code
-		GameControlPanel panel = new GameControlPanel();  // create the panel
-		JFrame frame = new JFrame();  // create the frame 
-		frame.setContentPane(panel); // put the panel in the frame
-		frame.setSize(750, 180);  // size the frame
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
-		frame.setVisible(true); // make it visible
-		
-		// test filling in the data
-		panel.setTurn(new ComputerPlayer( "Joe Mama", "red", 0, 0), 5);
-		panel.setGuess( "I have no guess!");
-		panel.setGuessResult( "So you have nothing?");
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == nextPlayerButton) {
+			currentPlayer = board.getCurrentPlayer();
+			if (currentPlayer.isHuman()) {
+				if (!currentPlayer.getTurnDone()) {
+					JOptionPane.showMessageDialog(null, 
+					"Please finish your turn first.",
+					"Error",
+					JOptionPane.WARNING_MESSAGE);
+				}	
+			}
+		}
 	}
 }
