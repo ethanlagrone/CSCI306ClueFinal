@@ -525,6 +525,7 @@ public class Board extends JPanel {
     	        visited.add(adjCell);
         		if(adjCell.isInRoom() || numSteps == 1) {
         			targets.add(adjCell);
+					adjCell.setIsTarget(true);
         		} else {
         			recursiveCalcTargets(adjCell, numSteps-1);
         		}
@@ -707,7 +708,12 @@ public class Board extends JPanel {
 			for (int j = 0; j < numCols; j++) {
 				xOffset = j * cellWidth;
 				yOffset = i * cellHeight;
-				grid[i][j].draw(xOffset, yOffset, cellWidth, cellHeight, g);
+				if (currentPlayer == null || !currentPlayer.isHuman()) {
+					grid[i][j].draw(xOffset, yOffset, cellWidth, cellHeight, g, false);
+				}
+				else {
+					grid[i][j].draw(xOffset, yOffset, cellWidth, cellHeight, g, true);
+				}
 			}
 		}
 

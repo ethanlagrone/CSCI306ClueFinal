@@ -17,6 +17,7 @@ public class BoardCell {
     private boolean isLabel = false;
     private boolean isRoomCenter = false;
     private boolean isSecretPassage = false;
+    private boolean isTarget = false;
     private DoorDirection doorDirection = DoorDirection.NONE;
     private Room room;
     private char secretPassage;
@@ -124,11 +125,24 @@ public class BoardCell {
         return column;
     }
 
+    public void setIsTarget(boolean b) {
+        isTarget = b;
+    }
+
+    public boolean isTarget() {
+        return isTarget;
+    }
+
     // DRAWING
-    public void draw(int xOffset, int yOffset, int width, int height, Graphics g) {
+    public void draw(int xOffset, int yOffset, int width, int height, Graphics g, boolean showTargets) {
         // draw each individual cell
         if (room.getName().equals("Walkway")) {
-            g.setColor(Color.YELLOW);
+            if (showTargets == true && isTarget) {
+                g.setColor(Color.CYAN);
+            }
+            else {
+                g.setColor(Color.YELLOW);
+            }
             g.fillRect(xOffset, yOffset, width, height);
             g.setColor(Color.BLACK);
             g.drawRect(xOffset, yOffset, width, height);
@@ -138,7 +152,12 @@ public class BoardCell {
             g.fillRect(xOffset, yOffset, width, height);
         }
         else {
-            g.setColor(Color.GREEN);
+            if (isTarget) {
+                g.setColor(Color.CYAN);
+            }
+            else {
+                g.setColor(Color.GREEN);
+            }
             g.fillRect(xOffset, yOffset, width, height);
         }
 
