@@ -33,7 +33,7 @@ public class Board extends JPanel {
     private ArrayList<Player> players = new ArrayList<Player>();
 	private Solution solution;
 	private Player humanPlayer;
-	private Player currentPlayer;
+	private Player currentPlayer = null;
     
     
     public Board() {
@@ -656,7 +656,10 @@ public class Board extends JPanel {
 	}
 
 	public void progressTurn() {
-		if (players.getLast().getName().equals(currentPlayer.getName())) {
+		if (currentPlayer == null) {
+			currentPlayer = players.get((int)(Math.random() * 6));
+		}
+		else if (players.getLast().getName().equals(currentPlayer.getName())) {
 			currentPlayer = players.getFirst();
 		}
 		else {

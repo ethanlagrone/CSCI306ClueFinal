@@ -112,9 +112,13 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == nextPlayerButton) {
+			int roll = (int)(Math.random() * 6);
+			if (board.getCurrentPlayer() == null) {
+				board.setCurrentPlayer(board.getPlayers().get((int)(Math.random() * board.getPlayers().size())));
+				setTurn(board.getCurrentPlayer(), roll);
+			}
 			if (board.turnProgressable()) {
 				board.progressTurn();
-				int roll = (int)(Math.random() * 6);
 				setTurn(board.getCurrentPlayer(), roll);
 				board.movePlayer(roll);
 			}
