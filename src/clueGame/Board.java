@@ -768,13 +768,20 @@ public class Board extends JPanel implements MouseListener{
 		if((getCurrentPlayer().isHuman()) && (clickFlag)) {
 			int cellClickedColumn = clickedX / cellWidth;
 			int cellClickedRow = clickedY / cellHeight;
+			if(targets.contains(getCell(cellClickedRow, cellClickedColumn))) {
+				currentPlayer.setColumn(cellClickedColumn);
+				currentPlayer.setRow(cellClickedRow);
+				clickFlag = false;
+				currentPlayer.setTurnDone(true);
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"You should click a light blue square!",
+						"Erorr",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
 			
-			currentPlayer.setColumn(cellClickedColumn);
-			currentPlayer.setRow(cellClickedRow);
 		} 
 		
-		clickFlag = false;
-		currentPlayer.setTurnDone(true);
 		repaint();
 		
 	}
