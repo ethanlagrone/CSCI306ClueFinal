@@ -676,7 +676,10 @@ public class Board extends JPanel {
 	public void movePlayer(int roll) {
 		calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
 		if (currentPlayer.isHuman()) {
-
+			for(BoardCell cell: targets) {
+				cell.setIsTarget(true);
+			}
+			repaint();
 		}
 		else {
 			// TODO: check for cpu accusation (next assignment)
