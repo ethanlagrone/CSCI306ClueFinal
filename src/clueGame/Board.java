@@ -2,6 +2,8 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,7 +17,7 @@ import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class Board extends JPanel {
+public class Board extends JPanel implements MouseListener{
     
     private BoardCell[][] grid;
     private Set<BoardCell> targets;
@@ -34,6 +36,7 @@ public class Board extends JPanel {
 	private Solution solution;
 	private Player humanPlayer;
 	private Player currentPlayer = null;
+	private boolean clickFlag = false;
     
     
     public Board() {
@@ -42,6 +45,7 @@ public class Board extends JPanel {
     	roomMap = new HashMap<>();
 		targets = new HashSet<>();
 		visited = new HashSet<>();
+		
     }
     
     
@@ -102,7 +106,9 @@ public class Board extends JPanel {
 		} catch (BadConfigFormatException e) {
 			e.printStackTrace();
 		}
-		
+		//Throwing in a mouseListener here
+		addMouseListener(this);
+
 	}
 
 	public void prepareCards() {
@@ -674,20 +680,30 @@ public class Board extends JPanel {
 	}
 
 	public void movePlayer(int roll) {
+		for (int i = 0; i < numRows; i++) {
+		    for (int j = 0; j < numCols; j++) {
+		        grid[i][j].setIsTarget(false);
+		    }
+		}
+
+		targets.clear();
 		calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
 		if (currentPlayer.isHuman()) {
 			for(BoardCell cell: targets) {
 				cell.setIsTarget(true);
 			}
 			repaint();
+			clickFlag = true;
 		}
 		else {
 			// TODO: check for cpu accusation (next assignment)
 			
 			// this looks really dumb, we could probably just change selectTarget to be a void method, but then all the old tests fail lol
 			BoardCell newCell = currentPlayer.selectTarget(targets);
+			targets.clear();
 			currentPlayer.setRow(newCell.getRow());
 			currentPlayer.setColumn(newCell.getColumn());
+			
 			repaint();
 
 			// TODO: have cpu make suggestion if needed (next assignment)
@@ -739,4 +755,61 @@ public class Board extends JPanel {
 			g.drawOval(xOffset, yOffset, cellWidth, cellHeight);
 		}
     }
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+		int cellWidth = getWidth() / numRows;
+		int cellHeight = getHeight() / numCols;
+		int clickedX = e.getX();
+		int clickedY = e.getY();
+		//check if currentPlayer is human and if the board is accepting clicks, otherwise we shouldn't worry about it
+		if((getCurrentPlayer().isHuman()) && (clickFlag)) {
+			int cellClickedColumn = clickedX / cellWidth;
+			int cellClickedRow = clickedY / cellHeight;
+			
+			currentPlayer.setColumn(cellClickedColumn);
+			currentPlayer.setRow(cellClickedRow);
+		} 
+		
+		clickFlag = false;
+		currentPlayer.setTurnDone(true);
+		repaint();
+		
+	}
+
+	
+	
+	
+	
+	
+	//UNIMPORTANT IGNORE
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
