@@ -706,6 +706,13 @@ public class Board extends JPanel implements MouseListener{
 			currentPlayer.setRow(newCell.getRow());
 			currentPlayer.setColumn(newCell.getColumn());
 			
+			ComputerPlayer cpu = (ComputerPlayer) currentPlayer;
+			//create cpu suggestion, and disprove it if it can be disproved
+			if(newCell.isInRoom()) {
+				Solution cpuSuggestion = cpu.createSuggestion(newCell.getRoom(), cpu.getHand());
+				//disprove suggestion starting at currentPlayer index, not sure how to do that loop
+				
+			}
 			repaint();
 
 			// TODO: have cpu make suggestion if needed (next assignment)
