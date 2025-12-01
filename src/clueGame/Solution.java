@@ -1,6 +1,7 @@
 package clueGame;
 
 public class Solution {
+	
 	private Card room;
 	private Card person;
 	private Card weapon;
@@ -15,6 +16,12 @@ public class Solution {
 		this.weapon = weapon;
 	}
 
+	@Override
+	public String toString() {
+		return "Solution [room=" + room + ", person=" + person + ", weapon=" + weapon + "]";
+	}
+
+	
 	public Card getRoom() {
 		return room;
 	}

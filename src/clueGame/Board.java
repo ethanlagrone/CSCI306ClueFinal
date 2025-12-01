@@ -709,6 +709,7 @@ public class Board extends JPanel implements MouseListener{
 			//create cpu suggestion, and disprove it if it can be disproved
 			if(newCell.isInRoom()) {
 				Solution cpuSuggestion = currentPlayer.createSuggestion(newCell.getRoom(), deck);
+
 				//disprove suggestion starting at currentPlayer index, not sure how to do that loop
 				int currentIndex = players.indexOf(currentPlayer);
                 boolean cardShown = false;
@@ -719,7 +720,6 @@ public class Board extends JPanel implements MouseListener{
                     // Don't have AI disprove its own suggestion
                     if (nextPlayer != currentPlayer) {
                         Card disprovedCard = nextPlayer.disproveSuggestion(cpuSuggestion);
-                        
                         if (disprovedCard != null) {
                             currentPlayer.updateSeen(disprovedCard);
                             cardShown = true;
@@ -801,23 +801,35 @@ public class Board extends JPanel implements MouseListener{
 		if((getCurrentPlayer().isHuman()) && (clickFlag)) {
 			int cellClickedColumn = clickedX / cellWidth;
 			int cellClickedRow = clickedY / cellHeight;
-			
+			BoardCell clicked = getCell(cellClickedRow, cellClickedColumn);
 			//check if targets contains the cell being clicked, else throw an error message
 			if(targets.contains(getCell(cellClickedRow, cellClickedColumn))) {
 				currentPlayer.setColumn(cellClickedColumn);
 				currentPlayer.setRow(cellClickedRow);
-				clickFlag = false;
-				currentPlayer.setTurnDone(true);
 			} else {
 				//Copied from ClueGame.java, shows error message if you click the wrong one.
 				JOptionPane.showMessageDialog(null, "You should click a light blue square!", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
+			
+			if (clicked.isInRoom()) {
+		        String roomName = clicked.getRoom().getName();
+		        suggestionGUI(roomName, currentPlayer);
+		    } else {
+		        // No suggestion → simply end turn
+		        currentPlayer.setTurnDone(true);
+		    }
+			
+			clickFlag = false;
+
 		} 
 		repaint();
 	}
 
 	
-	
+	public void suggestionGUI(String roomName, Player player) {
+		//idk yet
+		System.out.println("Human makes suggestion");
+	}
 	
 	
 	
