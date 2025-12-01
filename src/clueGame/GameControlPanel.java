@@ -113,7 +113,6 @@ public class GameControlPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == nextPlayerButton) {
 			int roll = (int)(Math.random() * 6 + 1);
-			System.out.println(roll);
 			if (board.getCurrentPlayer() == null) {
 				board.setCurrentPlayer(board.getPlayers().get((int)(Math.random() * board.getPlayers().size())));
 				setTurn(board.getCurrentPlayer(), roll);

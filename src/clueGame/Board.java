@@ -708,10 +708,35 @@ public class Board extends JPanel implements MouseListener{
 			
 			//create cpu suggestion, and disprove it if it can be disproved
 			if(newCell.isInRoom()) {
-				Solution cpuSuggestion = currentPlayer.createSuggestion(newCell.getRoom(), currentPlayer.getHand());
+				Solution cpuSuggestion = currentPlayer.createSuggestion(newCell.getRoom(), deck);
 				//disprove suggestion starting at currentPlayer index, not sure how to do that loop
-				
+				int currentIndex = players.indexOf(currentPlayer);
+                boolean cardShown = false;
+
+                for (int i = 1; i < players.size(); i++) {
+                    int nextPlayerIndex = (currentIndex + i) % players.size();
+                    Player nextPlayer = players.get(nextPlayerIndex);
+                    // Don't have AI disprove its own suggestion
+                    if (nextPlayer != currentPlayer) {
+                        Card disprovedCard = nextPlayer.disproveSuggestion(cpuSuggestion);
+                        
+                        if (disprovedCard != null) {
+                            currentPlayer.updateSeen(disprovedCard);
+                            cardShown = true;
+                            break;
+                        }
+                    }
+                }
+                
+                currentPlayer.setTurnDone(true);
+                if(!cardShown) {
+                	
+                }
+			} else {
+				System.out.println("not in room");
+				currentPlayer.setTurnDone(true);
 			}
+				
 			repaint();
 
 			// TODO: have cpu make suggestion if needed (next assignment)
