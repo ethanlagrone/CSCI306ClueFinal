@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class HumanPlayer extends Player{
@@ -21,5 +22,11 @@ public class HumanPlayer extends Player{
 	@Override
 	public boolean isHuman() {
 		return true;
+	}
+
+	@Override
+	public Solution createSuggestion(Room room, ArrayList<Card> deck) {
+		System.out.println("If you're seeing this, Ethan messed something up BAD at 2pm while already in class.");
+		return null;
 	}
 }

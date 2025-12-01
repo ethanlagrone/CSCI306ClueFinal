@@ -26,6 +26,8 @@ public abstract class Player {
 
 	public abstract boolean isHuman();
 	public abstract BoardCell selectTarget(Set<BoardCell> targets);
+	public abstract Solution createSuggestion(Room room, ArrayList<Card> deck);
+
 
 	public void updateHand(Card card) {
 		if (!hand.contains(card)) {
