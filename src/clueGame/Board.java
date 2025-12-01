@@ -1,7 +1,9 @@
 package clueGame;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
@@ -14,6 +16,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -829,9 +834,50 @@ public class Board extends JPanel implements MouseListener{
 	public void suggestionGUI(String roomName, Player player) {
 		//idk yet
 		System.out.println("Human makes suggestion");
+		
+		JDialog dialog = new JDialog();
+	    dialog.setTitle("Make a Suggestion");
+	    dialog.setModal(true);
+	    
+		JPanel panel = new JPanel(new GridLayout(3,1));
+		
+		ArrayList<String> rooms = new ArrayList<String>();
+		ArrayList<String> names = new ArrayList<String>();
+		for(int i = 0; i<deck.size(); i++) {
+			Card current = deck.get(i);
+			if(current.getCardType() == CardType.ROOM) {
+				rooms.add(current.getCardName());
+			} else if (current.getCardType() == CardType.PERSON) {
+				names.add(current.getCardName());
+			}
+		}
+		
+		//must convert arrayList to array for JComboBoxes
+		String[] roomsArray = rooms.toArray(new String[0]);
+		String[] namesArray = names.toArray(new String[0]);
+		
+		//Make JCombo Boxes
+		JComboBox<String> weaponBox = new JComboBox<String>(weaponCards);
+		JComboBox<String> roomBox = new JComboBox<String>(roomsArray);
+		JComboBox<String> nameBox = new JComboBox<String>(namesArray);
+		
+		panel.add(new JLabel("Current Room"));
+		panel.add(new JLabel(roomName));
+		panel.add(new JLabel("Weapon"));
+		panel.add(weaponBox);
+		panel.add(new JLabel("People: "));
+		panel.add(nameBox);
+		
+        dialog.getContentPane().add(panel, BorderLayout.CENTER);
+        
+        dialog.setVisible(true);
+		
 	}
 	
-	
+	public void accusationGUI(String roomName, Player player) {
+		//idk yet
+		System.out.println("Human makes accusation");
+	}
 	
 	//UNIMPORTANT IGNORE
 
