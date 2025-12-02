@@ -17,6 +17,7 @@ public class ClueGame extends JFrame {
 	    board.setCardGUI(clueCards);
 	    GameControlPanel gameControlPanel = new GameControlPanel();
 	    JFrame frame = new JFrame("Clue Game Board");
+	    board.setJFrame(frame);
 
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setSize(900, 900);

@@ -21,6 +21,7 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -46,6 +47,8 @@ public class Board extends JPanel implements MouseListener{
 	private Player currentPlayer = null;
 	private boolean clickFlag = false;
 	private ClueCardsGUI cardGUI;
+	private GameControlPanel controlPanel;
+	private JFrame jFrame;
     
     
     public Board() {
@@ -808,6 +811,7 @@ public class Board extends JPanel implements MouseListener{
 		
 		//check if currentPlayer is human and if the board is accepting clicks, otherwise we shouldn't worry about it
 		if((getCurrentPlayer().isHuman()) && (clickFlag)) {
+			
 			int cellClickedColumn = clickedX / cellWidth;
 			int cellClickedRow = clickedY / cellHeight;
 			BoardCell clicked = getCell(cellClickedRow, cellClickedColumn);
@@ -1011,8 +1015,10 @@ public class Board extends JPanel implements MouseListener{
 				if(accusation != null) {
 					if(solution.equals(accusation)) {
 						JOptionPane.showMessageDialog(null, "You won!", "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
+						jFrame.dispose();
 					} else {
-						JOptionPane.showMessageDialog(null, "That was wrong, you lose!", "Sorry!", JOptionPane.INFORMATION_MESSAGE);	
+						JOptionPane.showMessageDialog(null, "That was wrong, you lose!", "Sorry!", JOptionPane.INFORMATION_MESSAGE);
+						jFrame.dispose();
 					}
 				}
 	
@@ -1036,6 +1042,14 @@ public class Board extends JPanel implements MouseListener{
 	
 	public void setCardGUI(ClueCardsGUI newCardGUI) {
 		cardGUI = newCardGUI;
+	}
+	
+	public void setControlPanelGUI(GameControlPanel newControlPanel) {
+		controlPanel = newControlPanel;
+	}
+	
+	public void setJFrame(JFrame newJFrame) {
+		jFrame = newJFrame;
 	}
 	
 	//UNIMPORTANT IGNORE

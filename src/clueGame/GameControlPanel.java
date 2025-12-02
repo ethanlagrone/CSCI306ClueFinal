@@ -54,6 +54,7 @@ public class GameControlPanel extends JPanel implements ActionListener {
     	top1Panel = new JPanel(new GridLayout(1,2));
     	top2Panel = new JPanel(new GridLayout(2,1));
     	accusationButton = new JButton("Make Accusation");
+    	accusationButton.addActionListener(this);
     	nextPlayerButton = new JButton("NEXT!");
 		nextPlayerButton.addActionListener(this);
     	
@@ -122,6 +123,8 @@ public class GameControlPanel extends JPanel implements ActionListener {
 				setTurn(board.getCurrentPlayer(), roll);
 				board.movePlayer(roll);
 			}
+		} else if (e.getSource() == accusationButton) {
+			board.accusationGUI(board.getCurrentPlayer());
 		}
 	}
 }
