@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.util.Objects;
+
 public class Solution {
 	
 	private Card room;
@@ -22,6 +24,25 @@ public class Solution {
 	}
 
 	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(person, room, weapon);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Solution other = (Solution) obj;
+		return Objects.equals(person, other.person) && Objects.equals(room, other.room)
+				&& Objects.equals(weapon, other.weapon);
+	}
+
 	public Card getRoom() {
 		return room;
 	}

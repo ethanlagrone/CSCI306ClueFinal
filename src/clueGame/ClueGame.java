@@ -14,6 +14,7 @@ public class ClueGame extends JFrame {
 	    board.prepareCards();
 
 	    ClueCardsGUI clueCards = new ClueCardsGUI(board.getPlayers());
+	    board.setCardGUI(clueCards);
 	    GameControlPanel gameControlPanel = new GameControlPanel();
 	    JFrame frame = new JFrame("Clue Game Board");
 
@@ -24,7 +25,9 @@ public class ClueGame extends JFrame {
 	    frame.add(gameControlPanel, BorderLayout.SOUTH);
 	    
 	    frame.setVisible(true);
-
+	    
+	    Solution solution = board.getSolution();
+	    System.out.println(solution);
 		JOptionPane.showMessageDialog(frame, 
 			"You are " + board.getHumanPlayer().getName() + ".\nTry to find the solution before the other players!\nPress the next button to start the game.",
 			"Welcome!",

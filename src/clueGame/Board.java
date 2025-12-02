@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
@@ -16,6 +18,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -42,6 +45,7 @@ public class Board extends JPanel implements MouseListener{
 	private Player humanPlayer;
 	private Player currentPlayer = null;
 	private boolean clickFlag = false;
+	private ClueCardsGUI cardGUI;
     
     
     public Board() {
@@ -839,7 +843,7 @@ public class Board extends JPanel implements MouseListener{
 	    dialog.setTitle("Make a Suggestion");
 	    dialog.setModal(true);
 	    
-		JPanel panel = new JPanel(new GridLayout(3,1));
+		JPanel panel = new JPanel(new GridLayout(4,1));
 		
 		ArrayList<String> rooms = new ArrayList<String>();
 		ArrayList<String> names = new ArrayList<String>();
@@ -868,15 +872,170 @@ public class Board extends JPanel implements MouseListener{
 		panel.add(new JLabel("People: "));
 		panel.add(nameBox);
 		
+        JButton submit = new JButton("Submit");
+        JButton cancel = new JButton("Cancel"); 
+        
+        submit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String selectedWeapon = (String) weaponBox.getSelectedItem();
+				String selectedPerson = (String) nameBox.getSelectedItem();
+				
+				Card weapon = null;
+				Card person = null;
+				Card room = null;
+				
+				for(int i = 0; i < deck.size(); i++) {
+					Card current = deck.get(i);
+					if(current.getCardName().equals(selectedWeapon)) {
+						weapon = current;
+					} else if (current.getCardName().equals(selectedPerson)) {
+						person = current;
+					} else if (current.getCardName().equals(roomName)) {
+						room = current;
+					}
+				}
+				
+				Solution suggestion = null;
+				try {
+					suggestion = new Solution(room, person, weapon);
+				} catch (BadConfigFormatException e1) {
+					e1.printStackTrace();
+				}
+				if(suggestion != null) {
+					int currentIndex = players.indexOf(currentPlayer);
+
+	                for (int i = 1; i < players.size(); i++) {
+	                    int nextPlayerIndex = (currentIndex + i) % players.size();
+	                    Player nextPlayer = players.get(nextPlayerIndex);
+	                    if (nextPlayer != player) {
+	                        Card disprovedCard = nextPlayer.disproveSuggestion(suggestion);
+	                        if (disprovedCard != null) {
+	                            player.updateSeen(disprovedCard);
+	                            break;
+	                        }
+	                    }
+	                }
+	                for(Card c : player.seen) {
+	                	System.out.println(c);
+	                }
+				}
+	
+				
+				player.setTurnDone(true);
+			    dialog.dispose();
+			    cardGUI.reMakeGUI(players);
+			}
+        });
+        
+        cancel.addActionListener(e -> dialog.dispose());
+        panel.add(submit);
+        panel.add(cancel);
+
+		
         dialog.getContentPane().add(panel, BorderLayout.CENTER);
         
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-		
 	}
 	
-	public void accusationGUI(String roomName, Player player) {
-		//idk yet
-		System.out.println("Human makes accusation");
+	public void accusationGUI(Player player) {
+
+		JDialog dialog = new JDialog();
+	    dialog.setTitle("Make Accusation");
+	    dialog.setModal(true);
+	    
+		JPanel panel = new JPanel(new GridLayout(4,1));
+		
+		ArrayList<String> rooms = new ArrayList<String>();
+		ArrayList<String> names = new ArrayList<String>();
+		for(int i = 0; i<deck.size(); i++) {
+			Card current = deck.get(i);
+			if(current.getCardType() == CardType.ROOM) {
+				rooms.add(current.getCardName());
+			} else if (current.getCardType() == CardType.PERSON) {
+				names.add(current.getCardName());
+			}
+		}
+		
+		//must convert arrayList to array for JComboBoxes
+		String[] roomsArray = rooms.toArray(new String[0]);
+		String[] namesArray = names.toArray(new String[0]);
+		
+		//Make JCombo Boxes
+		JComboBox<String> weaponBox = new JComboBox<String>(weaponCards);
+		JComboBox<String> roomBox = new JComboBox<String>(roomsArray);
+		JComboBox<String> nameBox = new JComboBox<String>(namesArray);
+		
+		panel.add(new JLabel("Room: "));
+		panel.add(roomBox);
+		panel.add(new JLabel("Weapon: "));
+		panel.add(weaponBox);
+		panel.add(new JLabel("People: "));
+		panel.add(nameBox);
+		
+        JButton submit = new JButton("Submit");
+        JButton cancel = new JButton("Cancel"); 
+        
+        submit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String selectedWeapon = (String) weaponBox.getSelectedItem();
+				String selectedPerson = (String) nameBox.getSelectedItem();
+				String selectedRoom = (String) roomBox.getSelectedItem();
+				
+				Card weapon = null;
+				Card person = null;
+				Card room = null;
+				
+				for(int i = 0; i < deck.size(); i++) {
+					Card current = deck.get(i);
+					if(current.getCardName().equals(selectedWeapon)) {
+						weapon = current;
+					} else if (current.getCardName().equals(selectedPerson)) {
+						person = current;
+					} else if (current.getCardName().equals(selectedRoom)) {
+						room = current;
+					}
+				}
+				
+				Solution accusation = null;
+				try {
+					accusation = new Solution(room, person, weapon);
+				} catch (BadConfigFormatException e1) {
+					e1.printStackTrace();
+				}
+				if(accusation != null) {
+					if(solution.equals(accusation)) {
+						JOptionPane.showMessageDialog(null, "You won!", "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "That was wrong, you lose!", "Sorry!", JOptionPane.INFORMATION_MESSAGE);	
+					}
+				}
+	
+				
+				player.setTurnDone(true);
+			    dialog.dispose();
+			}
+        });
+        
+        cancel.addActionListener(e -> dialog.dispose());
+        panel.add(submit);
+        panel.add(cancel);
+
+		
+        dialog.getContentPane().add(panel, BorderLayout.CENTER);
+        
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+	}
+	
+	public void setCardGUI(ClueCardsGUI newCardGUI) {
+		cardGUI = newCardGUI;
 	}
 	
 	//UNIMPORTANT IGNORE
