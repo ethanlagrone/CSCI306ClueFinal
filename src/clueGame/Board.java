@@ -719,7 +719,7 @@ public class Board extends JPanel implements MouseListener{
 			currentPlayer.setColumn(newCell.getColumn());
 			
 			//create cpu suggestion, and disprove it if it can be disproved
-			if(newCell.isInRoom()) {
+			if (newCell.isInRoom()) {
 				Solution cpuSuggestion = currentPlayer.createSuggestion(newCell.getRoom(), deck);
 
 				//disprove suggestion starting at currentPlayer index, not sure how to do that loop
@@ -1052,32 +1052,13 @@ public class Board extends JPanel implements MouseListener{
 		jFrame = newJFrame;
 	}
 	
-	//UNIMPORTANT IGNORE
-
+	// unneeded MouseListener functions
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
+	public void mousePressed(MouseEvent e) {}
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
+	public void mouseReleased(MouseEvent e) {}
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
+	public void mouseEntered(MouseEvent e) {}
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 }

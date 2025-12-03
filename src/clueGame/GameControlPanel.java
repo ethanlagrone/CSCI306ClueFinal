@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
@@ -124,7 +125,15 @@ public class GameControlPanel extends JPanel implements ActionListener {
 				board.movePlayer(roll);
 			}
 		} else if (e.getSource() == accusationButton) {
-			board.accusationGUI(board.getCurrentPlayer());
+			if (!board.getCurrentPlayer().getTurnDone()) {
+				board.accusationGUI(board.getCurrentPlayer());
+			}
+			else {
+				JOptionPane.showMessageDialog(null, 
+				"You can only make an accusation at the beginning of your turn!",
+				"Error",
+				JOptionPane.WARNING_MESSAGE);
+			}
 		}
 	}
 }
