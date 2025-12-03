@@ -679,9 +679,11 @@ public class Board extends JPanel implements MouseListener{
 			currentPlayer = players.get((int)(Math.random() * 6));
 		}
 		else if (players.getLast().getName().equals(currentPlayer.getName())) {
+			currentPlayer.setTurnDone(false);
 			currentPlayer = players.getFirst();
 		}
 		else {
+			currentPlayer.setTurnDone(false);
 			for (int i = 0; i < players.size(); i++) {
 				if (players.get(i).getName().equals(currentPlayer.getName())) {
 					currentPlayer = players.get(i + 1);
