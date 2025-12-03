@@ -676,7 +676,7 @@ public class Board extends JPanel implements MouseListener{
 
 	public void progressTurn() {
 		if (currentPlayer == null) {
-			currentPlayer = players.get((int)(Math.random() * 6));
+			currentPlayer = players.get((int)(Math.random() * players.size() - 1) + 1);
 		}
 		else if (players.getLast().getName().equals(currentPlayer.getName())) {
 			currentPlayer.setTurnDone(false);
@@ -702,7 +702,9 @@ public class Board extends JPanel implements MouseListener{
 		}
 
 		targets.clear();
-		calcTargets(grid[currentPlayer.getRow()][currentPlayer.getColumn()], roll);
+		int playerRow = currentPlayer.getRow();
+		int playerColumn = currentPlayer.getColumn();
+		calcTargets(grid[playerRow][playerColumn], roll);
 		//if player is a human, set all their targets to true and repaint, 
 		//then set clickFlag to true to open up the listener
 		if (currentPlayer.isHuman()) {
@@ -799,8 +801,10 @@ public class Board extends JPanel implements MouseListener{
 
 		// draw players
 		for (int i = 0; i < players.size(); i++) {
-			xOffset = players.get(i).getColumn() * cellWidth;
-			yOffset = players.get(i).getRow() * cellHeight;
+			int playerRow = players.get(i).getRow();
+			int playerColumn = players.get(i).getColumn();
+			xOffset = playerColumn * cellWidth;
+			yOffset = playerRow * cellHeight;
 			g.setColor(players.get(i).getColorCode());
 			g.fillOval(xOffset, yOffset, cellWidth, cellHeight);
 			g.setColor(Color.BLACK);
@@ -832,7 +836,7 @@ public class Board extends JPanel implements MouseListener{
 			}
 			
 			if (clicked.isInRoom()) {
-		        String roomName = clicked.getRoom().getName();
+				String roomName = clicked.getRoom().getName();
 		        suggestionGUI(roomName, currentPlayer);
 		    } else {
 		        // No suggestion → simply end turn

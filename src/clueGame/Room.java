@@ -7,9 +7,6 @@ public class Room {
 	private boolean hasDoor;
 	private DoorDirection doorDirection;
 	
-	
-	
-
 	public Room() {
 		super();
 	}
@@ -63,5 +60,4 @@ public class Room {
 	public void setLabelCell(BoardCell labelCell) {
 		this.labelCell = labelCell;
 	}
-
 }
