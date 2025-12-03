@@ -2,6 +2,7 @@ package clueGame;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -103,12 +104,24 @@ public class GameControlPanel extends JPanel implements ActionListener {
 		rollText.setText(String.valueOf(roll));
 	}
 	
-	public void setGuess(String guess) {
-		guessText.setText(guess);
+	public void setGuess(Solution suggestion, Player player) {
+		guessText.setText(suggestion.toString());
+		guessText.setBackground(player.getColorCode());
 	}
 	
-	public void setGuessResult(String result) {
-		guessResultText.setText(result);
+	public void setGuessResult(Player player) {
+		guessResultText.setText("This was disproved by: " + player.getName());
+		guessResultText.setBackground(player.getColorCode());
+	}
+	
+	public void clearGuessResult() {
+		guessResultText.setText("");
+		guessResultText.setBackground(Color.white);
+	}
+	
+	public void clearGuess() {
+		guessText.setText("");
+		guessText.setBackground(Color.white);
 	}
 
 	@Override
@@ -120,6 +133,8 @@ public class GameControlPanel extends JPanel implements ActionListener {
 				setTurn(board.getCurrentPlayer(), roll);
 			}
 			if (board.turnProgressable()) {
+				clearGuessResult();
+				clearGuess();
 				board.progressTurn();
 				setTurn(board.getCurrentPlayer(), roll);
 				board.movePlayer(roll);

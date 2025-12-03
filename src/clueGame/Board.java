@@ -721,6 +721,7 @@ public class Board extends JPanel implements MouseListener{
 			}
 			
 			// this looks really dumb, we could probably just change selectTarget to be a void method, but then all the old tests fail lol
+			
 			BoardCell newCell = currentPlayer.selectTarget(targets);
 			targets.clear();
 			currentPlayer.setRow(newCell.getRow());
@@ -729,7 +730,13 @@ public class Board extends JPanel implements MouseListener{
 			//create cpu suggestion, and disprove it if it can be disproved
 			if (newCell.isInRoom()) {
 				Solution cpuSuggestion = currentPlayer.createSuggestion(newCell.getRoom(), deck);
-
+				controlPanel.setGuess(cpuSuggestion, currentPlayer);
+				for(Player p : players) {
+					if(p.getName().equals(cpuSuggestion.getPerson().getCardName())) {
+						p.setColumn(currentPlayer.getColumn());
+						p.setRow(currentPlayer.getRow());
+					}
+				}
 				//disprove suggestion starting at currentPlayer index, not sure how to do that loop
 				int currentIndex = players.indexOf(currentPlayer);
                 boolean cardShown = false;
@@ -743,6 +750,7 @@ public class Board extends JPanel implements MouseListener{
                         if (disprovedCard != null) {
                             currentPlayer.updateSeen(disprovedCard);
                             cardShown = true;
+                            controlPanel.setGuessResult(nextPlayer);
                             break;
                         }
                     }
@@ -824,7 +832,9 @@ public class Board extends JPanel implements MouseListener{
 			int cellClickedRow = clickedY / cellHeight;
 			BoardCell clicked = getCell(cellClickedRow, cellClickedColumn);
 			//check if targets contains the cell being clicked, else throw an error message
-			if(targets.contains(getCell(cellClickedRow, cellClickedColumn))) {
+			if(clicked.isOccupied() && clicked.getRoom().getName().equals("Walkway")) {
+				JOptionPane.showMessageDialog(null, "Please click an unoccupied square!", "Error", JOptionPane.INFORMATION_MESSAGE);
+			} else if(targets.contains(getCell(cellClickedRow, cellClickedColumn))) {
 				currentPlayer.setColumn(cellClickedColumn);
 				currentPlayer.setRow(cellClickedRow);
 			} else {
@@ -835,12 +845,19 @@ public class Board extends JPanel implements MouseListener{
 			if (clicked.isInRoom()) {
 				String roomName = clicked.getRoom().getName();
 		        suggestionGUI(roomName, currentPlayer);
+		    	currentPlayer.setTurnDone(true);
+		        clickFlag = false;
+		    } else if(clicked.isOccupied() && clicked.getRoom().getName().equals("Walkway")) {
+		    	//wait 
+		    } else if(!targets.contains(getCell(cellClickedRow, cellClickedColumn))){
+		    	//wait
 		    } else {
-		        // No suggestion → simply end turn
-		        currentPlayer.setTurnDone(true);
+		    	
+		    	currentPlayer.setTurnDone(true);
+		        clickFlag = false;
 		    }
 			
-			clickFlag = false;
+			
 
 		} 
 		repaint();
@@ -904,10 +921,18 @@ public class Board extends JPanel implements MouseListener{
 						weapon = current;
 					} else if (current.getCardName().equals(selectedPerson)) {
 						person = current;
+						for(Player p : players) {
+							if(p.getName().equals(selectedPerson)) {
+								p.setColumn(currentPlayer.getColumn());
+								p.setRow(currentPlayer.getRow());
+							}
+						}
 					} else if (current.getCardName().equals(roomName)) {
 						room = current;
 					}
 				}
+				
+				
 				
 				Solution suggestion = null;
 				try {
@@ -917,6 +942,7 @@ public class Board extends JPanel implements MouseListener{
 				}
 				if(suggestion != null) {
 					int currentIndex = players.indexOf(currentPlayer);
+					controlPanel.setGuess(suggestion, currentPlayer);
 
 	                for (int i = 1; i < players.size(); i++) {
 	                    int nextPlayerIndex = (currentIndex + i) % players.size();
@@ -925,12 +951,10 @@ public class Board extends JPanel implements MouseListener{
 	                        Card disprovedCard = nextPlayer.disproveSuggestion(suggestion);
 	                        if (disprovedCard != null) {
 	                            player.updateSeen(disprovedCard);
+	                            controlPanel.setGuessResult(nextPlayer);
 	                            break;
 	                        }
 	                    }
-	                }
-	                for(Card c : player.seen) {
-	                	System.out.println(c);
 	                }
 				}
 	

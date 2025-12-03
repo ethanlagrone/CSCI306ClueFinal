@@ -20,7 +20,7 @@ public class Solution {
 
 	@Override
 	public String toString() {
-		return "Solution [room=" + room + ", person=" + person + ", weapon=" + weapon + "]";
+		return "Solution guess: The Room: " + room.getCardName() + ", Person: " + person.getCardName() + ", Weapon: " + weapon.getCardName() + "!";
 	}
 
 	

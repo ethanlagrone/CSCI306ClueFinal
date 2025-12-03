@@ -61,6 +61,9 @@ public class ComputerPlayer extends Player{
 	        String roomName = cell.getRoom().getName();
 	        if (!roomName.equals("Walkway") && !roomName.equals("Unused")) {
 	            allRoomCells.add(cell);
+	        } 
+	        if(roomName.equals("Walkway") && cell.isOccupied()) {
+	        	allRoomCells.remove(cell);
 	        }
 	    }
 	    
