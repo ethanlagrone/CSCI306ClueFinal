@@ -676,7 +676,7 @@ public class Board extends JPanel implements MouseListener{
 
 	public void progressTurn() {
 		if (currentPlayer == null) {
-			currentPlayer = players.get((int)(Math.random() * players.size() - 1) + 1);
+			currentPlayer = players.get((int)(Math.random() * (players.size() - 1)) + 1);
 		}
 		else if (players.getLast().getName().equals(currentPlayer.getName())) {
 			currentPlayer.setTurnDone(false);
