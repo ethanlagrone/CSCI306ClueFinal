@@ -710,7 +710,14 @@ public class Board extends JPanel implements MouseListener{
 			repaint();
 			clickFlag = true;
 		} else {
-			// TODO: check for cpu accusation (next assignment)
+			if (deck.size() - currentPlayer.getSeen().size() == 3) {
+				JOptionPane.showMessageDialog(null, 
+				currentPlayer.getName() + " has accused correctly and won the game!\nThe solution was " 
+					+ solution.getPerson().getCardName() + " in " + solution.getRoom().getCardName() + " with the " + solution.getWeapon().getCardName(),
+				"Game Over!",
+				JOptionPane.INFORMATION_MESSAGE);
+				jFrame.dispose();
+			}
 			
 			// this looks really dumb, we could probably just change selectTarget to be a void method, but then all the old tests fail lol
 			BoardCell newCell = currentPlayer.selectTarget(targets);
@@ -750,8 +757,6 @@ public class Board extends JPanel implements MouseListener{
 			}
 				
 			repaint();
-
-			// TODO: have cpu make suggestion if needed (next assignment)
 		}
 	}
 
