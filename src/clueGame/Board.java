@@ -783,6 +783,7 @@ public class Board extends JPanel implements MouseListener{
 		}
 	}
 
+
 	// DRAWING
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -851,6 +852,11 @@ public class Board extends JPanel implements MouseListener{
 			} else if(targets.contains(getCell(cellClickedRow, cellClickedColumn))) {
 				currentPlayer.setColumn(cellClickedColumn);
 				currentPlayer.setRow(cellClickedRow);
+				for (int i = 0; i < numRows; i++) {
+				    for (int j = 0; j < numCols; j++) {
+				        grid[i][j].setIsTarget(false);
+				    }
+				}
 				if (clicked.isInRoom()) {
 					String roomName = clicked.getRoom().getName();
 			        suggestionGUI(roomName, currentPlayer);
