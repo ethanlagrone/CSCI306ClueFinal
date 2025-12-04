@@ -670,6 +670,14 @@ public class Board extends JPanel implements MouseListener{
 			}	
 		}
 		else {
+			if(currentPlayer.getSeen().size() == 18) {
+				JOptionPane.showMessageDialog(null, 
+						currentPlayer.getName() + " has accused correctly and won the game!\nThe solution was " 
+							+ solution.getPerson().getCardName() + " in " + solution.getRoom().getCardName() + " with the " + solution.getWeapon().getCardName(),
+						"Game Over!",
+						JOptionPane.INFORMATION_MESSAGE);
+						jFrame.dispose();
+			}
 			return true;
 		}
 	}
@@ -699,9 +707,14 @@ public class Board extends JPanel implements MouseListener{
 		}
 
 		targets.clear();
+
 		int playerRow = currentPlayer.getRow();
 		int playerColumn = currentPlayer.getColumn();
 		calcTargets(grid[playerRow][playerColumn], roll);
+		if(currentPlayer.isMoved()) {
+			targets.add(getCell(currentPlayer.getRow(),currentPlayer.getColumn()));
+			currentPlayer.setMoved(false);
+		}
 		//if player is a human, set all their targets to true and repaint, 
 		//then set clickFlag to true to open up the listener
 		if (currentPlayer.isHuman()) {
@@ -735,6 +748,7 @@ public class Board extends JPanel implements MouseListener{
 					if(p.getName().equals(cpuSuggestion.getPerson().getCardName())) {
 						p.setColumn(currentPlayer.getColumn());
 						p.setRow(currentPlayer.getRow());
+						p.setMoved(true);
 					}
 				}
 				//disprove suggestion starting at currentPlayer index, not sure how to do that loop
@@ -761,7 +775,7 @@ public class Board extends JPanel implements MouseListener{
                 	
                 }
 			} else {
-				System.out.println("not in room");
+				//System.out.println("not in room");
 				currentPlayer.setTurnDone(true);
 			}
 				
@@ -866,7 +880,7 @@ public class Board extends JPanel implements MouseListener{
 	
 	public void suggestionGUI(String roomName, Player player) {
 		//idk yet
-		System.out.println("Human makes suggestion");
+		//System.out.println("Human makes suggestion");
 		
 		JDialog dialog = new JDialog();
 	    dialog.setTitle("Make a Suggestion");

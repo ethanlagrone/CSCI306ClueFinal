@@ -20,6 +20,7 @@ public class ClueGame extends JFrame {
 	    JFrame frame = new JFrame("Clue Game Board");
 	    board.setJFrame(frame);
 
+	    
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setSize(900, 900);
 	    frame.add(board, BorderLayout.CENTER);
@@ -28,11 +29,10 @@ public class ClueGame extends JFrame {
 	    
 	    frame.setVisible(true);
 	    
-	    Solution solution = board.getSolution();
-	    System.out.println(solution);
 		JOptionPane.showMessageDialog(frame, 
 			"You are " + board.getHumanPlayer().getName() + ".\nTry to find the solution before the other players!\nPress the next button to start the game.",
 			"Welcome!",
 			JOptionPane.INFORMATION_MESSAGE);
+		
 	}
 }
