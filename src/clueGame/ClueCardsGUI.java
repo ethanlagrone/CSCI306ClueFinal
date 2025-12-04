@@ -119,36 +119,4 @@ public class ClueCardsGUI extends JPanel{
 		return cardText;
 		
 	}
-	
-	
-	public static void main(String[] args) {
-		Board board;
-		
-		ArrayList<Player> players = new ArrayList<Player>();
-		// test filling in the data
-		board = Board.getInstance();
-		// set the file names to use my config files
-		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
-		board.initialize();
-		board.prepareCards();
-		players = board.getPlayers();
-		//adding seen values for testing
-		for(Card c : players.get(2).getHand()) {
-			players.get(0).updateSeen(c);
-		}
-
-
-		ClueCardsGUI panel = new ClueCardsGUI(players);  // create the panel
-		JFrame frame = new JFrame();  // create the frame 
-		frame.setContentPane(panel); // put the panel in the frame
-		frame.setSize(300, 800);  // size the frame
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
-		frame.setVisible(true); // make it visible
-		
-		//adding more seen values for testing reMakeGUI
-		for(Card c : players.get(1).getHand()) {
-			players.get(0).updateSeen(c);
-		}
-		panel.reMakeGUI(players);
-	}
 }

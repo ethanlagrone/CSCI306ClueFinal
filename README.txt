@@ -1,2 +1,2 @@
-CSCI306 Section B: C24A Clue - Moving the Players
+CSCI306 Section B: Finishing Clue
 Authors: Ethan LaGrone, Morgan Smith
