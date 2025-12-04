@@ -13,7 +13,10 @@ public abstract class Player {
 	private ArrayList<Card> hand;
 	protected Set<Card> seen;
 	private boolean turnDone = false;
+	private boolean moved = false;
 	
+	
+
 	public Player(String name, String color, int row, int column) {
 		super();
 		this.name = name;
@@ -161,5 +164,13 @@ public abstract class Player {
 
 	public boolean getTurnDone() {
 		return turnDone;
+	}
+	
+	public boolean isMoved() {
+		return moved;
+	}
+
+	public void setMoved(boolean moved) {
+		this.moved = moved;
 	}
 }

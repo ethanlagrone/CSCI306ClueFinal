@@ -837,22 +837,22 @@ public class Board extends JPanel implements MouseListener{
 			} else if(targets.contains(getCell(cellClickedRow, cellClickedColumn))) {
 				currentPlayer.setColumn(cellClickedColumn);
 				currentPlayer.setRow(cellClickedRow);
+				if (clicked.isInRoom()) {
+					String roomName = clicked.getRoom().getName();
+			        suggestionGUI(roomName, currentPlayer);
+			    	currentPlayer.setTurnDone(true);
+			        clickFlag = false;
+			    }
 			} else {
 				//Copied from ClueGame.java, shows error message if you click the wrong one.
 				JOptionPane.showMessageDialog(null, "You should click a light blue square!", "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 			
-			if (clicked.isInRoom()) {
-				String roomName = clicked.getRoom().getName();
-		        suggestionGUI(roomName, currentPlayer);
-		    	currentPlayer.setTurnDone(true);
-		        clickFlag = false;
-		    } else if(clicked.isOccupied() && clicked.getRoom().getName().equals("Walkway")) {
+			 if(clicked.isOccupied() && clicked.getRoom().getName().equals("Walkway")) {
 		    	//wait 
 		    } else if(!targets.contains(getCell(cellClickedRow, cellClickedColumn))){
 		    	//wait
 		    } else {
-		    	
 		    	currentPlayer.setTurnDone(true);
 		        clickFlag = false;
 		    }
